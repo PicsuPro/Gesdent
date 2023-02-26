@@ -3,16 +3,25 @@
 	Page Creer un Patient SQL - wpf
 	Page RDV Calendrier (Ajouter Un Rendez vous)
 
-What we'll learn 
+
+What we'll learn  : 
 •	Onglets
 
 
+Les points les plus intéressents : 
 -	Create un patient update and delete show all patient search + Dossier 
 -	Historique des séances + Interface seance 
 -	Shema de patient + Historique  
 -	Gestion des RDVs + Historique
 -	Create an Interface that is ergonomic and Beautiful UI 
--	  
+
+
+
+Question pour le médecin : 
+-	Combien de rendez-vous  prendre par jour et par heure miniment et maximum ?
+-	La durée moyenne de chaque rendez-vous , vous préférez qu’il soit fixe ou change  d’un patient a un autre ?
+
+
 
 Sources:
 https://www.calendoc.com/
