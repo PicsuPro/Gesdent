@@ -20,9 +20,17 @@ namespace VsProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            if (PBar.Value <= 90)
+            {
+                PBar.Value += 10;
+                if (PBar.Value == 100)
+                {
+                    LoDo.Content = "Done! ";
+                }
+            }
+
         }
     }
 }

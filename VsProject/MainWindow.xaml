@@ -6,8 +6,17 @@
         xmlns:local="clr-namespace:VsProject"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <DockPanel LastChildFill="False">
+        <Button Content="Click to Progressing " DockPanel.Dock="Top" Click="Button_Click"/>
+        <StatusBar DockPanel.Dock="Bottom" >
+            <StatusBarItem x:Name="LoDo">
+                Loding ...
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <ProgressBar x:Name="PBar" Width="120" Height="15" Value="10" />
+            </StatusBarItem>
 
-        <Label Content="Aoumara" FontSize="40"/>
-    </Grid>
+        </StatusBar>
+    </DockPanel>
 </Window>

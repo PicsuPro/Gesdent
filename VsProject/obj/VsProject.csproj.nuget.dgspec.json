@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\alg16\\Source\\Repos\\Gesdent\\VsProject\\VsProject.csproj": {}
+    "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\alg16\\Source\\Repos\\Gesdent\\VsProject\\VsProject.csproj": {
+    "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\alg16\\Source\\Repos\\Gesdent\\VsProject\\VsProject.csproj",
+        "projectUniqueName": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
         "projectName": "VsProject",
-        "projectPath": "C:\\Users\\alg16\\Source\\Repos\\Gesdent\\VsProject\\VsProject.csproj",
+        "projectPath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
         "packagesPath": "C:\\Users\\alg16\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\alg16\\Source\\Repos\\Gesdent\\VsProject\\obj\\",
+        "outputPath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
