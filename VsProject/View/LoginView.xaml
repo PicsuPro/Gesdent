@@ -1,0 +1,238 @@
+﻿<Window x:Class="VsProject.View.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VsProject.View"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="LoginView" Height="550" Width="500"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown"
+        Background="Transparent"
+        AllowsTransparency="True">
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="1"  
+        CornerRadius ="0"
+        ResizeBorderThickness="4"         
+        GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+
+    <Border CornerRadius="12"
+            BorderThickness="2"
+            Background="White">
+
+
+
+        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="10"/>
+            </Grid.RowDefinitions>
+            
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="25"/>
+                    <ColumnDefinition Width="5"/>
+                </Grid.ColumnDefinitions>
+                
+
+                <Button x:Name="btnMinimize"
+                        BorderThickness="0"
+                        Content="-"
+                        FontSize="25"
+                        FontFamily="Calibri"
+                        Grid.Column="2"
+                        Click="btnMinimize_Click" 
+                        Margin="0,0,0,5">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+
+                <Button x:Name="btnClose"
+                        BorderThickness="0"
+                        Content="x"
+                        FontSize="16"
+                        FontFamily="Calibri"
+                        Grid.Column="3"
+                        Click="btnClose_Click" 
+                        Margin="0,4,0,5">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
+            </Grid>
+            
+            <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                           Grid.Row="1">
+                <ScrollViewer.Resources>
+                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
+                </ScrollViewer.Resources>
+                <StackPanel Width="250"
+                            Orientation="Vertical"
+                            Margin="0,35,0,0">
+
+                    <Image Source="/Images/logo.png"
+                           Height="100" Width="200"
+                           />
+
+                    <TextBlock Text="Gesdent"
+                               Foreground="Black"
+                               FontSize="20"
+                               FontWeight="Bold"
+                               FontFamily="Calibri"
+                               HorizontalAlignment="Center"
+                               Margin="0,5,0,0"/>
+
+                    <TextBlock Text="Un sourire est une mission."
+                               Foreground="DarkGray"
+                               FontSize="12"
+                               FontFamily="Calibri"
+                               HorizontalAlignment="Center"/>
+
+                    <TextBlock Text="Utilisateur"
+                               Foreground="#1B1B1B"
+                               FontSize="13"
+                               FontFamily="Calibri"
+                               FontWeight="Medium"
+                               Margin="0,25,0,0"/>
+
+                    <TextBox x:Name="txtUser"
+                             FontSize="13"
+                             FontFamily="Calibri"
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="DarkGray"
+                             BorderThickness="0,0,0,1"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,4,0,0"
+                             Padding="0,0,25,0">
+                        <TextBox.Background>
+                            <ImageBrush ImageSource="/Images/user.png"
+                                        Stretch="Uniform"
+                                        AlignmentX="Right"/>
+                        </TextBox.Background>
+                    </TextBox>
+                
+                
+                    <TextBlock Text="Mot de passe"
+                               Foreground="#1B1B1B"
+                               FontSize="13"
+                               FontFamily="Calibri"
+                               FontWeight="Medium"
+                               Margin="0,25,0,0"/>
+
+                    <PasswordBox x:Name="txtPassword"
+                             FontSize="13"
+                             FontFamily="Calibri"
+                             Foreground="Black"
+                             CaretBrush="LightGray"
+                             BorderBrush="DarkGray"
+                             BorderThickness="0,0,0,1"
+                             Height="28"
+                             VerticalContentAlignment="Center"
+                             Margin="0,4,0,0"
+                             Padding="0,0,25,0">
+                        <PasswordBox.Background>
+                            <ImageBrush ImageSource="/Images/password.png"
+                                        Stretch="Uniform"
+                                        AlignmentX="Right"/>
+                        </PasswordBox.Background>
+                    </PasswordBox>
+
+                    <TextBlock Text="Mot de passe oublié?"
+                               Foreground="DarkGray"
+                               FontSize="12"
+                               FontFamily="Calibri"
+                               FontWeight="Medium"
+                               Margin="0,5,0,0"
+                               Cursor="Hand"/>
+
+                    <Button x:Name="btnLogin"
+                            BorderThickness="0"
+                            Content="Connexion"
+                            FontWeight="DemiBold"
+                            FontSize="16"
+                            FontFamily="Calibri"
+                            Grid.Column="2"
+                            Click="btnLogin_Click"
+                            Margin="0,50,0,0"
+                            Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="Background" Value="#0049B3"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="WhiteSmoke"/>
+                                        <Setter Property="Foreground" Value="#0049B3"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
+                                        Height="40"
+                                        Width="150"
+                                        CornerRadius="20">
+                                    <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
+            </ScrollViewer>
+
+        </Grid>
+    </Border>
+</Window>
