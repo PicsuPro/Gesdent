@@ -13,6 +13,7 @@ namespace VsProject.Repositories
 {
     using BCrypt.Net;
     using System.Data.SqlTypes;
+    using System.Diagnostics;
     using System.Text;
 
     public class UserRepository : RepositoryBase, IUserRepository
@@ -22,6 +23,17 @@ namespace VsProject.Repositories
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
+                if (userModel == null)
+                {
+                    throw new ArgumentNullException("user");
+                }
+
+                // Check if the username already exists
+                if (GetByUsername(userModel.UserName) != null)
+                {
+                    throw new ArgumentNullException("user already exists");
+                }
+
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = "INSERT INTO [User] (username, hash, salt, email) " +
@@ -45,6 +57,7 @@ namespace VsProject.Repositories
         public bool AuthenticateUser(NetworkCredential credential)
         {
             bool validUser;
+            
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -64,7 +77,7 @@ namespace VsProject.Repositories
                     string hash = Encoding.UTF8.GetString((byte[])reader["hash"]);
                     string salt = Encoding.UTF8.GetString((byte[])reader["salt"]);
                     string hashedPassword = BCrypt.HashPassword(credential.Password, salt);
-                    validUser = BCrypt.Verify(hashedPassword, hash);
+                    validUser = string.Equals(hashedPassword, hash);
                 }
             }
 
@@ -111,7 +124,6 @@ namespace VsProject.Repositories
                             Id = (SqlGuid)(reader["id"]),
                             UserName = (string)reader["username"],
                             Hash = Encoding.UTF8.GetString((byte[])reader["hash"]),
-                            Salt = Encoding.UTF8.GetString((byte[])reader["salt"]),
                             Email = (string)(reader["Email"]),
                         };
                         return userModel;
@@ -172,7 +184,6 @@ namespace VsProject.Repositories
                             Id = (SqlGuid)reader["Id"],
                             UserName = (string)reader["Username"],
                             Hash = (string)reader["hash"],
-                            Salt = (string)reader["salt"],
                             Email = (string)reader["Email"]
                         };
                         

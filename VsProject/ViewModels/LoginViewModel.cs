@@ -75,6 +75,8 @@ namespace VsProject.ViewModels
 
         private void ExecuteLoginCommand(object obj)
         {
+
+
             var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username , Password));
             if(isValidUser)
             {
