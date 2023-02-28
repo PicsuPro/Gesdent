@@ -53,7 +53,11 @@ namespace VsProject.Views {
                 return;
             }
             _contentLoaded = true;
+<<<<<<< HEAD
             System.Uri resourceLocater = new System.Uri("/VsProject;V1.0.0.0;component/views/mainview.xaml", System.UriKind.Relative);
+=======
+            System.Uri resourceLocater = new System.Uri("/VsProject;component/views/mainview.xaml", System.UriKind.Relative);
+>>>>>>> Revert "Revert """
             
             #line 1 "..\..\..\..\Views\MainView.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

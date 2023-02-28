@@ -45,13 +45,13 @@
         "net7.0-windows7.0": {
           "targetAlias": "net7.0-windows",
           "dependencies": {
-            "Microsoft.Data.Sqlite.Core": {
+            "BCrypt.Net-Next": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[4.0.3, )"
             },
-            "Microsoft.EntityFrameworkCore.Sqlite": {
+            "System.Data.SqlClient": {
               "target": "Package",
-              "version": "[7.0.3, )"
+              "version": "[4.8.5, )"
             }
           },
           "imports": [

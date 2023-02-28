@@ -18,8 +18,9 @@ C:\Users\alg16\source\repos\Gesdent\VsProject\App.xaml
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 =======
 C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
-3-1581796297
+4-324950561
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 13-1714712885
 200-1739948151
@@ -30,6 +31,11 @@ CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Vie
 2161600615348
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 >>>>>>> Revert ""
+=======
+13-1714712885
+200-1739948151
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
+>>>>>>> Revert "Revert """
 
 False
 
