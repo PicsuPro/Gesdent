@@ -9,12 +9,21 @@ VsProject
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
+<<<<<<< HEAD
 C:\Users\alg16\source\repos\Gesdent\VsProject\App.xaml
 3-1581796297
 
 10-1121010410
 216-1956914167
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
+=======
+C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
+4-324950561
+
+13-1714712885
+200-1739948151
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
+>>>>>>> Working LoginView + Secure Password
 
 False
 

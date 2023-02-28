@@ -15,9 +15,9 @@ namespace VsProject.Models
         void Remove(UserModel userModel);
 
         UserModel GetById(int id);
-        UserModel GeyByUsername(string username);
+        UserModel GetByUsername(string username);
 
-        IEnumerable<UserModel> GetByAll();
+        IEnumerable<UserModel> GetAll();
         //... 
 
     }
