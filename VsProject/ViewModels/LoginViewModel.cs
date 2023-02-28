@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Security;
-using System.Security.Principal;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using VsProject.Models;
-using VsProject.Repositories;
 
 namespace VsProject.ViewModels
 {
@@ -20,8 +15,6 @@ namespace VsProject.ViewModels
         private SecureString _password;
         private string _errorMessage;
         private bool _isViewVisible = true;
-
-        private IUserRepository userRepository;
 
         public string Username
         {
@@ -65,7 +58,6 @@ namespace VsProject.ViewModels
 
         public LoginViewModel()
         {
-            userRepository = new UserRepository();
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             RecoverPasswordCommand = new ViewModelCommand(p => ExecuteRecoveryPassCommand("",""));
         }
@@ -75,16 +67,7 @@ namespace VsProject.ViewModels
 
         private void ExecuteLoginCommand(object obj)
         {
-            var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username , Password));
-            if(isValidUser)
-            {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-                IsViewVisible = false;
-            }
-            else
-            {
-                ErrorMessage = "* Invalid username or password";
-            }
+            throw new NotImplementedException();
         }
         private bool CanExecuteLoginCommand(object obj)
         {

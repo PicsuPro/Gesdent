@@ -18,12 +18,18 @@ C:\Users\alg16\source\repos\Gesdent\VsProject\App.xaml
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 =======
 C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
-4-324950561
+3-1581796297
 
+<<<<<<< HEAD
 13-1714712885
 200-1739948151
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
 >>>>>>> Working LoginView + Secure Password
+=======
+10-1121010410
+2161600615348
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
+>>>>>>> Revert ""
 
 False
 
