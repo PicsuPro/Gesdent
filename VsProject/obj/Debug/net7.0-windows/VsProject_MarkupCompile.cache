@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
-2376403462
+3-1581796297
 
-42104924793
-1981462702791
-MainWindow.xaml;View\LoginView.xaml;
+10-1121010410
+2161600615348
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 
 False
 
