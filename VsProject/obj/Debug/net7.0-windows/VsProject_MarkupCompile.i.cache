@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\alg16\Source\Repos\Gesdent\VsProject\obj\Debug\net7.0-windows\
+C:\Users\Picsu\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\
 VsProject
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
-C:\Users\alg16\Source\Repos\Gesdent\VsProject\App.xaml
-11407045341
+C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
+3-1581796297
 
-5585829901
-1981911467256
-MainWindow.xaml;
+12697989048
+2161600615348
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 
 False
 
