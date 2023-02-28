@@ -1140,23 +1140,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Picsu\\.nuget\\packages\\": {},
+    "C:\\Users\\alg16\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Picsu\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
+      "projectUniqueName": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
       "projectName": "VsProject",
-      "projectPath": "C:\\Users\\Picsu\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
-      "packagesPath": "C:\\Users\\Picsu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Picsu\\source\\repos\\Gesdent\\VsProject\\obj\\",
+      "projectPath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
+      "packagesPath": "C:\\Users\\alg16\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Picsu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\alg16\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1165,7 +1165,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
