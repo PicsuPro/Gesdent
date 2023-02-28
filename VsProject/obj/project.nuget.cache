@@ -2,10 +2,17 @@
   "version": 2,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "dgSpecHash": "QcqeVDfFu9O+FNc3O3KDjJQj1F1PJXPEUZ96LqcbxALXltsold8iDw2WdkYe77L67CE6uDIyhShHjQJ8xOsBng==",
 =======
   "dgSpecHash": "ehIg+M7+2TaP/59PkcMEn6k9DgptZ3wRDW59/RHiMZeKMYCoc0y+HT6HxHY/Pw9P0UmlwPQ1d+XkURHiiAiYCA==",
 >>>>>>> main
+=======
+  "dgSpecHash": "QcqeVDfFu9O+FNc3O3KDjJQj1F1PJXPEUZ96LqcbxALXltsold8iDw2WdkYe77L67CE6uDIyhShHjQJ8xOsBng==",
+=======
+  "dgSpecHash": "ehIg+M7+2TaP/59PkcMEn6k9DgptZ3wRDW59/RHiMZeKMYCoc0y+HT6HxHY/Pw9P0UmlwPQ1d+XkURHiiAiYCA==",
+>>>>>>> c7474a0 (Yacine.prog (#9))
+>>>>>>> abb14dc (Res)
   "success": true,
   "projectFilePath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
   "expectedPackageFiles": [
@@ -21,12 +28,15 @@
     "C:\\Users\\Picsu\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\Picsu\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
 =======
+<<<<<<< HEAD
 =======
   "dgSpecHash": "ehIg+M7+2TaP/59PkcMEn6k9DgptZ3wRDW59/RHiMZeKMYCoc0y+HT6HxHY/Pw9P0UmlwPQ1d+XkURHiiAiYCA==",
   "success": true,
   "projectFilePath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
   "expectedPackageFiles": [
 >>>>>>> 546f175 (new yacine)
+=======
+>>>>>>> abb14dc (Res)
     "C:\\Users\\alg16\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.3\\microsoft.data.sqlite.core.7.0.3.nupkg.sha512",
     "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.3\\microsoft.entityframeworkcore.7.0.3.nupkg.sha512",
     "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.3\\microsoft.entityframeworkcore.abstractions.7.0.3.nupkg.sha512",
@@ -52,9 +62,13 @@
     "C:\\Users\\alg16\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
     "C:\\Users\\alg16\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> main
 =======
 >>>>>>> 546f175 (new yacine)
+=======
+>>>>>>> c7474a0 (Yacine.prog (#9))
+>>>>>>> abb14dc (Res)
   ],
   "logs": [
     {
