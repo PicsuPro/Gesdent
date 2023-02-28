@@ -4,22 +4,32 @@
 winexe
 C#
 .cs
-C:\Users\alg16\Source\Repos\Gesdent\VsProject\obj\Debug\net7.0-windows\
+C:\Users\alg16\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\
 VsProject
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 <<<<<<< HEAD
+<<<<<<< HEAD
 C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
 4-324950561
 =======
 C:\Users\alg16\Source\Repos\Gesdent\VsProject\App.xaml
+=======
+C:\Users\alg16\source\repos\Gesdent\VsProject\App.xaml
+>>>>>>> 9677deb (pul)
 11407045341
 >>>>>>> e3c7b2e (..)
 
+<<<<<<< HEAD
 15104286573
 1981462702791
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
+=======
+5585829901
+1981462702791
+MainWindow.xaml;
+>>>>>>> 9677deb (pul)
 
 True
 
