@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <!-- HELLO WORLD -->
 
-        
+
+        <Label Content="Aoumara" FontSize="40"/>
     </Grid>
 </Window>
