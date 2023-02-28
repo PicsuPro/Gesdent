@@ -9,12 +9,39 @@ VsProject
 none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 C:\Users\alg16\source\repos\Gesdent\VsProject\App.xaml
 3-1581796297
 
 10-1121010410
 216-1956914167
+<<<<<<< HEAD
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
+=======
+C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
+4-324950561
+
+<<<<<<< HEAD
+<<<<<<< HEAD
+13-1714712885
+200-1739948151
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
+>>>>>>> Working LoginView + Secure Password
+=======
+10-1121010410
+2161600615348
+=======
+>>>>>>> main
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
+>>>>>>> Revert ""
+=======
+13-1714712885
+200-1739948151
+CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
+>>>>>>> Revert "Revert """
 
 False
 
