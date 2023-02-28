@@ -10,11 +10,15 @@ none
 false
 TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 C:\Users\alg16\source\repos\Gesdent\VsProject\App.xaml
 3-1581796297
 
 10-1121010410
 216-1956914167
+<<<<<<< HEAD
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 =======
 C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
@@ -29,6 +33,8 @@ CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Vie
 =======
 10-1121010410
 2161600615348
+=======
+>>>>>>> main
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;
 >>>>>>> Revert ""
 =======

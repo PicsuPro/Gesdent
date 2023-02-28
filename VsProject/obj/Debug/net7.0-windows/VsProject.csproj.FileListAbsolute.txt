@@ -28,6 +28,9 @@ C:\Users\Picsu\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\VsProject
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> main
 C:\Users\alg16\source\repos\Gesdent\VsProject\bin\Debug\net7.0-windows\VsProject.exe
 C:\Users\alg16\source\repos\Gesdent\VsProject\bin\Debug\net7.0-windows\VsProject.deps.json
 C:\Users\alg16\source\repos\Gesdent\VsProject\bin\Debug\net7.0-windows\VsProject.runtimeconfig.json
@@ -96,6 +99,7 @@ C:\Users\alg16\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\refint\Vs
 C:\Users\alg16\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\VsProject.pdb
 C:\Users\alg16\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\VsProject.genruntimeconfig.cache
 C:\Users\alg16\source\repos\Gesdent\VsProject\obj\Debug\net7.0-windows\ref\VsProject.dll
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> Revert "Revert """
@@ -114,3 +118,5 @@ C:\Users\Picsu\source\repos\Gesdent\VsProject\bin\Debug\net7.0-windows\BCrypt.Ne
 >>>>>>> Revert ""
 =======
 >>>>>>> Revert "Revert """
+=======
+>>>>>>> main
