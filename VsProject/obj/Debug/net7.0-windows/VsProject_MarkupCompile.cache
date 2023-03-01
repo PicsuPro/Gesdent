@@ -1,5 +1,5 @@
 ﻿VsProject
-1.0.0.0
+
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET7_0;NETCOREAPP
 C:\Users\Picsu\source\repos\Gesdent\VsProject\App.xaml
 4-324950561
 
-15104286573
+13-1714712885
 200-1739948151
 CustomControls\BindablePasswordBox.xaml;MainWindow.xaml;Views\LoginView.xaml;Views\MainView.xaml;
 
-True
+False
 

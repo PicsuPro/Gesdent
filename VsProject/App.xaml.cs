@@ -23,7 +23,7 @@ namespace VsProject
                 {
                     var mainView = new MainView();
                     mainView.Show();
-                    loginView.Close();
+                    loginView.Dispatcher.BeginInvoke(new Action(() => loginView.Close()));
                 }
             };
         }
