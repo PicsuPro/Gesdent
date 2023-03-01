@@ -1,22 +1,9 @@
 {
   "version": 2,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   "dgSpecHash": "QcqeVDfFu9O+FNc3O3KDjJQj1F1PJXPEUZ96LqcbxALXltsold8iDw2WdkYe77L67CE6uDIyhShHjQJ8xOsBng==",
-=======
-  "dgSpecHash": "ehIg+M7+2TaP/59PkcMEn6k9DgptZ3wRDW59/RHiMZeKMYCoc0y+HT6HxHY/Pw9P0UmlwPQ1d+XkURHiiAiYCA==",
->>>>>>> main
-=======
-  "dgSpecHash": "QcqeVDfFu9O+FNc3O3KDjJQj1F1PJXPEUZ96LqcbxALXltsold8iDw2WdkYe77L67CE6uDIyhShHjQJ8xOsBng==",
-=======
-  "dgSpecHash": "ehIg+M7+2TaP/59PkcMEn6k9DgptZ3wRDW59/RHiMZeKMYCoc0y+HT6HxHY/Pw9P0UmlwPQ1d+XkURHiiAiYCA==",
->>>>>>> c7474a0 (Yacine.prog (#9))
->>>>>>> abb14dc (Res)
   "success": true,
-  "projectFilePath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
+  "projectFilePath": "C:\\Users\\Picsu\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
   "expectedPackageFiles": [
-<<<<<<< HEAD
     "C:\\Users\\Picsu\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\Picsu\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Picsu\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
@@ -27,55 +14,6 @@
     "C:\\Users\\Picsu\\.nuget\\packages\\system.data.sqlclient\\4.8.5\\system.data.sqlclient.4.8.5.nupkg.sha512",
     "C:\\Users\\Picsu\\.nuget\\packages\\system.security.accesscontrol\\4.7.0\\system.security.accesscontrol.4.7.0.nupkg.sha512",
     "C:\\Users\\Picsu\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512"
-=======
-<<<<<<< HEAD
-=======
-  "dgSpecHash": "ehIg+M7+2TaP/59PkcMEn6k9DgptZ3wRDW59/RHiMZeKMYCoc0y+HT6HxHY/Pw9P0UmlwPQ1d+XkURHiiAiYCA==",
-  "success": true,
-  "projectFilePath": "C:\\Users\\alg16\\source\\repos\\Gesdent\\VsProject\\VsProject.csproj",
-  "expectedPackageFiles": [
->>>>>>> 546f175 (new yacine)
-=======
->>>>>>> abb14dc (Res)
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.data.sqlite.core\\7.0.3\\microsoft.data.sqlite.core.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.3\\microsoft.entityframeworkcore.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.3\\microsoft.entityframeworkcore.abstractions.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.3\\microsoft.entityframeworkcore.analyzers.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\7.0.3\\microsoft.entityframeworkcore.relational.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite\\7.0.3\\microsoft.entityframeworkcore.sqlite.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.entityframeworkcore.sqlite.core\\7.0.3\\microsoft.entityframeworkcore.sqlite.core.7.0.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\7.0.0\\microsoft.extensions.caching.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.caching.memory\\7.0.0\\microsoft.extensions.caching.memory.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\7.0.0\\microsoft.extensions.configuration.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\7.0.0\\microsoft.extensions.dependencyinjection.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\7.0.0\\microsoft.extensions.dependencyinjection.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.dependencymodel\\7.0.0\\microsoft.extensions.dependencymodel.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.logging\\7.0.0\\microsoft.extensions.logging.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.4\\sqlitepclraw.bundle_e_sqlite3.2.1.4.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\sqlitepclraw.core\\2.1.4\\sqlitepclraw.core.2.1.4.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.1.4\\sqlitepclraw.lib.e_sqlite3.2.1.4.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.1.4\\sqlitepclraw.provider.e_sqlite3.2.1.4.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
-    "C:\\Users\\alg16\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> main
-=======
->>>>>>> 546f175 (new yacine)
-=======
->>>>>>> c7474a0 (Yacine.prog (#9))
->>>>>>> abb14dc (Res)
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\Users\\Picsu\\source\\repos\\Gesdent\\VsProject\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }
