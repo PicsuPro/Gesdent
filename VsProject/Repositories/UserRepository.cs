@@ -34,7 +34,6 @@ namespace VsProject.Repositories
                     throw new ArgumentNullException("user already exists");
                 }
 
-
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = "INSERT INTO [User] (username, hash, salt, email) " +
