@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VsProject.Views"
         mc:Ignorable="d"
-        Title="MainView" Height="720" Width="1280">
+        Title="MainView" Height="720" Width="1280"
+        WindowState="Maximized">
     <Grid>
         
     </Grid>
