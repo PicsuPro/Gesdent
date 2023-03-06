@@ -20,8 +20,30 @@
 
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+
+        <Style x:Key="WindowButtonStyle" TargetType="Button">
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="FontFamily" Value="Calibri"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
-    
+
+
     <Window.Visibility>
                 <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
     </Window.Visibility>
@@ -56,69 +78,24 @@
                     <ColumnDefinition Width="25"/>
                     <ColumnDefinition Width="5"/>
                 </Grid.ColumnDefinitions>
-                
+
 
                 <Button x:Name="btnMinimize"
-                        BorderThickness="0"
-                        Content="-"
-                        FontSize="25"
-                        FontFamily="Calibri"
-                        Grid.Column="2"
-                        Click="btnMinimize_Click" 
-                        Margin="0,0,0,5">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
+                Grid.Column="2"
+                Content="-"
+                FontSize="25"
+                Margin="0,-1,0,5"
+                Click="btnMinimize_Click"
+                Style="{StaticResource WindowButtonStyle}"/>
 
                 <Button x:Name="btnClose"
-                        BorderThickness="0"
-                        Content="x"
-                        FontSize="16"
-                        FontFamily="Calibri"
-                        Grid.Column="3"
-                        Click="btnClose_Click" 
-                        Margin="0,4,0,5">
-                    <Button.Style>
-                        <Style TargetType="Button">
-                            <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="Foreground" Value="Black"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Setter Property="Foreground" Value="Gray"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
+                Grid.Column="3"
+                Content="x"
+                FontSize="16"
+                Margin="0,4,0,5"
+                Click="btnClose_Click"
+                Style="{StaticResource WindowButtonStyle}"/>
 
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}">
-                                <ContentPresenter VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
             </Grid>
             
             <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"

@@ -130,7 +130,9 @@ namespace VsProject.Repositories
                     }
                 }
             }
+#pragma warning disable CS8603 // Possible null reference return.
             return null;
+#pragma warning restore CS8603 // Possible null reference return.
         }
 
 
@@ -165,7 +167,9 @@ namespace VsProject.Repositories
 
         public UserModel GetById(int id)
         {
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             UserModel user = null;
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -189,7 +193,9 @@ namespace VsProject.Repositories
                         
                     }
                 }
+#pragma warning disable CS8603 // Possible null reference return.
                 return user;
+#pragma warning restore CS8603 // Possible null reference return.
             }
 
         }

@@ -8,6 +8,7 @@
         Title="MainView" Height="720" Width="1280"
         WindowState="Maximized">
     <Grid>
-        
+        <local:UsersSettingsView/>
+
     </Grid>
 </Window>

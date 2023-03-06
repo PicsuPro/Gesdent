@@ -37,12 +37,16 @@ namespace VsProject.ViewModels
         //Methods
         public bool CanExecute(object? parameter)
         {
+#pragma warning disable CS8604 // Possible null reference argument.
             return _canExecuteAction==null || _canExecuteAction(parameter);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
 
         public void Execute(object? parameter)
         {
+#pragma warning disable CS8604 // Possible null reference argument.
             _executeAction(parameter);
+#pragma warning restore CS8604 // Possible null reference argument.
         }
     }
 }

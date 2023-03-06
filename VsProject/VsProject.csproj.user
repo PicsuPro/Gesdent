@@ -11,6 +11,9 @@
     <Compile Update="Views\MainView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\UsersSettingsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="CustomControls\BindablePasswordBox.xaml">
@@ -20,6 +23,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UsersSettingsView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
