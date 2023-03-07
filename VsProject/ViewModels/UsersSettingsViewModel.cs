@@ -47,13 +47,9 @@ namespace VsProject.ViewModels
         private void ExecuteAddUserCommand(object obj)
         {
             var newUser = new UserModel();
-            //var userEditViewModel = new UserEditViewModel(newUser);
+           // var userEditView = new UserEditView(newUser);
 
-            //if (userEditViewModel.ShowDialog() == true)
-            //{
-            //  _userRepository.Add(newUser);
-            //  Users.Add(newUser);
-            //}
+       
         }
 
         private void ExecuteEditUserCommand(UserModel user)
