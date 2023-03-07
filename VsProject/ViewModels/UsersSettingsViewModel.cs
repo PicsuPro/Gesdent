@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -15,18 +17,7 @@ namespace VsProject.ViewModels
     {
         private readonly IUserRepository _userRepository;
 
-        private UserModel _selectedUser;
         private ObservableCollection<UserModel> _users;
-
-        public UserModel SelectedUser
-        {
-            get => _selectedUser;
-            set
-            {
-                _selectedUser = value;
-                OnPropertyChanged(nameof(SelectedUser));
-            }
-        }
 
         public ObservableCollection<UserModel> Users
         {
@@ -42,19 +33,15 @@ namespace VsProject.ViewModels
         public ICommand EditUserCommand { get; }
         public ICommand RemoveUserCommand { get; }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public UsersSettingsViewModel()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         {
             _userRepository = new UserRepository();
 
             Users = new ObservableCollection<UserModel>(_userRepository.GetAll());
 
             AddUserCommand = new ViewModelCommand(ExecuteAddUserCommand);
-            EditUserCommand = new ViewModelCommand(ExecuteEditUserCommand);
-            RemoveUserCommand = new ViewModelCommand(ExecuteRemoveUserCommand, CanExecuteRemoveUserCommand);
+            EditUserCommand = new ViewModelCommand((user) => ExecuteEditUserCommand((UserModel)user));
+            RemoveUserCommand = new ViewModelCommand((user) => ExecuteRemoveUserCommand((UserModel)user) , CanExecuteRemoveUserCommand);
         }
 
         private void ExecuteAddUserCommand(object obj)
@@ -69,8 +56,10 @@ namespace VsProject.ViewModels
             //}
         }
 
-        private void ExecuteEditUserCommand(object obj)
+        private void ExecuteEditUserCommand(UserModel user)
         {
+            Debug.WriteLine(user.UserName);
+            
             //var userEditViewModel = new UserEditViewModel(_selectedUser);
 
             //if (userEditViewModel.ShowDialog() == true)
@@ -79,15 +68,16 @@ namespace VsProject.ViewModels
             //}
         }   
 
-        private void ExecuteRemoveUserCommand(object obj)
+        private void ExecuteRemoveUserCommand(UserModel user)
         {
-            _userRepository.Remove(_selectedUser);
-            Users.Remove(_selectedUser);
+            Trace.WriteLine("REMOVE");
+            //_userRepository.Remove(_selectedUser);
+            //Users.Remove(_selectedUser);
         }
 
         private bool CanExecuteRemoveUserCommand(object obj)
         {
-            return _selectedUser != null;
+            return true;
         }
     }
 }

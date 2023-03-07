@@ -121,7 +121,7 @@ namespace VsProject.Repositories
                     {
                         UserModel userModel = new UserModel
                         {
-                            Id = (SqlGuid)(reader["id"]),
+                            Id = (Guid)(reader["id"]),
                             UserName = (string)reader["username"],
                             Hash = Encoding.UTF8.GetString((byte[])reader["hash"]),
                             Email = (string)(reader["Email"]),
@@ -130,9 +130,7 @@ namespace VsProject.Repositories
                     }
                 }
             }
-#pragma warning disable CS8603 // Possible null reference return.
             return null;
-#pragma warning restore CS8603 // Possible null reference return.
         }
 
 
@@ -153,7 +151,7 @@ namespace VsProject.Repositories
                     {
                         UserModel user = new UserModel
                         {
-                            Id = (SqlGuid)reader["Id"],
+                            Id = (Guid)reader["Id"],
                             UserName = (string)reader["username"],
                             Email = (string)reader["email"]
                         };
@@ -167,9 +165,7 @@ namespace VsProject.Repositories
 
         public UserModel GetById(int id)
         {
-#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
             UserModel user = null;
-#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -185,7 +181,7 @@ namespace VsProject.Repositories
                     {
                         user = new UserModel
                         {
-                            Id = (SqlGuid)reader["Id"],
+                            Id = (Guid)reader["Id"],
                             UserName = (string)reader["Username"],
                             Hash = (string)reader["hash"],
                             Email = (string)reader["Email"]
@@ -193,9 +189,7 @@ namespace VsProject.Repositories
                         
                     }
                 }
-#pragma warning disable CS8603 // Possible null reference return.
                 return user;
-#pragma warning restore CS8603 // Possible null reference return.
             }
 
         }
