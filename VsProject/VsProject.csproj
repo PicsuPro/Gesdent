@@ -9,9 +9,12 @@
 
   <ItemGroup>
     <None Remove="Images\edit.png" />
+    <None Remove="Images\email.png" />
+    <None Remove="Images\hidePassword.png" />
     <None Remove="Images\logo.png" />
     <None Remove="Images\password.png" />
     <None Remove="Images\remove.png" />
+    <None Remove="Images\showPassword.png" />
     <None Remove="Images\user.png" />
   </ItemGroup>
 
@@ -22,9 +25,12 @@
 
   <ItemGroup>
     <Resource Include="Images\edit.png" />
+    <Resource Include="Images\email.png" />
+    <Resource Include="Images\hidePassword.png" />
     <Resource Include="Images\logo.png" />
     <Resource Include="Images\password.png" />
     <Resource Include="Images\remove.png" />
+    <Resource Include="Images\showPassword.png" />
     <Resource Include="Images\user.png" />
   </ItemGroup>
 
