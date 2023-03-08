@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:VsProject.Views"
              xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
              xmlns:customcontrols="clr-namespace:VsProject.CustomControls"
+             xmlns:styles="clr-namespace:VsProject.Resources.Styles"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600"
              Background="#F4F5F7">
@@ -47,13 +48,13 @@
                                     <Button Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource DataGridButtonsStyle}">
-                                        <Image Source="/Images/edit.png" Width="16" Height="16"/>
+                                        <Image Source="/Resources/Images/edit.png" Width="16" Height="16"/>
                                     </Button>
                                     <Button Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource DataGridButtonsStyle}"
                                         Margin="5,0,1,0">
-                                        <Image Source="/Images/remove.png" Width="16" Height="16" />
+                                        <Image Source="/Resources/Images/remove.png" Width="16" Height="16" />
                                     </Button>
                                 </StackPanel>
                             </Grid>

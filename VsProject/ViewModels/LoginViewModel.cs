@@ -16,14 +16,14 @@ namespace VsProject.ViewModels
     public class LoginViewModel : ViewModelBase
     {
         //Fields
-        private string _username;
-        private string _password;
-        private string _errorMessage;
+        private string? _username;
+        private string? _password;
+        private string? _errorMessage;
         private bool _isViewVisible = true;
 
         private IUserRepository userRepository;
 
-        public string Username
+        public string? Username
         {
             get => _username; set
             {
@@ -31,7 +31,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Username));
             }
         }
-        public string Password
+        public string? Password
         {
             get => _password; set
             {
@@ -39,7 +39,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Password));
             }
         }
-        public string ErrorMessage
+        public string? ErrorMessage
         {
             get => _errorMessage; set
             {
@@ -59,7 +59,7 @@ namespace VsProject.ViewModels
         //-> Commands
         public ICommand LoginCommand { get; }
         public ICommand RecoverPasswordCommand { get; }
-        public ICommand RememberPasswordCommand { get; }
+        public ICommand? RememberPasswordCommand { get; }
 
         public LoginViewModel()
         {

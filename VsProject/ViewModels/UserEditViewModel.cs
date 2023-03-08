@@ -10,16 +10,30 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
 using VsProject.Repositories;
+using System.Reflection.Metadata;
+using System.Windows;
+using System.Diagnostics;
 
 namespace VsProject.ViewModels
 {
     public class UserEditViewModel : ViewModelBase
     {
         //Fields
+        private UserModel _user;
         private string _username;
         private string _password;
         private string _email;
         private string _errorMessage;
+
+        public UserModel User
+        {
+            get => _user;
+            set
+            {
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
+        }
 
         public string Username
         {
@@ -54,44 +68,39 @@ namespace VsProject.ViewModels
             }
         }
 
+
+        public event EventHandler EditFinished;
+
         //-> Commands
-        public ICommand LoginCommand { get; }
-        public ICommand RecoverPasswordCommand { get; }
-        public ICommand ShowPasswordCommand { get; }
-        public ICommand RememberPasswordCommand { get; }
+        public ICommand SaveEditCommand { get; }
+       
 
         public UserEditViewModel()
-
         {
-            LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
-            RecoverPasswordCommand = new ViewModelCommand(p => ExecuteRecoveryPassCommand("", ""));
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEditCommand, CanExecuteSaveEditCommand);
+        }
+        public UserEditViewModel(UserModel user)
+        {
+            User = user;
+            Username = user.UserName;
+            Email = user.Email;
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEditCommand, CanExecuteSaveEditCommand);
         }
 
 
 
-        private void ExecuteLoginCommand(object obj)
+        private void ExecuteSaveEditCommand(object obj)
         {
-
-            //var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
-            //if (isValidUser)
-           // {
-           //     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-           //     IsViewVisible = false;
-          //  }
-          //  else
-          //  {
-                ErrorMessage = "* Invalid username or password";
-          //  }
+            User.Hash = Password;
+            User.UserName = Username;
+            User.Email = Email;
+            EditFinished?.Invoke(this, EventArgs.Empty);
         }
-        private bool CanExecuteLoginCommand(object obj)
+        private bool CanExecuteSaveEditCommand(object obj)
         {
             return !(string.IsNullOrWhiteSpace(Username) || Username.Length < 3 || Password == null || Password.Length < 3);
         }
-        private void ExecuteRecoveryPassCommand(string username, string email)
-        {
-            throw new NotImplementedException();
-        }
-
+    
     }
 }
 

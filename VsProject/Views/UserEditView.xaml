@@ -7,6 +7,8 @@
                 xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
         xmlns:customcontrols="clr-namespace:VsProject.CustomControls"
+             xmlns:styles="clr-namespace:VsProject.Resources.Styles"
+		
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="500"
         WindowStyle="None"
@@ -30,6 +32,8 @@
         </WindowChrome>
     </WindowChrome.WindowChrome>
 
+
+        
     <Border CornerRadius="12"
             BorderThickness="2"
             Background="White">
@@ -79,17 +83,17 @@
                 </ScrollViewer.Resources>
                 <StackPanel Width="250"
                             Orientation="Vertical"
-                            Margin="0,15,0,0">
+                            Margin="0,20,0,0">
 
                     
 
-                    <TextBlock Text="Modifier Utilisateur"
+                    <TextBlock Text="Modifier"
                                 Foreground="Black"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
-                                Margin="0,5,0,35"/>
+                                Margin="0,30,0,45"/>
 
                     <TextBlock Text="Utilisateur"
                                 Foreground="#1B1B1B"
@@ -99,6 +103,7 @@
                                 Margin="0,20,0,0"/>
 
                     <TextBox x:Name="txtUser"
+                             Text="{Binding Username ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 Foreground="Black"
@@ -110,7 +115,7 @@
                                 Margin="0,4,0,0"
                                 Padding="0,0,25,0">
                         <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user.png"
+                            <ImageBrush ImageSource="/Resources/Images/user.png"
                                         Stretch="Uniform"
                                         AlignmentX="Right"/>
                         </TextBox.Background>
@@ -140,6 +145,7 @@
                                 Margin="0,20,0,0"/>
 
                     <TextBox x:Name="txtEmail"
+                             Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 Foreground="Black"
@@ -151,7 +157,7 @@
                                 Margin="0,4,0,0"
                                 Padding="0,0,25,0">
                         <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/email.png"
+                            <ImageBrush ImageSource="/Resources/Images/email.png"
                                         Stretch="Uniform"
                                         AlignmentX="Right"/>
                         </TextBox.Background>
@@ -159,6 +165,7 @@
 
                     <Button x:Name="btnSave"
                             Content="Enregistrer"
+                            Command="{Binding SaveEditCommand}"
                             FontWeight="DemiBold"
                             FontSize="16"
                             Grid.Column="2"

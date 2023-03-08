@@ -29,28 +29,30 @@ namespace VsProject.Repositories
                 }
 
                 // Check if the username already exists
-                if (GetByUsername(userModel.UserName) != null)
+                if (GetByUsername(userModel.UserName) == null)
+                {
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "INSERT INTO [User] (username, hash, salt, email) " +
+                                          "VALUES (@username, @hash, @salt, @email)";
+
+                    string salt = BCrypt.GenerateSalt();
+                    string hash = BCrypt.HashPassword(userModel.Hash, salt);
+
+                    byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+                    byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
+
+                    command.Parameters.AddWithValue("@username", userModel.UserName);
+                    command.Parameters.AddWithValue("@hash", hashBytes);
+                    command.Parameters.AddWithValue("@salt", saltBytes);
+                    command.Parameters.AddWithValue("@email", userModel.Email);
+
+                    command.ExecuteNonQuery();
+                }
+                else
                 {
                     throw new ArgumentNullException("user already exists");
                 }
-
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "INSERT INTO [User] (username, hash, salt, email) " +
-                                      "VALUES (@username, @hash, @salt, @email)";
-
-                string salt = BCrypt.GenerateSalt();
-                string hash = BCrypt.HashPassword(userModel.Hash, salt);
-
-                byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
-                byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
-
-                command.Parameters.AddWithValue("@username", userModel.UserName);
-                command.Parameters.AddWithValue("@hash", hashBytes);
-                command.Parameters.AddWithValue("@salt", saltBytes);
-                command.Parameters.AddWithValue("@email", userModel.Email);
-
-                command.ExecuteNonQuery();
             }
         }
 

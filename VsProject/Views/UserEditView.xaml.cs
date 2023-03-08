@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using VsProject.ViewModels;
 
 namespace VsProject.Views
 {
@@ -22,7 +23,9 @@ namespace VsProject.Views
         public UserEditView()
         {
             InitializeComponent();
+            
         }
+
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -37,7 +40,7 @@ namespace VsProject.Views
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            Application.Current.Shutdown();
+            DialogResult = false;
 
 
         }

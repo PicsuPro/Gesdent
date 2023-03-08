@@ -7,6 +7,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
         xmlns:customcontrols="clr-namespace:VsProject.CustomControls"
+        xmlns:styles="clr-namespace:VsProject.Resources.Styles"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="500"
         WindowStyle="None"
@@ -83,7 +84,7 @@
                             Orientation="Vertical"
                             Margin="0,35,0,0">
 
-                    <Image Source="/Images/logo.png"
+                    <Image Source="/Resources/Images/logo.png"
                            Height="100" Width="200"
                            />
 
@@ -121,7 +122,7 @@
                              Margin="0,4,0,0"
                              Padding="0,0,25,0">
                         <TextBox.Background>
-                            <ImageBrush ImageSource="/Images/user.png"
+                            <ImageBrush ImageSource="/Resources/Images/user.png"
                                         Stretch="Uniform"
                                         AlignmentX="Right"/>
                         </TextBox.Background>
