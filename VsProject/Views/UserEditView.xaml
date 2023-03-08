@@ -15,9 +15,13 @@
         Background="Transparent"
         AllowsTransparency="True">
 
- 
 
 
+    <Window.DataContext>
+        <viewModel:UserEditViewModel/>
+    </Window.DataContext>
+
+    
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="1"  
         CornerRadius ="0"
@@ -79,20 +83,20 @@
 
                     
 
-                    <TextBlock Text="EditUser"
+                    <TextBlock Text="Modifier Utilisateur"
                                 Foreground="Black"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
-                                Margin="0,5,0,0"/>
+                                Margin="0,5,0,35"/>
 
                     <TextBlock Text="Utilisateur"
                                 Foreground="#1B1B1B"
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 FontWeight="Medium"
-                                Margin="0,25,0,0"/>
+                                Margin="0,20,0,0"/>
 
                     <TextBox x:Name="txtUser"
                                 FontSize="13"
@@ -118,53 +122,14 @@
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 FontWeight="Medium"
-                                Margin="0,25,0,0"/>
+                                Margin="0,20,0,0"/>
 
-                    <Grid >
-                        <PasswordBox Name="passwordBox"
-                                    FontSize="13"
-                                    FontFamily="Calibri"
-                                    Foreground="Black"
-                                    CaretBrush="LightGray"
-                                    BorderBrush="DarkGray"
-                                    BorderThickness="0,0,0,1"
-                                    Height="28"
-                                    VerticalContentAlignment="Center"
-                                    Margin="0,4,0,0"/> 
-                        <TextBox Name="passwordTxtBox" Visibility="Collapsed" 
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                Foreground="Black"
-                                CaretBrush="LightGray"
-                                BorderBrush="DarkGray"
-                                BorderThickness="0,0,0,1"
-                                Height="28"
-                                VerticalContentAlignment="Center"
-                                Margin="0,4,0,0"/>
-                        <CheckBox Margin="10" Name="showPassword"  Unchecked="ShowPassword_Unchecked"  Checked="ShowPassword_Checked" VerticalAlignment="Center" HorizontalAlignment="Right" 
-                                  Cursor="Hand">
-                            <ToggleButton.Style>
-                                <Style TargetType="{x:Type ToggleButton}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                                                    <Image x:Name="CheckedImage" Source="/Images/showPassword.png" Width="26" Height="26" Visibility="Collapsed" Margin="0,0,-9.5,0"/>
-                                                    <Image x:Name="UncheckedImage" Source="/Images/hidePassword.png" Width="26" Height="26" Visibility="Visible" Margin="0,0,-9.5,0"/>
-                                                </StackPanel>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
-                                                        <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ToggleButton.Style>
-                        </CheckBox>
-                    </Grid>
+
+                        <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                            x:Name="passwordBox"
+                                                            Height="28"
+                                                            Margin="0,4,0,0"/>
+               
 
 
                     <TextBlock Text="Email"
@@ -172,7 +137,7 @@
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 FontWeight="Medium"
-                                Margin="0,25,0,0"/>
+                                Margin="0,20,0,0"/>
 
                     <TextBox x:Name="txtEmail"
                                 FontSize="13"
@@ -192,12 +157,12 @@
                         </TextBox.Background>
                     </TextBox>
 
-                    <Button x:Name="btnLogin"
-                            Content="Connexion"
+                    <Button x:Name="btnSave"
+                            Content="Enregistrer"
                             FontWeight="DemiBold"
                             FontSize="16"
                             Grid.Column="2"
-                            Margin="0,40,0,0"
+                            Margin="0,90,0,0"
                             Cursor="Hand"
                             IsDefault="True"
                             BorderThickness="0"

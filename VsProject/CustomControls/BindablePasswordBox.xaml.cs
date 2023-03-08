@@ -21,12 +21,14 @@ namespace VsProject.CustomControls
     /// </summary>
     public partial class BindablePasswordBox : UserControl
     {
-        public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register("Password", typeof(SecureString), typeof(BindablePasswordBox));
 
-        public SecureString Password
+
+        public static readonly DependencyProperty PasswordProperty =
+            DependencyProperty.Register("Password", typeof(string), typeof(BindablePasswordBox));
+
+        public string Password
         { 
-            get { return (SecureString)GetValue(PasswordProperty); }
+            get { return (string)GetValue(PasswordProperty); }
             set { SetValue(PasswordProperty, value); }
 
         }
@@ -39,7 +41,23 @@ namespace VsProject.CustomControls
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            Password = txtPassword.SecurePassword;
+            Password = txtPassword.Password;
         }
+
+        private void ShowPassword_Checked(object sender, RoutedEventArgs e)
+        {
+            txtBoxPassword.Text = txtPassword.Password;
+            txtPassword.MaxWidth = 0;
+            txtBoxPassword.MaxWidth = double.PositiveInfinity;
+        }
+
+        private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
+        {
+            txtPassword.Password = txtBoxPassword.Text;
+            txtBoxPassword.MaxWidth = 0;
+            txtPassword.MaxWidth = double.PositiveInfinity;
+        }
+
+
     }
 }

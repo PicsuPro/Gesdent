@@ -135,17 +135,24 @@
                                FontWeight="Medium"
                                Margin="0,25,0,0"/>
 
-                    <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        Height="28"
-                                                        Margin="0,5,0,0">
-                    </customcontrols:BindablePasswordBox>
+                    <Grid>
+                        
+                        <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                         x:Name="passwordBox"
+                                         Height="28"
+                                         Margin="0,4,0,0"
+                                        />
+                      
+                    </Grid>
+
+
 
                     <TextBlock Text="Mot de passe oublié?"
                                Foreground="DarkGray"
                                FontSize="12"
                                FontFamily="Calibri"
                                FontWeight="Medium"
-                               Margin="0,5,0,0"
+                               Margin="0,4,0,0"
                                Cursor="Hand"/>
 
                     <TextBlock Text="{Binding ErrorMessage}"

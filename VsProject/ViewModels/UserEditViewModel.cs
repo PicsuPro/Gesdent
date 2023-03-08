@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Security;
 using System.Security.Principal;
+using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,15 +13,13 @@ using VsProject.Repositories;
 
 namespace VsProject.ViewModels
 {
-    public class LoginViewModel : ViewModelBase
+    public class UserEditViewModel : ViewModelBase
     {
         //Fields
         private string _username;
         private string _password;
+        private string _email;
         private string _errorMessage;
-        private bool _isViewVisible = true;
-
-        private IUserRepository userRepository;
 
         public string Username
         {
@@ -47,39 +45,43 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public bool IsViewVisible
+        public string Email
         {
-            get => _isViewVisible; set
+            get => _email; set
             {
-                _isViewVisible = value;
-                OnPropertyChanged(nameof(IsViewVisible));
+                _email = value;
+                OnPropertyChanged(nameof(Email));
             }
         }
 
         //-> Commands
         public ICommand LoginCommand { get; }
         public ICommand RecoverPasswordCommand { get; }
+        public ICommand ShowPasswordCommand { get; }
         public ICommand RememberPasswordCommand { get; }
 
-        public LoginViewModel()
+        public UserEditViewModel()
+
         {
-            userRepository = new UserRepository();
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
             RecoverPasswordCommand = new ViewModelCommand(p => ExecuteRecoveryPassCommand("", ""));
         }
 
+
+
         private void ExecuteLoginCommand(object obj)
         {
-            var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
-            if (isValidUser)
-            {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-                IsViewVisible = false;
-            }
-            else
-            {
+
+            //var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
+            //if (isValidUser)
+           // {
+           //     Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
+           //     IsViewVisible = false;
+          //  }
+          //  else
+          //  {
                 ErrorMessage = "* Invalid username or password";
-            }
+          //  }
         }
         private bool CanExecuteLoginCommand(object obj)
         {
@@ -92,3 +94,5 @@ namespace VsProject.ViewModels
 
     }
 }
+
+
