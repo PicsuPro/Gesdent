@@ -12,22 +12,23 @@ namespace VsProject.Services
     {
         static DialogService()
         {
-           // ViewMappings.LoadMappingsFromFile("ViewMappings.xml");
         }
+        public static void Void() { }
 
         public static bool? Show<TViewModel>(TViewModel viewModel)
             where TViewModel : ViewModelBase
         {
-            var viewType = 0;//= ViewMappings.GetMapping(viewModel.GetType());
+            var viewType = VMVMappings.GetViewType(viewModel.GetType());
             if (viewType == null)
             {
                 throw new ArgumentException($"No view mapping defined for view model type '{viewModel.GetType().FullName}'");
             }
 
-            var view = new Window();//(Window)Activator.CreateInstance(viewType);
+            var view = (Window)Activator.CreateInstance(viewType);
             view.DataContext = viewModel;
-
-            return view.ShowDialog();
+            bool? result = view.ShowDialog();
+            view.Close();
+            return result;
         }
     }
 

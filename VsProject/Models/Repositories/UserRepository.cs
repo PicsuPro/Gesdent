@@ -93,14 +93,16 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE [User] SET username=@username, hash=@hash, salt=@halt, email=@email WHERE id=@id";
+                command.CommandText = "UPDATE [User] SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
 
                 string salt = BCrypt.GenerateSalt();
                 string hash = BCrypt.HashPassword(userModel.Hash, salt);
+                byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+                byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
 
                 command.Parameters.AddWithValue("@username", userModel.UserName);
-                command.Parameters.AddWithValue("@hash", hash);
-                command.Parameters.AddWithValue("@salt", salt);
+                command.Parameters.AddWithValue("@hash", hashBytes);
+                command.Parameters.AddWithValue("@salt", saltBytes);
                 command.Parameters.AddWithValue("@email", userModel.Email);
                 command.Parameters.AddWithValue("@id", userModel.Id);
 
@@ -185,7 +187,7 @@ namespace VsProject.Models.Repositories
                         {
                             Id = (Guid)reader["Id"],
                             UserName = (string)reader["Username"],
-                            Hash = (string)reader["hash"],
+                            Hash = Encoding.UTF8.GetString((byte[])reader["hash"]),
                             Email = (string)reader["Email"]
                         };
                         

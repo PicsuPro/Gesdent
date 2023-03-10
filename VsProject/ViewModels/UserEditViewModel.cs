@@ -32,25 +32,46 @@ namespace VsProject.ViewModels
             {
                 _user = value;
                 OnPropertyChanged(nameof(User));
+                OnPropertyChanged(nameof(CanSaveEdit));
+            }
+        }
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                _username = value;
+                User.UserName = value;
+                OnPropertyChanged(nameof(Username));
+                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
 
-        public string Username
-        {
-            get => _username; set
-            {
-                _username = value;
-                OnPropertyChanged(nameof(Username));
-            }
-        }
         public string Password
         {
-            get => _password; set
+            get => _password;
+            set
             {
                 _password = value;
+                User.Hash = value;
                 OnPropertyChanged(nameof(Password));
+                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
+
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                _email = value;
+                User.Email = value;
+                OnPropertyChanged(nameof(Email));
+                OnPropertyChanged(nameof(CanSaveEdit));
+            }
+        }
+
+
         public string ErrorMessage
         {
             get => _errorMessage; set
@@ -59,48 +80,23 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public string Email
-        {
-            get => _email; set
-            {
-                _email = value;
-                OnPropertyChanged(nameof(Email));
-            }
-        }
 
-
-        public event EventHandler EditFinished;
+        public bool CanSaveEdit => !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || User.Hash == null || User.Hash.Length < 3);
+        
 
         //-> Commands
-        public ICommand SaveEditCommand { get; }
        
 
         public UserEditViewModel()
         {
-            SaveEditCommand = new ViewModelCommand(ExecuteSaveEditCommand, CanExecuteSaveEditCommand);
+            User = new UserModel();
         }
         public UserEditViewModel(UserModel user)
         {
             User = user;
-            Username = user.UserName;
-            Email = user.Email;
-            SaveEditCommand = new ViewModelCommand(ExecuteSaveEditCommand, CanExecuteSaveEditCommand);
+            Username = User.UserName;
+            Email = User.Email;
         }
-
-
-
-        private void ExecuteSaveEditCommand(object obj)
-        {
-            User.Hash = Password;
-            User.UserName = Username;
-            User.Email = Email;
-            EditFinished?.Invoke(this, EventArgs.Empty);
-        }
-        private bool CanExecuteSaveEditCommand(object obj)
-        {
-            return !(string.IsNullOrWhiteSpace(Username) || Username.Length < 3 || Password == null || Password.Length < 3);
-        }
-    
     }
 }
 

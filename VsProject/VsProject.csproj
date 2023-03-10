@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Data\ViewModelViewMappings.xml" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\hidePassword.png" />
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\Data\ViewModelViewMappings.xml" />
     <Resource Include="Resources\Images\edit.png" />
     <Resource Include="Resources\Images\email.png" />
     <Resource Include="Resources\Images\hidePassword.png" />

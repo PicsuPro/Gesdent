@@ -41,10 +41,11 @@ namespace VsProject.Views
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
-
-
         }
 
-      
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 }

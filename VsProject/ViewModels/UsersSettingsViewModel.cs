@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
 using VsProject.Models.Repositories;
+using VsProject.Services;
 using VsProject.Views;
 
 namespace VsProject.ViewModels
@@ -56,8 +57,8 @@ namespace VsProject.ViewModels
         private void ExecuteEditUserCommand(UserModel user)
         {
             UserEditViewModel userEditViewModel = new UserEditViewModel(user);
-            UserEditView userEditView = new UserEditView { DataContext = userEditViewModel };
-            if (userEditView.ShowDialog() == true)
+            
+            if (DialogService.Show(userEditViewModel) == true)
             {
                 _userRepository.Edit(userEditViewModel.User);
             }

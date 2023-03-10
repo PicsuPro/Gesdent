@@ -9,7 +9,7 @@
         xmlns:controls="clr-namespace:VsProject.Controls"
 		
         mc:Ignorable="d"
-        Title="LoginView" Height="550" Width="500"
+        Title="UserEditView" Height="550" Width="500"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
@@ -164,7 +164,7 @@
 
                     <Button x:Name="btnSave"
                             Content="Enregistrer"
-                            Command="{Binding SaveEditCommand}"
+                            Click="btnSave_Click"
                             FontWeight="DemiBold"
                             FontSize="16"
                             Grid.Column="2"
@@ -172,7 +172,8 @@
                             Cursor="Hand"
                             IsDefault="True"
                             BorderThickness="0"
-                            Style="{StaticResource PopupWindowMainButton}">
+                            Style="{StaticResource PopupWindowMainButton}"
+                            IsEnabled="{Binding CanSaveEdit}">
 
                         <Button.Template>
                             <ControlTemplate TargetType="Button">

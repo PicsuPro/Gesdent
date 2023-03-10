@@ -17,7 +17,7 @@ namespace VsProject
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
-            //ViewMappings.Initialize();
+            VMVMappings.Initialize();
             var loginView = new LoginView();
             loginView.Show();
             loginView.IsVisibleChanged += (s, ev) =>
