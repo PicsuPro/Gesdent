@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
-using VsProject.Repositories;
+using VsProject.Models.Repositories;
 using VsProject.Views;
 
 namespace VsProject.ViewModels

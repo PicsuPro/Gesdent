@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
-using VsProject.Repositories;
+using VsProject.Models.Repositories;
 using System.Reflection.Metadata;
 using System.Windows;
 using System.Diagnostics;

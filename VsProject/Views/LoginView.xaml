@@ -6,8 +6,7 @@
         xmlns:local="clr-namespace:VsProject.Views"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
-        xmlns:customcontrols="clr-namespace:VsProject.CustomControls"
-        xmlns:styles="clr-namespace:VsProject.Resources.Styles"
+        xmlns:controls="clr-namespace:VsProject.Controls"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="500"
         WindowStyle="None"
@@ -137,8 +136,8 @@
                                Margin="0,25,0,0"/>
 
                     <Grid>
-                        
-                        <customcontrols:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+                        <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                          x:Name="passwordBox"
                                          Height="28"
                                          Margin="0,4,0,0"

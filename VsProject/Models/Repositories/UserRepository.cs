@@ -9,7 +9,7 @@ using VsProject.Models;
 
 
 
-namespace VsProject.Repositories
+namespace VsProject.Models.Repositories
 {
     using BCrypt.Net;
     using System.Data.SqlTypes;

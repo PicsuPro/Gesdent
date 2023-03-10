@@ -5,8 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VsProject.Views"
              xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
-             xmlns:customcontrols="clr-namespace:VsProject.CustomControls"
-             xmlns:styles="clr-namespace:VsProject.Resources.Styles"
+             xmlns:controls="clr-namespace:VsProject.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600"
              Background="#F4F5F7">

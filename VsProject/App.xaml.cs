@@ -5,10 +5,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using VsProject.Services;
 using VsProject.ViewModels;
 using VsProject.Views;
 namespace VsProject
-{
+{ 
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -16,6 +17,7 @@ namespace VsProject
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
+            //ViewMappings.Initialize();
             var loginView = new LoginView();
             loginView.Show();
             loginView.IsVisibleChanged += (s, ev) =>
