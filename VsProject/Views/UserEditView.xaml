@@ -69,7 +69,7 @@
                 Grid.Column="3"
                 Content="x"
                 FontSize="16"
-                Margin="0,4,0,5"
+                Margin="0,4,2,5"
                 Click="btnClose_Click"
                 Style="{StaticResource WindowButton}"/>
 

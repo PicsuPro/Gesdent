@@ -8,16 +8,10 @@
              xmlns:controls="clr-namespace:VsProject.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600"
-             Background="#F4F5F7">
+             Background="#F0F2F5">
     <UserControl.DataContext>
         <viewModel:UsersSettingsViewModel/>
     </UserControl.DataContext>
-
-    <UserControl.Resources>
-
-       
-
-    </UserControl.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -27,8 +21,7 @@
 
         <DataGrid IsReadOnly="True" 
                   AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Users}"
-                  Margin="-6,-3,0,0">
+                  ItemsSource="{Binding Users}">
 
            
             
@@ -47,14 +40,13 @@
                                     <Button Command="{Binding DataContext.EditUserCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
                                         Style="{StaticResource DataGridButtonsStyle}"
-                                            Margin="0,0,2,0">
-                                        <Image Source="/Resources/Images/edit.png" Width="24" Height="24"/>
+                                            Margin="0,0,6,0">
+                                        <Image Source="/Resources/Images/edit.png" Width="18" Height="18"/>
                                     </Button>
                                     <Button Command="{Binding DataContext.RemoveUserCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
-                                        Style="{StaticResource DataGridButtonsStyle}"
-                                        Margin="0,0,2,0">
-                                        <Image Source="/Resources/Images/remove.png" Width="24" Height="24" />
+                                        Style="{StaticResource DataGridButtonsStyle}">
+                                        <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
                                     </Button>
                                 </StackPanel>
                             </Grid>
@@ -66,27 +58,36 @@
         <Button Content="Add User" 
                 Command="{Binding AddUserCommand}" 
                 Grid.Row="1"
-                FontWeight="DemiBold"
                 FontSize="12"
                 BorderThickness="10"
-                Cursor="Hand">
+                Cursor="Hand"
+                Margin="10,-7,10,7">
             <Button.Style>
                 <Style TargetType="Button">
-                    <Setter Property="Background" Value="#ADADAD"/>
+                    <Setter Property="Background" Value="#0049B3"/>
                     <Setter Property="Foreground" Value="White"/>
                     <Setter Property="FontFamily" Value="Calibri"/>
 
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="White"/>
+                            <Setter Property="Background" Value="#00398F"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="LightGray"/>
                             <Setter Property="Foreground" Value="Gray"/>
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </Button.Style>
+           
+
             <Button.Template>
+                
                 <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}">
+                    <Border Background="{TemplateBinding Background}"
+                            CornerRadius="5"
+                            Padding="7">
                         <ContentPresenter VerticalAlignment="Center"
                                           HorizontalAlignment="Center"/>
                     </Border>

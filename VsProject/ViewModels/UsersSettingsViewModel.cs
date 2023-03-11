@@ -54,6 +54,7 @@ namespace VsProject.ViewModels
             if (DialogService.Show(userEditViewModel) == true)
             {
                 _userRepository.Add(userEditViewModel.User);
+                Users.Add(newUser);
             }
             
 
@@ -66,6 +67,9 @@ namespace VsProject.ViewModels
             if (DialogService.Show(userEditViewModel) == true)
             {
                 _userRepository.Edit(userEditViewModel.User);
+                var index = Users.IndexOf(user);
+                Users.Remove(userEditViewModel.User);
+                Users.Insert(index, userEditViewModel.User);
             }
         }
 

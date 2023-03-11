@@ -18,6 +18,37 @@ namespace VsProject.Models.Repositories
 
     public class UserRepository : RepositoryBase, IUserRepository
     {
+
+        public bool AuthenticateUser(NetworkCredential credential)
+        {
+            bool validUser;
+
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT hash, salt FROM [User] WHERE username=@username";
+                command.Parameters.AddWithValue("@username", credential.UserName);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (!reader.Read())
+                    {
+                        return false;
+                    }
+
+                    string hash = Encoding.UTF8.GetString((byte[])reader["hash"]);
+                    string salt = Encoding.UTF8.GetString((byte[])reader["salt"]);
+                    string hashedPassword = BCrypt.HashPassword(credential.Password, salt);
+                    validUser = string.Equals(hashedPassword, hash);
+                }
+            }
+
+            return validUser;
+        }
+
         public void Add(UserModel userModel)
         {
             using (var connection = GetConnection())
@@ -56,35 +87,7 @@ namespace VsProject.Models.Repositories
             }
         }
 
-        public bool AuthenticateUser(NetworkCredential credential)
-        {
-            bool validUser;
-            
 
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
-            {
-                connection.Open();
-                command.Connection = connection;
-                command.CommandText = "SELECT hash, salt FROM [User] WHERE username=@username";
-                command.Parameters.AddWithValue("@username", credential.UserName);
-
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    if (!reader.Read())
-                    {
-                        return false;
-                    }
-
-                    string hash = Encoding.UTF8.GetString((byte[])reader["hash"]);
-                    string salt = Encoding.UTF8.GetString((byte[])reader["salt"]);
-                    string hashedPassword = BCrypt.HashPassword(credential.Password, salt);
-                    validUser = string.Equals(hashedPassword, hash);
-                }
-            }
-
-            return validUser;
-        }
 
         public void Edit(UserModel userModel)
         {
@@ -93,19 +96,36 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE [User] SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
-
-                string salt = BCrypt.GenerateSalt();
-                string hash = BCrypt.HashPassword(userModel.Hash, salt);
-                byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
-                byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
-
+                if (string.IsNullOrWhiteSpace(userModel.Hash))
+                {
+                    command.CommandText = "UPDATE [User] SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
+                    string salt = BCrypt.GenerateSalt();
+                    string hash = BCrypt.HashPassword(userModel.Hash, salt);
+                    byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
+                    byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
+                    command.Parameters.AddWithValue("@hash", hashBytes);
+                    command.Parameters.AddWithValue("@salt", saltBytes);
+                }else
+                {
+                    command.CommandText = "UPDATE [User] SET username=@username, email=@email WHERE id=@id";
+                }
                 command.Parameters.AddWithValue("@username", userModel.UserName);
-                command.Parameters.AddWithValue("@hash", hashBytes);
-                command.Parameters.AddWithValue("@salt", saltBytes);
                 command.Parameters.AddWithValue("@email", userModel.Email);
                 command.Parameters.AddWithValue("@id", userModel.Id);
 
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void Remove(UserModel userModel)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "DELETE FROM [User] WHERE Id=@id";
+                command.Parameters.AddWithValue("@id", userModel.Id);
                 command.ExecuteNonQuery();
             }
         }
@@ -197,18 +217,7 @@ namespace VsProject.Models.Repositories
             return null;
 
         }
-            public void Remove(UserModel userModel)
-            {
-                using (var connection = GetConnection())
-                using (var command = new SqlCommand())
-                {
-                    connection.Open();
-                    command.Connection = connection;
-                    command.CommandText = "DELETE FROM [User] WHERE Id=@id";
-                    command.Parameters.AddWithValue("@id", userModel.Id);
-                    command.ExecuteNonQuery();
-                }
-            }
+
         }
 
     }
