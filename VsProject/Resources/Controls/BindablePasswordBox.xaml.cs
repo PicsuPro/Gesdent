@@ -49,6 +49,8 @@ namespace VsProject.Controls
             txtBoxPassword.Text = txtPassword.Password;
             txtPassword.MaxWidth = 0;
             txtBoxPassword.MaxWidth = double.PositiveInfinity;
+            txtBoxPassword.Focusable = true;
+            txtPassword.Focusable = false;
         }
 
         private void ShowPassword_Unchecked(object sender, RoutedEventArgs e)
@@ -56,6 +58,8 @@ namespace VsProject.Controls
             txtPassword.Password = txtBoxPassword.Text;
             txtBoxPassword.MaxWidth = 0;
             txtPassword.MaxWidth = double.PositiveInfinity;
+            txtPassword.Focusable = true;
+            txtBoxPassword.Focusable = false;
         }
 
 

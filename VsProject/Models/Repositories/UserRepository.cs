@@ -110,7 +110,7 @@ namespace VsProject.Models.Repositories
             }
         }
 
-        public UserModel GetByUsername(string username)
+        public UserModel? GetByUsername(string username)
         {
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -167,9 +167,9 @@ namespace VsProject.Models.Repositories
             return users;
         }
 
-        public UserModel GetById(int id)
+        public UserModel? GetById(int id)
         {
-            UserModel user = null;
+            UserModel user;
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -190,11 +190,11 @@ namespace VsProject.Models.Repositories
                             Hash = Encoding.UTF8.GetString((byte[])reader["hash"]),
                             Email = (string)reader["Email"]
                         };
-                        
+                        return user;
                     }
                 }
-                return user;
             }
+            return null;
 
         }
             public void Remove(UserModel userModel)
@@ -205,7 +205,7 @@ namespace VsProject.Models.Repositories
                     connection.Open();
                     command.Connection = connection;
                     command.CommandText = "DELETE FROM [User] WHERE Id=@id";
-                    command.Parameters.Add("@id", SqlDbType.Int).Value = userModel.Id;
+                    command.Parameters.AddWithValue("@id", userModel.Id);
                     command.ExecuteNonQuery();
                 }
             }

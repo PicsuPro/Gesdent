@@ -49,9 +49,14 @@ namespace VsProject.ViewModels
         private void ExecuteAddUserCommand(object obj)
         {
             var newUser = new UserModel();
-           // var userEditView = new UserEditView(newUser);
+            UserEditViewModel userEditViewModel = new UserEditViewModel(newUser);
 
-       
+            if (DialogService.Show(userEditViewModel) == true)
+            {
+                _userRepository.Add(userEditViewModel.User);
+            }
+            
+
         }
 
         private void ExecuteEditUserCommand(UserModel user)
@@ -68,8 +73,8 @@ namespace VsProject.ViewModels
         private void ExecuteRemoveUserCommand(UserModel user)
         {
             Trace.WriteLine("REMOVE");
-            //_userRepository.Remove(_selectedUser);
-            //Users.Remove(_selectedUser);
+            _userRepository.Remove(user);
+            Users.Remove(user);
         }
 
         private bool CanExecuteRemoveUserCommand(object obj)

@@ -14,8 +14,8 @@ namespace VsProject.Models
         void Edit(UserModel userModel);
         void Remove(UserModel userModel);
 
-        UserModel GetById(int id);
-        UserModel GetByUsername(string username);
+        UserModel? GetById(int id);
+        UserModel? GetByUsername(string username);
 
         IEnumerable<UserModel> GetAll();
         //... 
