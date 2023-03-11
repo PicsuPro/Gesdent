@@ -24,6 +24,7 @@ namespace VsProject.ViewModels
         private string _password = "";
         private string _email = "";
         private string _errorMessage = "";
+        private bool _isEditPassword = false;
 
         public UserModel User
         {
@@ -81,11 +82,21 @@ namespace VsProject.ViewModels
             }
         }
 
-        public bool CanSaveEdit => !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || User.Hash == null || User.Hash.Length < 3);
-        
+        public bool CanSaveEdit => !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || (IsEditPassword && (string.IsNullOrWhiteSpace(User.Hash) || User.Hash.Length < 3)));
+
+        public bool IsEditPassword
+        {
+            get => _isEditPassword; set 
+            {
+                if (!value) { Password = ""; }
+                _isEditPassword = value;
+                OnPropertyChanged(nameof(IsEditPassword));
+                OnPropertyChanged(nameof(CanSaveEdit));
+            }
+        }
+
 
         //-> Commands
-       
 
         public UserEditViewModel()
         {

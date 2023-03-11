@@ -15,7 +15,7 @@ using VsProject.Views;
 namespace VsProject.ViewModels
 {
 
-    public class UsersSettingsViewModel : ViewModelBase
+    public class SettingsUsersViewModel : ViewModelBase
     {
         private readonly IUserRepository _userRepository;
 
@@ -35,7 +35,7 @@ namespace VsProject.ViewModels
         public ICommand EditUserCommand { get; }
         public ICommand RemoveUserCommand { get; }
 
-        public UsersSettingsViewModel()
+        public SettingsUsersViewModel()
         {
             _userRepository = new UserRepository();
 
@@ -43,17 +43,15 @@ namespace VsProject.ViewModels
 
             AddUserCommand = new ViewModelCommand(ExecuteAddUserCommand);
             EditUserCommand = new ViewModelCommand((user) => ExecuteEditUserCommand((UserModel)user));
-            RemoveUserCommand = new ViewModelCommand((user) => ExecuteRemoveUserCommand((UserModel)user) , CanExecuteRemoveUserCommand);
+            RemoveUserCommand = new ViewModelCommand((user) => ExecuteRemoveUserCommand((UserModel)user));
         }
 
         private void ExecuteAddUserCommand(object obj)
         {
             var newUser = new UserModel();
-            UserEditViewModel userEditViewModel = new UserEditViewModel(newUser);
-
-            if (DialogService.Show(userEditViewModel) == true)
+            if (DialogService.Show(new UserEditViewModel(newUser)) == true)
             {
-                _userRepository.Add(userEditViewModel.User);
+                _userRepository.Add(newUser);
                 Users.Add(newUser);
             }
             
@@ -62,29 +60,24 @@ namespace VsProject.ViewModels
 
         private void ExecuteEditUserCommand(UserModel user)
         {
-            UserEditViewModel userEditViewModel = new UserEditViewModel(user);
             
-            if (DialogService.Show(userEditViewModel) == true)
+            if (DialogService.Show(new UserEditViewModel(user)) == true)
             {
-                _userRepository.Edit(userEditViewModel.User);
+                _userRepository.Edit(user);
                 var index = Users.IndexOf(user);
-                Users.Remove(userEditViewModel.User);
-                Users.Insert(index, userEditViewModel.User);
+                Users.Remove(user);
+                Users.Insert(index, user);
             }
         }
 
 
         private void ExecuteRemoveUserCommand(UserModel user)
         {
-            Trace.WriteLine("REMOVE");
             _userRepository.Remove(user);
             Users.Remove(user);
         }
 
-        private bool CanExecuteRemoveUserCommand(object obj)
-        {
-            return true;
-        }
+
     }
 }
 

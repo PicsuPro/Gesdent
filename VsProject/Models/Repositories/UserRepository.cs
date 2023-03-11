@@ -96,7 +96,7 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                if (string.IsNullOrWhiteSpace(userModel.Hash))
+                if (!string.IsNullOrWhiteSpace(userModel.Hash))
                 {
                     command.CommandText = "UPDATE [User] SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
                     string salt = BCrypt.GenerateSalt();

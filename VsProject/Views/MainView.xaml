@@ -8,7 +8,7 @@
         Title="MainView" Height="400" Width="600"
         WindowStartupLocation="CenterScreen">
     <Grid>
-        <local:UsersSettingsView/>
+        <local:SettingsUsersView/>
 
     </Grid>
 </Window>

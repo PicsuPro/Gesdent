@@ -9,7 +9,9 @@
 
   <ItemGroup>
     <None Remove="Resources\Data\ViewModelViewMappings.xml" />
+    <None Remove="Resources\Images\cancel.png" />
     <None Remove="Resources\Images\edit.png" />
+    <None Remove="Resources\Images\edit2.png" />
     <None Remove="Resources\Images\email.png" />
     <None Remove="Resources\Images\hidePassword.png" />
     <None Remove="Resources\Images\logo.png" />
@@ -26,7 +28,9 @@
 
   <ItemGroup>
     <Resource Include="Resources\Data\ViewModelViewMappings.xml" />
+    <Resource Include="Resources\Images\cancel.png" />
     <Resource Include="Resources\Images\edit.png" />
+    <Resource Include="Resources\Images\edit2.png" />
     <Resource Include="Resources\Images\email.png" />
     <Resource Include="Resources\Images\hidePassword.png" />
     <Resource Include="Resources\Images\logo.png" />

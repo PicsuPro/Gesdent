@@ -18,11 +18,11 @@ using VsProject.ViewModels;
 namespace VsProject.Views
 {
     /// <summary>
-    /// Interaction logic for UsersSettingsView.xaml
+    /// Interaction logic for SettingsUsersView.xaml
     /// </summary>
-    public partial class UsersSettingsView : UserControl
+    public partial class SettingsUsersView : UserControl
     {
-        public UsersSettingsView()
+        public SettingsUsersView()
         {
             InitializeComponent();
         }

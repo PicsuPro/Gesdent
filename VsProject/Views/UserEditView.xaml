@@ -9,7 +9,7 @@
         xmlns:controls="clr-namespace:VsProject.Controls"
 		
         mc:Ignorable="d"
-        Title="UserEditView" Height="550" Width="500"
+        Title="UserEditView" Height="400" Width="350"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown"
@@ -32,32 +32,31 @@
     </WindowChrome.WindowChrome>
 
 
-        
     <Border CornerRadius="12"
-            BorderThickness="2"
+            BorderThickness="0"
+            Background="LightGray">
+        <Border CornerRadius="12"
+            BorderThickness="1"
             Background="White">
 
+            <Grid FocusManager.FocusedElement="{Binding ElementName=txtUser}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
 
 
-
-        <Grid FocusManager.FocusedElement="{Binding ElementName=txtUser}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="10"/>
-            </Grid.RowDefinitions>
-
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="5"/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="25"/>
-                    <ColumnDefinition Width="5"/>
-                </Grid.ColumnDefinitions>
-
-
-                <Button x:Name="btnMinimize"
+                    <Button x:Name="btnMinimize"
                 Grid.Column="2"
                 Content="-"
                 FontSize="25"
@@ -65,7 +64,7 @@
                 Click="btnMinimize_Click"
                 Style="{StaticResource WindowButton}"/>
 
-                <Button x:Name="btnClose"
+                    <Button x:Name="btnClose"
                 Grid.Column="3"
                 Content="x"
                 FontSize="16"
@@ -73,35 +72,35 @@
                 Click="btnClose_Click"
                 Style="{StaticResource WindowButton}"/>
 
-            </Grid>
+                </Grid>
 
-            <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+                <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                             Grid.Row="1">
-                <ScrollViewer.Resources>
-                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
-                </ScrollViewer.Resources>
-                <StackPanel Width="250"
+                    <ScrollViewer.Resources>
+                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
+                    </ScrollViewer.Resources>
+                    <StackPanel Width="250"
                             Orientation="Vertical"
-                            Margin="0,20,0,0">
+                            Margin="0,0,0,0">
 
-                    
 
-                    <TextBlock Text="Modifier"
+
+                        <TextBlock Text="Modifier"
                                 Foreground="Black"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
-                                Margin="0,30,0,45"/>
+                                Margin="0,10,0,30"/>
 
-                    <TextBlock Text="Utilisateur"
+                        <TextBlock Text="Utilisateur"
                                 Foreground="#1B1B1B"
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 FontWeight="Medium"
-                                Margin="0,20,0,0"/>
+                                Margin="0,0,0,0"/>
 
-                    <TextBox x:Name="txtUser"
+                        <TextBox x:Name="txtUser"
                              Text="{Binding Username ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 FontSize="13"
                                 FontFamily="Calibri"
@@ -113,37 +112,85 @@
                                 VerticalContentAlignment="Center"
                                 Margin="0,4,0,0"
                                 Padding="0,0,25,0">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Resources/Images/user.png"
+                            <TextBox.Background>
+                                <ImageBrush ImageSource="/Resources/Images/user.png"
                                         Stretch="Uniform"
                                         AlignmentX="Right"/>
-                        </TextBox.Background>
-                    </TextBox>
+                            </TextBox.Background>
+                        </TextBox>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="30"/>
 
+                            </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Mot de passe"
+                            <TextBlock Text="Mot de passe"
+                                Foreground="#1B1B1B"
+                                FontSize="13"
+                                FontFamily="Calibri"
+                                FontWeight="Medium"
+                                Margin="0,20,0,0"
+                            Grid.Column="0"/>
+                        <CheckBox Name="editPassword" 
+                                  Grid.Column="1"
+                                    Cursor="Hand"
+                                    Focusable="False"
+                                    Margin="0,0,0,-1"
+                                    IsChecked="{Binding IsEditPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                  HorizontalAlignment="Right">
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                                                        <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="17" Height="17" Visibility="Collapsed" />
+                                                        <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="17" Height="17" Visibility="Visible" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
+                                                        <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ToggleButton.Style>
+                        </CheckBox>
+
+                        </Grid>
+
+                        <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                          HorizontalAlignment="Stretch"  
+                                                          Grid.Column="1"
+                                                          x:Name="passwordBox"
+                                                                Height="28"
+                                                                Margin="0,4,0,0"
+                                                          IsEnabled="{Binding  IsChecked, ElementName=editPassword}">
+                                <controls:BindablePasswordBox.Style>
+                                    <Style TargetType="controls:BindablePasswordBox">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Style.Triggers>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Opacity" Value="0.5"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </controls:BindablePasswordBox.Style>
+                            </controls:BindablePasswordBox>
+                           
+
+                        <TextBlock Text="Email"
                                 Foreground="#1B1B1B"
                                 FontSize="13"
                                 FontFamily="Calibri"
                                 FontWeight="Medium"
                                 Margin="0,20,0,0"/>
 
-
-                    <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                            x:Name="passwordBox"
-                                                            Height="28"
-                                                            Margin="0,4,0,0"/>
-               
-
-
-                    <TextBlock Text="Email"
-                                Foreground="#1B1B1B"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                FontWeight="Medium"
-                                Margin="0,20,0,0"/>
-
-                    <TextBox x:Name="txtEmail"
+                        <TextBox x:Name="txtEmail"
                              Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                                 FontSize="13"
                                 FontFamily="Calibri"
@@ -155,43 +202,44 @@
                                 VerticalContentAlignment="Center"
                                 Margin="0,4,0,0"
                                 Padding="0,0,25,0">
-                        <TextBox.Background>
-                            <ImageBrush ImageSource="/Resources/Images/email.png"
+                            <TextBox.Background>
+                                <ImageBrush ImageSource="/Resources/Images/email.png"
                                         Stretch="Uniform"
                                         AlignmentX="Right"/>
-                        </TextBox.Background>
-                    </TextBox>
+                            </TextBox.Background>
+                        </TextBox>
 
-                    <Button x:Name="btnSave"
+                        <Button x:Name="btnSave"
                             Content="Enregistrer"
                             Click="btnSave_Click"
                             FontWeight="DemiBold"
                             FontSize="16"
                             Grid.Column="2"
-                            Margin="0,90,0,0"
+                            Margin="0,40,0,0"
                             Cursor="Hand"
                             IsDefault="True"
                             BorderThickness="0"
                             Style="{StaticResource PopupWindowMainButton}"
                             IsEnabled="{Binding CanSaveEdit}">
 
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
                                         Height="40"
                                         Width="150"
                                         CornerRadius="20">
-                                    <ContentPresenter VerticalAlignment="Center"
+                                        <ContentPresenter VerticalAlignment="Center"
                                                         HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
 
 
-                </StackPanel>
-            </ScrollViewer>
+                    </StackPanel>
+                </ScrollViewer>
 
-        </Grid>
+            </Grid>
+        </Border>
     </Border>
 </Window>
