@@ -1,5 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Mappings>
-	<Mapping ViewModelType="VsProject.ViewModels.LoginViewModel" ViewType="VsProject.Views.LoginView" />
-	<Mapping ViewModelType="VsProject.ViewModels.UserEditViewModel" ViewType="VsProject.Views.UserEditView" />
-	<Mapping ViewModelType="VsProject.ViewModels.SettingsUsersViewModel" ViewType="VsProject.Views.SettingsUsersViewS" />
+<?xml version="1.0" encoding="utf-8"?>
+<Mappings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Mapping ViewModelType="VsProject.ViewModels.LoginViewModel" ViewType="VsProject.Views.LoginView" />
+  <Mapping ViewModelType="VsProject.ViewModels.UserEditViewModel" ViewType="VsProject.Views.UserEditView" />
+  <Mapping ViewModelType="VsProject.ViewModels.MainViewModel" ViewType="VsProject.Views.MainView" />
+  <Mapping ViewModelType="VsProject.ViewModels.SettingsUsersViewModel" ViewType="VsProject.Views.SettingsUsersView" />
+  <Mapping ViewModelType="VsProject.ViewModels.SettingsViewModel" ViewType="VsProject.Views.SettingsView" />
 </Mappings>

@@ -187,7 +187,7 @@ namespace VsProject.Models.Repositories
             return users;
         }
 
-        public UserModel? GetById(int id)
+        public UserModel? GetById(Guid id)
         {
             UserModel user;
 

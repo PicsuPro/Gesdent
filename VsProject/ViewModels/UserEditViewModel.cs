@@ -89,14 +89,9 @@ namespace VsProject.ViewModels
         {
             get => _isEditPassword; set 
             {
-                if (IsNewUser)
-                {
-                    _isEditPassword = IsNewUser;
-                }
-                else
-                {
-                    _isEditPassword = value;
-                }
+
+                _isEditPassword = IsNewUser || value;
+
                 OnPropertyChanged(nameof(IsEditingPassword));
                 OnPropertyChanged(nameof(CanSaveEdit));
             }
@@ -117,6 +112,7 @@ namespace VsProject.ViewModels
         public UserEditViewModel(UserModel user)
         {
             IsNewUser = user.Id == null;
+            IsEditingPassword = IsNewUser;
             User = user;
             Username = User.UserName;
             Email = User.Email;

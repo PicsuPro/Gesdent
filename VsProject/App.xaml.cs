@@ -10,25 +10,19 @@ using VsProject.ViewModels;
 using VsProject.Views;
 namespace VsProject
 { 
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
             VMVMappings.Initialize();
-            var loginView = new LoginView();
-            loginView.Show();
-            loginView.IsVisibleChanged += (s, ev) =>
-            {
-                if (loginView.IsVisible == false && loginView.IsLoaded)
-                {
-                    var mainView = new MainView();
-                    mainView.Show();
-                    loginView.Dispatcher.BeginInvoke(new Action(() => loginView.Close()));
-                }
-            };
+            var mainView = new MainView();
+            if ((bool)DialogService.Show(new LoginViewModel())) 
+                mainView.Show();
+            
+            else 
+                Shutdown();
+
+
         }
     }
 }

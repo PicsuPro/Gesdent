@@ -7,14 +7,15 @@ using System.ComponentModel;
 
 namespace VsProject.ViewModels
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
+    public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public virtual void Dispose()
+        public event EventHandler? End;
+        protected virtual void OnEnd()
         {
+            End?.Invoke(this, EventArgs.Empty);
         }
-
         public void OnPropertyChanged (string propertyName) 
         {
             PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));

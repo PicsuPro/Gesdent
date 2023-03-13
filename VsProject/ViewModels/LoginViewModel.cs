@@ -75,6 +75,7 @@ namespace VsProject.ViewModels
             {
                 Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
                 IsViewVisible = false;
+                OnEnd();
             }
             else
             {

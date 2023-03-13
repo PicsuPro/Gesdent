@@ -14,7 +14,6 @@ namespace VsProject.Services
         {
         }
         public static void Void() { }
-
         public static bool? Show<TViewModel>(TViewModel viewModel)
             where TViewModel : ViewModelBase
         {
@@ -26,8 +25,15 @@ namespace VsProject.Services
 
             var view = (Window)Activator.CreateInstance(viewType);
             view.DataContext = viewModel;
+            viewModel.End += (sender, args) =>
+            {
+                view.DialogResult = true;
+                viewModel.End -= (sender, args) => { };
+            };
+
             bool? result = view.ShowDialog();
             view.Close();
+
             return result;
         }
     }
