@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Security;
 using System.Text;
@@ -14,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VsProject.Controls
+namespace VsProject.Resources.Controls
 {
     /// <summary>
     /// Interaction logic for BindablePasswordBox.xaml
@@ -27,16 +28,21 @@ namespace VsProject.Controls
             DependencyProperty.Register("Password", typeof(string), typeof(BindablePasswordBox));
 
         public string Password
-        { 
+        {
             get { return (string)GetValue(PasswordProperty); }
             set { SetValue(PasswordProperty, value); }
-
         }
+
 
         public BindablePasswordBox()
         {
             InitializeComponent();
             txtPassword.PasswordChanged += OnPasswordChanged;
+            var window = Window.GetWindow(this);
+            if (window != null)
+            {
+                window.Closing += (sender, e) => {DataContext = null;};
+            }
         }
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
@@ -61,7 +67,6 @@ namespace VsProject.Controls
             txtPassword.Focusable = true;
             txtBoxPassword.Focusable = false;
         }
-
 
     }
 }

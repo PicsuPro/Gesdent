@@ -25,6 +25,11 @@ namespace VsProject.Views
         public SettingsUsersView()
         {
             InitializeComponent();
+            var window = Window.GetWindow(this);
+            if (window != null)
+            {
+                window.Closing += (sender, e) => { DataContext = null; };
+            }
         }
 
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

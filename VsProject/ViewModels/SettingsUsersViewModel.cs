@@ -49,6 +49,7 @@ namespace VsProject.ViewModels
         private void ExecuteAddUserCommand(object obj)
         {
             var newUser = new UserModel();
+
             if (DialogService.Show(new UserEditViewModel(newUser)) == true)
             {
                 _userRepository.Add(newUser);
@@ -60,7 +61,6 @@ namespace VsProject.ViewModels
 
         private void ExecuteEditUserCommand(UserModel user)
         {
-            
             if (DialogService.Show(new UserEditViewModel(user)) == true)
             {
                 _userRepository.Edit(user);

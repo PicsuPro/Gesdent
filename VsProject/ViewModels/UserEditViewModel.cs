@@ -24,7 +24,8 @@ namespace VsProject.ViewModels
         private string _password = "";
         private string _email = "";
         private string _errorMessage = "";
-        private bool _isEditPassword = false;
+        private bool _isNewUser = false;
+        private bool _isEditPassword = true;
 
         public UserModel User
         {
@@ -82,28 +83,40 @@ namespace VsProject.ViewModels
             }
         }
 
-        public bool CanSaveEdit => !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || (IsEditPassword && (string.IsNullOrWhiteSpace(User.Hash) || User.Hash.Length < 3)));
+        public bool CanSaveEdit => !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || (IsEditingPassword && (string.IsNullOrWhiteSpace(User.Hash) || User.Hash.Length < 3)));
 
-        public bool IsEditPassword
+        public bool IsEditingPassword
         {
             get => _isEditPassword; set 
             {
-                if (!value) { Password = ""; }
-                _isEditPassword = value;
-                OnPropertyChanged(nameof(IsEditPassword));
+                if (IsNewUser)
+                {
+                    _isEditPassword = IsNewUser;
+                }
+                else
+                {
+                    _isEditPassword = value;
+                }
+                OnPropertyChanged(nameof(IsEditingPassword));
                 OnPropertyChanged(nameof(CanSaveEdit));
+            }
+        }
+
+        public bool IsNewUser 
+        { 
+            get => _isNewUser; set
+            {
+                _isNewUser = value;
+                OnPropertyChanged(nameof(IsNewUser));
             }
         }
 
 
         //-> Commands
 
-        public UserEditViewModel()
-        {
-            User = new UserModel();
-        }
         public UserEditViewModel(UserModel user)
         {
+            IsNewUser = user.Id == null;
             User = user;
             Username = User.UserName;
             Email = User.Email;

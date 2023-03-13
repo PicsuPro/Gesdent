@@ -11,24 +11,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using VsProject.ViewModels;
 
 namespace VsProject.Views
 {
-    public partial class UserEditView : Window
+    /// <summary>
+    /// Interaction logic for SettingsView.xaml
+    /// </summary>
+    public partial class SettingsView : Window
     {
-        public UserEditView()
+        public SettingsView()
         {
             InitializeComponent();
         }
 
 
 
-        
+    
 
-        private void btnSave_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = true;
-        }
+
     }
 }

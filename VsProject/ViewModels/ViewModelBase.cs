@@ -7,9 +7,13 @@ using System.ComponentModel;
 
 namespace VsProject.ViewModels
 {
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public virtual void Dispose()
+        {
+        }
 
         public void OnPropertyChanged (string propertyName) 
         {

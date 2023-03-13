@@ -6,12 +6,11 @@
         xmlns:local="clr-namespace:VsProject.Views"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
-        xmlns:controls="clr-namespace:VsProject.Controls"
+        xmlns:controls="clr-namespace:VsProject.Resources.Controls"
         mc:Ignorable="d"
         Title="LoginView" Height="550" Width="500"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
-        MouseDown="Window_MouseDown"
         Background="Transparent"
         AllowsTransparency="True">
 
@@ -38,45 +37,15 @@
         
         <Border CornerRadius="12"
             BorderThickness="1"
-            Background="White">
-
-
-
+            Background="{StaticResource primaryBack1}">
 
             <Grid FocusManager.FocusedElement="{Binding ElementName=txtUser}">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="10"/>
                 </Grid.RowDefinitions>
-
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5"/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="25"/>
-                        <ColumnDefinition Width="5"/>
-                    </Grid.ColumnDefinitions>
-
-
-                    <Button x:Name="btnMinimize"
-                Grid.Column="2"
-                Content="-"
-                FontSize="25"
-                Margin="0,-1,0,5"
-                Click="btnMinimize_Click"
-                Style="{StaticResource WindowButton}"/>
-
-                    <Button x:Name="btnClose"
-                Grid.Column="3"
-                Content="x"
-                FontSize="16"
-                Margin="0,4,0,5"
-                Click="btnClose_Click"
-                Style="{StaticResource WindowButton}"/>
-
-                </Grid>
+                <controls:ControlBar Minimize="Visible"/>
 
                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                            Grid.Row="1">
@@ -92,7 +61,7 @@
                            />
 
                         <TextBlock Text="Gesdent"
-                               Foreground="Black"
+                               Foreground="{StaticResource primaryFore1}"
                                FontSize="20"
                                FontWeight="Bold"
                                FontFamily="Calibri"
@@ -116,7 +85,7 @@
                              Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
                              FontSize="13"
                              FontFamily="Calibri"
-                             Foreground="Black"
+                             Foreground="{StaticResource primaryFore1}"
                              CaretBrush="LightGray"
                              BorderBrush="DarkGray"
                              BorderThickness="0,0,0,1"
@@ -195,7 +164,6 @@
                         </Button>
                     </StackPanel>
                 </ScrollViewer>
-
             </Grid>
         </Border>
     </Border>
