@@ -25,10 +25,10 @@ namespace VsProject.Services
 
             var view = (Window)Activator.CreateInstance(viewType);
             view.DataContext = viewModel;
-            viewModel.End += (sender, args) =>
+            viewModel.Ending += (sender, args) =>
             {
                 view.DialogResult = true;
-                viewModel.End -= (sender, args) => { };
+                viewModel.Ending -= (sender, args) => { };
             };
 
             bool? result = view.ShowDialog();

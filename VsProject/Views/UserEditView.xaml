@@ -9,7 +9,7 @@
         xmlns:controls="clr-namespace:VsProject.Resources.Controls"
 		
         mc:Ignorable="d"
-        Height="400" Width="350"
+        Height="410" Width="350"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
@@ -26,6 +26,7 @@
         </Style>
     </Window.Style>
 
+ 
     
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="1"  
@@ -71,7 +72,7 @@
                                 FontWeight="Bold"
                                 FontFamily="Calibri"
                                 HorizontalAlignment="Center"
-                                Margin="0,10,0,30"/>
+                                Margin="0,10,0,40"/>
 
                         <TextBlock Text="Utilisateur"
                                 Foreground="#1B1B1B"
@@ -190,7 +191,7 @@
 
                         <Button x:Name="btnSave"
                             Content="Enregistrer"
-                            Click="btnSave_Click"
+                            Command="{Binding SaveEditCommand}"
                             FontWeight="DemiBold"
                             FontSize="16"
                             Grid.Column="2"
@@ -198,8 +199,7 @@
                             Cursor="Hand"
                             IsDefault="True"
                             BorderThickness="0"
-                            Style="{StaticResource PopupWindowMainButton}"
-                            IsEnabled="{Binding CanSaveEdit}">
+                            Style="{StaticResource PopupWindowMainButton}">
 
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">

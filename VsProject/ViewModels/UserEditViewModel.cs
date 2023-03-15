@@ -34,7 +34,6 @@ namespace VsProject.ViewModels
             {
                 _user = value;
                 OnPropertyChanged(nameof(User));
-                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
         public string Username
@@ -45,7 +44,6 @@ namespace VsProject.ViewModels
                 _username = value;
                 User.UserName = value;
                 OnPropertyChanged(nameof(Username));
-                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
 
@@ -57,7 +55,6 @@ namespace VsProject.ViewModels
                 _password = value;
                 User.Hash = value;
                 OnPropertyChanged(nameof(Password));
-                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
 
@@ -69,7 +66,6 @@ namespace VsProject.ViewModels
                 _email = value;
                 User.Email = value;
                 OnPropertyChanged(nameof(Email));
-                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
 
@@ -83,7 +79,6 @@ namespace VsProject.ViewModels
             }
         }
 
-        public bool CanSaveEdit => !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || (IsEditingPassword && (string.IsNullOrWhiteSpace(User.Hash) || User.Hash.Length < 3)));
 
         public bool IsEditingPassword
         {
@@ -93,7 +88,6 @@ namespace VsProject.ViewModels
                 _isEditPassword = IsNewUser || value;
 
                 OnPropertyChanged(nameof(IsEditingPassword));
-                OnPropertyChanged(nameof(CanSaveEdit));
             }
         }
 
@@ -108,15 +102,32 @@ namespace VsProject.ViewModels
 
 
         //-> Commands
+        public ICommand SaveEditCommand { get; }
+        public UserEditViewModel() 
+        {
 
+        }
         public UserEditViewModel(UserModel user)
         {
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             IsNewUser = user.Id == null;
             IsEditingPassword = IsNewUser;
             User = user;
             Username = User.UserName;
             Email = User.Email;
         }
+
+
+        private void ExecuteSaveEdit(object obj)
+        {
+            End();
+        }
+
+        private bool CanExecuteSaveEdit(object obj)
+        {
+            return !(string.IsNullOrWhiteSpace(User.UserName) || User.UserName.Length < 3 || (IsEditingPassword && (string.IsNullOrWhiteSpace(User.Hash) || User.Hash.Length < 3)));
+        }
+
     }
 }
 

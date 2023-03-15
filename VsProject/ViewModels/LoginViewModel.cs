@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Security;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
@@ -19,9 +22,7 @@ namespace VsProject.ViewModels
         private string? _username;
         private string? _password;
         private string? _errorMessage;
-        private bool _isViewVisible = true;
 
-        private IUserRepository userRepository;
 
         public string? Username
         {
@@ -47,35 +48,21 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public bool IsViewVisible
-        {
-            get => _isViewVisible; set
-            {
-                _isViewVisible = value;
-                OnPropertyChanged(nameof(IsViewVisible));
-            }
-        }
 
         //-> Commands
         public ICommand LoginCommand { get; }
-        public ICommand RecoverPasswordCommand { get; }
         public ICommand? RememberPasswordCommand { get; }
 
         public LoginViewModel()
         {
-            userRepository = new UserRepository();
             LoginCommand = new ViewModelCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
-            RecoverPasswordCommand = new ViewModelCommand(p => ExecuteRecoveryPassCommand("", ""));
         }
 
         private void ExecuteLoginCommand(object obj)
         {
-            var isValidUser = userRepository.AuthenticateUser(new NetworkCredential(Username, Password));
-            if (isValidUser)
+            if (UserPrincipal.Set(new NetworkCredential(Username, Password)))
             {
-                Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(Username), null);
-                IsViewVisible = false;
-                OnEnd();
+                End();
             }
             else
             {
@@ -86,10 +73,7 @@ namespace VsProject.ViewModels
         {
             return !(string.IsNullOrWhiteSpace(Username) || Username.Length < 3 || Password == null || Password.Length < 3);
         }
-        private void ExecuteRecoveryPassCommand(string username, string email)
-        {
-            throw new NotImplementedException();
-        }
+
 
     }
 }

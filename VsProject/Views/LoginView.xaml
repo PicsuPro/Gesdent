@@ -18,10 +18,6 @@
         <viewModel:LoginViewModel/>
     </Window.DataContext>
 
-    <Window.Visibility>
-                <Binding Path="IsViewVisible" Mode="TwoWay" Converter="{StaticResource BooleanToVisibility}"/>
-    </Window.Visibility>
-    
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="1"  
         CornerRadius ="0"

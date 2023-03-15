@@ -76,7 +76,7 @@ namespace VsProject.Models.Repositories
                     command.Parameters.AddWithValue("@username", userModel.UserName);
                     command.Parameters.AddWithValue("@hash", hashBytes);
                     command.Parameters.AddWithValue("@salt", saltBytes);
-                    command.Parameters.AddWithValue("@email", userModel.Email);
+                    command.Parameters.AddWithValue("@email", string.IsNullOrWhiteSpace(userModel.Email) ? DBNull.Value : userModel.Email);
 
                     command.ExecuteNonQuery();
                 }
@@ -145,10 +145,10 @@ namespace VsProject.Models.Repositories
                     {
                         UserModel userModel = new UserModel
                         {
-                            Id = (Guid)(reader["id"]),
-                            UserName = (string)reader["username"],
-                            Hash = Encoding.UTF8.GetString((byte[])reader["hash"]),
-                            Email = (string)(reader["Email"]),
+                            Id = reader["Id"].DBValue<Guid>(),
+                            UserName = reader["username"].DBValue<string>(),
+                            Hash = Encoding.UTF8.GetString(reader["hash"].DBValue<byte[]>()),
+                            Email = reader["Email"].DBValue<string>()
                         };
                         return userModel;
                     }
@@ -175,9 +175,9 @@ namespace VsProject.Models.Repositories
                     {
                         UserModel user = new UserModel
                         {
-                            Id = (Guid)reader["Id"],
-                            UserName = (string)reader["username"],
-                            Email = (string)reader["email"]
+                            Id = reader["Id"].DBValue<Guid>(),
+                            UserName = reader["username"].DBValue<string>(),
+                            Email = reader["Email"].DBValue<string>()
                         };
                         users.Add(user);
                     }
@@ -205,10 +205,10 @@ namespace VsProject.Models.Repositories
                     {
                         user = new UserModel
                         {
-                            Id = (Guid)reader["Id"],
-                            UserName = (string)reader["Username"],
-                            Hash = Encoding.UTF8.GetString((byte[])reader["hash"]),
-                            Email = (string)reader["Email"]
+                            Id = reader["Id"].DBValue<Guid>(),
+                            UserName = reader["username"].DBValue<string>(),
+                            Hash = Encoding.UTF8.GetString(reader["hash"].DBValue<byte[]>()),
+                            Email = reader["Email"].DBValue<string>()
                         };
                         return user;
                     }

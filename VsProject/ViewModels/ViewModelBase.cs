@@ -11,10 +11,10 @@ namespace VsProject.ViewModels
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public event EventHandler? End;
-        protected virtual void OnEnd()
+        public event EventHandler? Ending;
+        protected virtual void End()
         {
-            End?.Invoke(this, EventArgs.Empty);
+            Ending?.Invoke(this, EventArgs.Empty);
         }
         public void OnPropertyChanged (string propertyName) 
         {

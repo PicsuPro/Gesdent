@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
@@ -17,7 +19,6 @@ namespace VsProject.ViewModels
 
     public class SettingsUsersViewModel : ViewModelBase
     {
-        private readonly IUserRepository _userRepository;
 
         private ObservableCollection<UserModel> _users;
 
@@ -30,21 +31,21 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Users));
             }
         }
-
         public ICommand AddUserCommand { get; }
         public ICommand EditUserCommand { get; }
         public ICommand RemoveUserCommand { get; }
 
         public SettingsUsersViewModel()
         {
-            _userRepository = new UserRepository();
 
-            Users = new ObservableCollection<UserModel>(_userRepository.GetAll());
+            Users = new ObservableCollection<UserModel>(UserPrincipal.Repository.GetAll());
 
             AddUserCommand = new ViewModelCommand(ExecuteAddUserCommand);
             EditUserCommand = new ViewModelCommand((user) => ExecuteEditUserCommand((UserModel)user));
-            RemoveUserCommand = new ViewModelCommand((user) => ExecuteRemoveUserCommand((UserModel)user));
+            RemoveUserCommand = new ViewModelCommand((user) => ExecuteRemoveUserCommand((UserModel)user), (user) => CanExecuteRemoveUserCommand((UserModel)user));
         }
+
+
 
         private void ExecuteAddUserCommand(object obj)
         {
@@ -52,9 +53,8 @@ namespace VsProject.ViewModels
 
             if (DialogService.Show(new UserEditViewModel(newUser)) == true)
             {
-                _userRepository.Add(newUser);
-                Users.Add(_userRepository.GetByUsername(newUser.UserName));
-
+                    UserPrincipal.Repository.Add(newUser);
+                    Users.Add(UserPrincipal.Repository.GetByUsername(newUser.UserName));
             }
 
 
@@ -64,21 +64,29 @@ namespace VsProject.ViewModels
         {
             if (DialogService.Show(new UserEditViewModel(user)) == true)
             {
-                _userRepository.Edit(user);
+                UserPrincipal.Repository.Edit(user);
                 var index = Users.IndexOf(user);
                 Users.Remove(user);
-                Users.Insert(index, _userRepository.GetById((Guid)user.Id));
+                Users.Insert(index, UserPrincipal.Repository.GetById((Guid)user.Id));
+                if (user.Id == UserPrincipal.Current?.Id)
+                {
+                    UserPrincipal.Set(user);
+                }
             }
+
         }
 
 
         private void ExecuteRemoveUserCommand(UserModel user)
         {
-            _userRepository.Remove(user);
+            UserPrincipal.Repository.Remove(user);
             Users.Remove(user);
         }
 
-
+        private static bool CanExecuteRemoveUserCommand(UserModel user)
+        {
+            return user?.Id != UserPrincipal.Current?.Id;
+        }
     }
 }
 

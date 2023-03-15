@@ -7,6 +7,19 @@ using System.Data.SqlClient;
 
 namespace VsProject.Models.Repositories
 {
+
+    public static class DbExtensions
+    {
+
+        public static T? DBValue<T>(this object obj)
+        {
+            if (obj == DBNull.Value)
+                return default(T);
+
+            return (T)obj;
+        }
+    }
+
     public abstract class RepositoryBase
     {
         private readonly string _connectionString;
