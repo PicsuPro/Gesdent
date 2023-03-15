@@ -104,15 +104,12 @@
                                FontWeight="Medium"
                                Margin="0,25,0,0"/>
 
-                        <Grid>
 
-                            <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                         x:Name="passwordBox"
-                                         Height="28"
-                                         Margin="0,4,0,0"
-                                        />
+                        <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        x:Name="passwordBox"
+                                        Height="28"
+                                        Margin="0,4,0,0"/>
 
-                        </Grid>
 
 
 
