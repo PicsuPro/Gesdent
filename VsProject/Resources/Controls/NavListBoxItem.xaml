@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="VsProject.Resources.Controls.NavListBoxItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:VsProject.Resources.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="24"
+             d:DesignWidth="200"
+             Margin="5">
+   
+        <Border x:Name="back" CornerRadius="8" Background="Transparent">
+
+        <Path x:Name="icon"
+                  Data="{Binding Icon, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                  Stretch="Uniform"
+                  Fill="#7b8792"
+                  Height="18"
+                  Width="18" >
+
+        </Path>
+    </Border>
+       
+</UserControl>
