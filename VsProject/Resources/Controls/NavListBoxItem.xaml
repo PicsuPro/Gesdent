@@ -7,8 +7,7 @@
              mc:Ignorable="d"
              d:DesignHeight="24"
              d:DesignWidth="200"
-             Margin="5"
-             Foreground="Gray">
+             Margin="5">
 
     <ListBoxItem.Style>
         <Style TargetType="{x:Type ListBoxItem}">
@@ -17,20 +16,23 @@
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border x:Name="back"
                                 CornerRadius="8"
-                                Background="Transparent">
+                                Background="Transparent"
+                                Padding="7">
                             <Path x:Name="icon"
                                   Data="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                   Stretch="Uniform"
-                                  Fill="{TemplateBinding Foreground}"
+                                  Fill="DarkGray"
                                   Height="18"
                                   Width="18" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="icon" Property="Fill" Value="DarkGray" />
+                                <Setter TargetName="icon" Property="Fill" Value="Gray" />
+                                <Setter TargetName="back" Property="Background" Value="LightGray" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="icon" Property="Fill" Value="Black" />
+                                <Setter TargetName="icon" Property="Fill" Value="WhiteSmoke" />
+                                <Setter TargetName="back" Property="Background" Value="{StaticResource primary1}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
