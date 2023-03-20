@@ -18,20 +18,8 @@ namespace VsProject.Resources.Controls
     /// <summary>
     /// Interaction logic for NavListBoxItem.xaml
     /// </summary>
-    public partial class NavListBoxItem : UserControl
+    public partial class NavListBoxItem : ListBoxItem
     {
-        public static readonly DependencyProperty IsSelectedProperty =
-        DependencyProperty.Register(
-            nameof(IsSelected),
-            typeof(bool),
-            typeof(NavListBoxItem),
-            new FrameworkPropertyMetadata(false));
-
-        public bool IsSelected
-        {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
-        }
 
         public static readonly DependencyProperty NavlinkProperty =
           DependencyProperty.Register("Navlink", typeof(Uri), typeof(NavListBoxItem), new PropertyMetadata(null));
