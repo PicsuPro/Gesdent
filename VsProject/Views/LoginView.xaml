@@ -79,16 +79,9 @@
 
                         <TextBox x:Name="txtUser"
                              Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                             FontSize="13"
-                             FontFamily="Calibri"
-                             Foreground="{StaticResource primaryFore1}"
-                             CaretBrush="LightGray"
-                             BorderBrush="DarkGray"
-                             BorderThickness="0,0,0,1"
-                             Height="28"
-                             VerticalContentAlignment="Center"
+                             Style="{StaticResource FormTextBox}"
                              Margin="0,4,0,0"
-                             Padding="0,0,25,0">
+                                 >
                             <TextBox.Background>
                                 <ImageBrush ImageSource="/Resources/Images/user.png"
                                         Stretch="Uniform"
@@ -105,7 +98,9 @@
                                Margin="0,25,0,0"/>
 
 
-                        <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        <controls:BindablePasswordBox 
+                            
+                            Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                         x:Name="passwordBox"
                                         Height="28"
                                         Margin="0,4,0,0"/>

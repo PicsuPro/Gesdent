@@ -7,7 +7,33 @@
         <ResourceDictionary Source="Icons.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-
+    <!--TextBox-->
+    <Style x:Key="FormTextBox" TargetType="TextBox">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="Foreground" Value="{StaticResource primaryFore1}"/>
+        <Setter Property="CaretBrush" Value="LightGray"/>
+        <Setter Property="BorderBrush" Value="DarkGray"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0 0 25 0"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    <Style x:Key="FormPasswordBox" TargetType="PasswordBox">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Calibri"/>
+        <Setter Property="Foreground" Value="{StaticResource primaryFore1}"/>
+        <Setter Property="CaretBrush" Value="LightGray"/>
+        <Setter Property="BorderBrush" Value="DarkGray"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="Height" Value="28"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0 0 25 0"/>
+        <Setter Property="Background" Value="Transparent"/>
+    </Style>
+    
+    <!--Button-->
     <Style x:Key="WindowButton" TargetType="Button">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Focusable" Value="False" />

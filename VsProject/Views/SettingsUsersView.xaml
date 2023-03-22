@@ -9,7 +9,7 @@
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
-            Background="#F0F2F5">
+             Background="#F0F2F5">
     <UserControl.DataContext>
         <viewModel:SettingsUsersViewModel/>
     </UserControl.DataContext>

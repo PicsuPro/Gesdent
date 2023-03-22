@@ -14,6 +14,7 @@ namespace VsProject
     {
         protected void ApplicationStart(object sender, StartupEventArgs e)
         {
+
             VMVMappings.Initialize();
             var mainView = new MainView();
             if ((bool)DialogService.Show(new LoginViewModel()))

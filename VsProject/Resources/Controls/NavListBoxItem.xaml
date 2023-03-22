@@ -7,7 +7,10 @@
              mc:Ignorable="d"
              d:DesignHeight="24"
              d:DesignWidth="200"
-             Margin="5">
+             Margin="5"
+            HorizontalAlignment="Center"
+             HorizontalContentAlignment="Center"
+             >
 
     <ListBoxItem.Style>
         <Style TargetType="{x:Type ListBoxItem}">
@@ -17,13 +20,15 @@
                         <Border x:Name="back"
                                 CornerRadius="8"
                                 Background="Transparent"
-                                Padding="7">
+                                Padding="7"
+                                  HorizontalAlignment="Center">
                             <Path x:Name="icon"
+                                  HorizontalAlignment="Center"
                                   Data="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                   Stretch="Uniform"
                                   Fill="DarkGray"
-                                  Height="18"
-                                  Width="18" />
+                                  Height="24"
+                                  Width="24" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">

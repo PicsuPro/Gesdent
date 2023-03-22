@@ -8,6 +8,9 @@
     <Compile Update="Resources\Controls\ControlBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Resources\Controls\DatePickerComboBoxes.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -23,12 +26,18 @@
     <Compile Update="Views\MainView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\StaffEditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Resources\Controls\BindablePasswordBox.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Controls\ControlBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\DatePickerComboBoxes.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Controls\NavListBoxItem.xaml">
@@ -53,6 +62,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StaffEditView.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
