@@ -21,7 +21,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="1"  
         CornerRadius ="0"
-        ResizeBorderThickness="4"         
+        ResizeBorderThickness="3"         
         GlassFrameThickness="0">
         </WindowChrome>
     </WindowChrome.WindowChrome>
@@ -45,9 +45,6 @@
 
                 <ScrollViewer  HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
                            Grid.Row="1">
-                    <ScrollViewer.Resources>
-                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
-                    </ScrollViewer.Resources>
                     <StackPanel Width="250"
                             Orientation="Vertical"
                             Margin="0,35,0,0">

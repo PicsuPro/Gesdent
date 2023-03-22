@@ -46,10 +46,13 @@
     <Page Update="Resources\Styles\Colors.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Resources\Styles\Controls.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Resources\Styles\Icons.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resources\Styles\Resources.xaml">
+    <Page Update="Resources\Styles\Converters.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">

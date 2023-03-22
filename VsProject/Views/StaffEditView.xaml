@@ -15,7 +15,7 @@
         <viewModel:StaffEditViewModel/>
     </UserControl.DataContext>
     
-    <Grid>
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
@@ -47,7 +47,7 @@
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
 
-                <TextBox Text="x"
+                <TextBox Text=""
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"/>
 
@@ -58,7 +58,7 @@
                             FontFamily="Calibri"
                             FontWeight="Medium"
                              Margin="0,25,0,0"/>
-                <StackPanel Margin="0,9,0,0" Orientation="Horizontal">
+                <StackPanel Margin="-1,9,0,0" Orientation="Horizontal">
                     <RadioButton Content="Male" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" />
                     <RadioButton Content="Femelle" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" />
                 </StackPanel>
@@ -103,7 +103,9 @@
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <controls:DatePickerComboBoxes  x:Name="datePickerComboBoxes" SelectedDate="{Binding MyDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                <controls:DatePickerComboBoxes  x:Name="datePickerComboBoxes" 
+                                                SelectedDate="{Binding MyDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                                Margin="0,9,0,0"/>
                 
 
 
@@ -144,5 +146,5 @@
                     </Button>
             </StackPanel>
         </Grid>
-    </Grid>
+    </ScrollViewer>
 </UserControl>
