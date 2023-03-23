@@ -52,6 +52,7 @@
         </Style.Triggers>
     </Style>
 
+   
     <Style x:Key="PopupWindowMainButton" TargetType="Button">
         <Setter Property="Background" Value="{DynamicResource primary1}"/>
         <Setter Property="Foreground" Value="White"/>
@@ -69,8 +70,94 @@
         </Style.Triggers>
     </Style>
 
+    
+    
+    
+    <!--RadioButton-->
+  
+    <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#569DE5"/>
+    <SolidColorBrush x:Key="RadioButton.Static.Border" Color="DarkGray"/>
+    <SolidColorBrush x:Key="RadioButton.Static.Glyph" Color="#FCFCFC"/>
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Border" Color="#7EB4EA"/>
+    <SolidColorBrush x:Key="RadioButton.MouseOver.Glyph" Color="White"/>
+    <SolidColorBrush x:Key="RadioButton.Pressed.Border" Color="#569DE5"/>
+    <SolidColorBrush x:Key="RadioButton.Pressed.Glyph" Color="#FCFCFC"/>
+    <SolidColorBrush x:Key="RadioButton.Pressed.Background" Color="#7EB4EA"/>
+    <SolidColorBrush x:Key="RadioButton.Checked.Background" Color="#569DE5"/>
+    <SolidColorBrush x:Key="RadioButton.Checked.Border" Color="#569DE5"/>
+    <SolidColorBrush x:Key="RadioButton.Checked.Glyph" Color="#FCFCFC"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070"/>
+      <Style x:Key="FocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="OptionMarkFocusVisual">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Margin="14,0,-3,0" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RadioButton}">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="radioButtonBorder" Padding="0"  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0,0,1,0">
+                            <Border x:Name="optionMark" Background="{StaticResource RadioButton.Static.Glyph}" Padding="5" CornerRadius="100" />
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasContent" Value="true">
+                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
+                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.MouseOver.Border}"/>
+                            <Setter Property="Background" TargetName="optionMark" Value="{StaticResource RadioButton.MouseOver.Glyph}"/>
+                        </Trigger>
 
-   <!--ScrollBar-->
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="BorderThickness" TargetName="radioButtonBorder" Value="0"/>
+                            <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Checked.Background}"/>
+                            <Setter Property="Padding" TargetName="radioButtonBorder" Value="3"/>
+                            <Setter Property="Padding" TargetName="optionMark" Value="3"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Pressed.Border}"/>
+                            <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Pressed.Background}"/>
+                            <Setter Property="Background" TargetName="optionMark" Value="{StaticResource RadioButton.Pressed.Glyph}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Background}"/>
+                            <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Border}"/>
+                            <Setter Property="Background" TargetName="optionMark" Value="{StaticResource RadioButton.Disabled.Glyph}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--ScrollBar-->
     <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
     <sys:Double x:Key="{x:Static SystemParameters.HorizontalScrollBarHeightKey}">10</sys:Double>
 
@@ -376,7 +463,7 @@
             </Grid.ColumnDefinitions>
             <Border Grid.ColumnSpan="2" Name="Border"
                       BorderBrush="DarkGray" 
-                      CornerRadius="3.5" BorderThickness="0.2, 0.2, 0.2, 0"
+                      CornerRadius="3.5" BorderThickness="0.3, 0.3, 0.3, 0.3"
                       Background="#FCFCFC" 
                         VerticalAlignment="Stretch"/>
             <Border Grid.ColumnSpan="2" Name="Line"
@@ -394,12 +481,12 @@
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="White"/>
-                <Setter Property="BorderThickness" TargetName="Border" Value="0.3, 0.3, 0.3, 0"/>
+                <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
                 <Setter Property="BorderBrush" TargetName="Line" Value="#7EB4EA"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="White"/>
-                <Setter Property="BorderThickness" TargetName="Border" Value="0.3, 0.3, 0.3, 0"/>
+                <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
                 <Setter Property="BorderBrush" TargetName="Line" Value="#569DE5"/>
                 <Setter Property="Fill" TargetName="Arrow" Value="#BB444444"/>
 
@@ -444,7 +531,7 @@
                                    MaxHeight="480">
                             <Grid Name="DropDown">
                                 <Border Name="DropDownBorder" Background="White" Margin="0, -1, 0, 0"
-                                            CornerRadius="3.5" BorderThickness="1,1,1,1" 
+                                            CornerRadius="3.5" BorderThickness="0.4, 0.4, 0.4,0.4" 
                                             BorderBrush="DarkGray"/>
                                 <ScrollViewer Margin="1,3">
                                     <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />

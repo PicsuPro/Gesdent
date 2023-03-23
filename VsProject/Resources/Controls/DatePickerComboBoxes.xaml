@@ -8,8 +8,8 @@
     
 
     <StackPanel Orientation="Horizontal">
-        <ComboBox x:Name="DayComboBox" Width="60" SelectionChanged="UpdateSelectedDate" DropDownOpened="DayComboBox_DropDownOpened"/>
-        <ComboBox x:Name="MonthComboBox" Width="100" Margin="10,0,0,0" SelectionChanged="UpdateSelectedDate"/>
-        <ComboBox x:Name="YearComboBox" Width="80" Margin="10,0,0,0" SelectionChanged="UpdateSelectedDate"/>
+        <ComboBox x:Name="DayComboBox" Width="60" SelectionChanged="DayComboBox_SelectionChanged" DropDownOpened="DayComboBox_DropDownOpened" />
+        <ComboBox x:Name="MonthComboBox" Width="100" Margin="10,0,0,0" SelectionChanged="MonthComboBox_SelectionChanged" DropDownOpened="MonthComboBox_DropDownOpened"/>
+        <ComboBox x:Name="YearComboBox" Width="80" Margin="10,0,0,0" SelectionChanged="YearComboBox_SelectionChanged"/>
     </StackPanel>
 </UserControl>

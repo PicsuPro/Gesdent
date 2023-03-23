@@ -16,7 +16,12 @@ using System.Windows.Shapes;
 
 namespace VsProject.Resources.Controls
 {
-
+    public enum DatePickerTimes
+    {
+        All,
+        Past,
+        Future
+    }
     public partial class DatePickerComboBoxes : UserControl
     {
 
@@ -29,6 +34,9 @@ namespace VsProject.Resources.Controls
             var datePickerComboBoxes = (DatePickerComboBoxes)d;
             datePickerComboBoxes.UpdateComboBoxes();
         }
+
+        
+
         public DateTime SelectedDate
         {
             get { 
@@ -39,13 +47,29 @@ namespace VsProject.Resources.Controls
             }
         }
 
+        public static readonly DependencyProperty TimesProperty = DependencyProperty.Register(
+       "Times", typeof(DatePickerTimes), typeof(DatePickerComboBoxes), new PropertyMetadata(DatePickerTimes.All, OnTimesChanged));
 
+        public static void OnTimesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var datePickerComboBoxes = (DatePickerComboBoxes)d;
+            datePickerComboBoxes.SetYears();
+
+        }
+        public DatePickerTimes Times
+        {
+            get => (DatePickerTimes)GetValue(TimesProperty);
+            set => SetValue(TimesProperty, value);
+        }
 
         private static readonly List<string> months = new List<string>()
         {
             "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
             "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
         };
+
+        private int monthIndexCompensator = 1;
+
         public DatePickerComboBoxes()
         {
            
@@ -54,7 +78,7 @@ namespace VsProject.Resources.Controls
             // Initialize the ComboBoxes
             DayComboBox.ItemsSource = Enumerable.Range(1, 31);
             MonthComboBox.ItemsSource = months;
-            YearComboBox.ItemsSource = Enumerable.Range(1900, DateTime.Now.Year - 1900 + 1);
+            SetYears();
 
             UpdateComboBoxes();
         }
@@ -71,22 +95,38 @@ namespace VsProject.Resources.Controls
             return new DateTime(year, month, day);
         }
 
+        private void SetYears()
+        {
+            if (Times == DatePickerTimes.All)
+            {
+                YearComboBox.ItemsSource = Enumerable.Range(1900, DateTime.Now.Year - 1900 + 11);
+            }
+            else if (Times == DatePickerTimes.Past)
+            {
+                YearComboBox.ItemsSource = Enumerable.Range(1900, DateTime.Now.Year - 1900 + 1);
+            }
+            else
+            {
+                YearComboBox.ItemsSource = Enumerable.Range(DateTime.Now.Year, 11);
+            }
+        }
+
         private void UpdateComboBoxes()
         {
             DayComboBox.SelectedItem = SelectedDate.Day;
-            MonthComboBox.SelectedIndex = SelectedDate.Month - 1;
+            MonthComboBox.SelectedIndex = SelectedDate.Month - monthIndexCompensator;
             YearComboBox.SelectedItem = SelectedDate.Year;
 
         }
 
-        private void UpdateSelectedDate(object sender, SelectionChangedEventArgs e)
+        private void UpdateSelectedDate()
         {
             if (DayComboBox.SelectedItem == null || MonthComboBox.SelectedItem == null || YearComboBox.SelectedItem == null)
             {
                 return;
             }
             int day = (int)DayComboBox.SelectedItem;
-            int month = MonthComboBox.SelectedIndex + 1;
+            int month = MonthComboBox.SelectedIndex + monthIndexCompensator;
             int year = (int)YearComboBox.SelectedItem;
            
 
@@ -96,8 +136,120 @@ namespace VsProject.Resources.Controls
 
         private void DayComboBox_DropDownOpened(object sender, EventArgs e)
         {
-            DayComboBox.ItemsSource = Enumerable.Range(1, DateTime.DaysInMonth(SelectedDate.Year, SelectedDate.Month)).ToList();
+            int daysInMonth = DateTime.DaysInMonth(SelectedDate.Year, SelectedDate.Month);
+            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year &&
+                MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator && 
+                Times != DatePickerTimes.All)
+            {
+                int currentDay = DateTime.Now.Day;
+                if (Times == DatePickerTimes.Past)
+                {
+                    DayComboBox.ItemsSource = Enumerable.Range(1, currentDay);
+                }
+                else
+                {
+                    DayComboBox.ItemsSource = Enumerable.Range(currentDay, daysInMonth - currentDay);
+                }
+            }
+            else
+            {
+                DayComboBox.ItemsSource = Enumerable.Range(1, daysInMonth);
+            }
             
+        }
+        private void DayComboBox_SelectionChanged(object sender, EventArgs e)
+        {
+            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year &&
+                MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator &&
+                Times != DatePickerTimes.All)
+            {
+                int currentDay = DateTime.Now.Day;
+                if (Times == DatePickerTimes.Past)
+                {
+                    if ((int)DayComboBox.SelectedItem > currentDay)
+                    {
+                        DayComboBox.SelectedIndex = DayComboBox.Items.IndexOf(currentDay);
+                    }
+                }
+                else
+                {
+                    if ((int)DayComboBox.SelectedItem < currentDay)
+                    {
+                        DayComboBox.SelectedIndex = DayComboBox.Items.IndexOf(currentDay);
+                    }
+                }
+            }
+            UpdateSelectedDate();
+        }
+
+        private void MonthComboBox_DropDownOpened(object sender, EventArgs e)
+        {
+            if(Times == DatePickerTimes.All)
+            {
+                return;
+            }
+            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year)
+            {
+                int currentMonthIndex = DateTime.Now.Month - monthIndexCompensator;
+                if (Times == DatePickerTimes.Past )
+                {
+                     MonthComboBox.ItemsSource = months.Take(currentMonthIndex + monthIndexCompensator);
+                }else
+                {
+                    MonthComboBox.ItemsSource= months.Skip(currentMonthIndex + monthIndexCompensator -1);
+                    monthIndexCompensator = currentMonthIndex + monthIndexCompensator;
+                }
+            }
+            else
+            {
+                monthIndexCompensator = 1;
+                MonthComboBox.ItemsSource = months;
+            }
+        }
+
+        private void MonthComboBox_SelectionChanged(object sender, EventArgs e)
+        {
+            
+
+
+            if (Times != DatePickerTimes.All && (int?)YearComboBox.SelectedItem == DateTime.Now.Year)
+            {
+                int currentMonthIndex = DateTime.Now.Month - monthIndexCompensator;
+                int currentDay = DateTime.Now.Day;
+                if (Times == DatePickerTimes.Past)
+                {
+                    if (MonthComboBox.SelectedIndex > currentMonthIndex)
+                    {
+                        MonthComboBox.SelectedIndex = currentMonthIndex;
+                    }
+                    if (MonthComboBox.SelectedIndex == currentMonthIndex)
+                    {
+                        if ((int)DayComboBox.SelectedItem > currentDay)
+                        {
+                            DayComboBox.SelectedIndex = DayComboBox.Items.IndexOf(currentDay);
+                        }
+                    }
+                }else
+                {
+                    if (MonthComboBox.SelectedIndex < currentMonthIndex)
+                    {
+                        MonthComboBox.SelectedIndex = currentMonthIndex;
+                    }
+                    if (MonthComboBox.SelectedIndex == currentMonthIndex)
+                    {
+                        if ((int)DayComboBox.SelectedItem < currentDay)
+                        {
+                            DayComboBox.SelectedIndex = DayComboBox.Items.IndexOf(currentDay);
+                        }
+                    }
+                }
+            }
+            UpdateSelectedDate();
+        }
+
+        private void YearComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateSelectedDate();
         }
     }
 }
