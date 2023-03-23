@@ -528,7 +528,7 @@
                                    IsOpen="{TemplateBinding ComboBox.IsDropDownOpen}"
                                    PopupAnimation="Slide"
                                    MinWidth="{TemplateBinding Width}"
-                                   MaxHeight="480">
+                                   MaxHeight="465">
                             <Grid Name="DropDown">
                                 <Border Name="DropDownBorder" Background="White" Margin="0, -1, 0, 0"
                                             CornerRadius="3.5" BorderThickness="0.4, 0.4, 0.4,0.4" 

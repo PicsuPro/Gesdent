@@ -10,19 +10,7 @@ namespace VsProject.ViewModels
     {
         public StaffEditViewModel() 
         {
-            _myDate = DateTime.Now;
         }
-        private DateTime _myDate = DateTime.Now;
-
-
-        public DateTime MyDate
-        {
-            get { return _myDate; }
-            set
-            {
-                _myDate = value;
-                OnPropertyChanged(nameof(MyDate));
-            }
-        }
+     
     }
 }
