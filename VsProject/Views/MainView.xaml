@@ -13,40 +13,39 @@
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
-    <Grid>
+    <Grid  Background="#F0F2F5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="60"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <Image Source="/Resources/Images/logo.png"
-               Margin="5,20"
-               VerticalAlignment="Top" />
+                <Border  VerticalAlignment="Center" Background="White" Grid.Row="1" CornerRadius="0,30,30,0" >
+                    <ListBox x:Name="sidebar" 
+                     BorderThickness="0"
+                     Margin="0,10"
+                     Background="Transparent"
+                     Grid.Column="0"
+                     SelectionMode="Single"
+                     HorizontalAlignment="Center"
+                     VerticalAlignment="Center">
 
-        <ListBox x:Name="sidebar" 
-                 BorderThickness="0"
-                 Margin="0, 100"
-                 Grid.Column="0"
-                 SelectionMode="Single"
-                 HorizontalAlignment="Center"
-                 VerticalAlignment="Center">
+                        <controls:NavListBoxItem 
+                    Icon="{StaticResource homeIcon}"
+                    Navlink="HomeView.xaml"/>
+                        <controls:NavListBoxItem 
+                    Icon="{StaticResource patientIcon}"
+                    Navlink="HomeView.xaml"/>
+                        <controls:NavListBoxItem 
+                    Icon="{StaticResource doctorIcon}"
+                    Navlink="StaffEditView.xaml"/>
+                        <controls:NavListBoxItem 
+                    Icon="{StaticResource settingsIcon}"
+                    Navlink="SettingsUsersView.xaml">
+                        </controls:NavListBoxItem>
+                    </ListBox>
+                </Border>
 
-            <controls:NavListBoxItem 
-                Icon="{StaticResource homeIcon}"
-                Navlink="HomeView.xaml"/>
-            <controls:NavListBoxItem 
-                Icon="{StaticResource patientIcon}"
-                Navlink="HomeView.xaml"/>
-            <controls:NavListBoxItem 
-                Icon="{StaticResource doctorIcon}"
-                Navlink="StaffEditView.xaml"/>
-            <controls:NavListBoxItem 
-                Icon="{StaticResource settingsIcon}"
-                Navlink="SettingsUsersView.xaml">
-            </controls:NavListBoxItem>
-        </ListBox>
-        <Frame Grid.Column="1" x:Name="navFrame"   
-               Background="#F0F2F5"  Source="{Binding SelectedItem.Navlink, ElementName=sidebar}"
+            <Frame Grid.Column="1" x:Name="navFrame"   
+               Source="{Binding SelectedItem.Navlink, ElementName=sidebar}"
                NavigationUIVisibility="Hidden"/>
-
     </Grid>
 </Window>
