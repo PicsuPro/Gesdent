@@ -17,14 +17,14 @@ namespace VsProject
 
             VMVMappings.Initialize();
             var mainView = new MainView();
-            if ((bool)DialogService.Show(new LoginViewModel()))
-            {
+            //if ((bool)DialogService.Show(new LoginViewModel()))
+            //{
                 mainView.Show();
-            }
-            else
-            {
-                Shutdown();
-            }
+            //}
+            //else
+            //{
+            //    Shutdown();
+            //}
         }
     }
 }

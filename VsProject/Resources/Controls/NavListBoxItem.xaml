@@ -7,10 +7,9 @@
              mc:Ignorable="d"
              d:DesignHeight="24"
              d:DesignWidth="200"
-             Margin="5"
             HorizontalAlignment="Center"
              HorizontalContentAlignment="Center"
-             >
+             FocusVisualStyle="{x:Null}">       
 
     <ListBoxItem.Style>
         <Style TargetType="{x:Type ListBoxItem}">
@@ -18,26 +17,26 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border x:Name="back"
-                                CornerRadius="8"
                                 Background="Transparent"
                                 Padding="7"
-                                  HorizontalAlignment="Center">
+                                CornerRadius="8">
                             <Path x:Name="icon"
-                                  HorizontalAlignment="Center"
+                                  SnapsToDevicePixels="True"
+                                  HorizontalAlignment="Stretch"
                                   Data="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                   Stretch="Uniform"
-                                  Fill="DarkGray"
+                                  Fill="Gray"
                                   Height="24"
                                   Width="24" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="icon" Property="Fill" Value="Gray" />
-                                <Setter TargetName="back" Property="Background" Value="LightGray" />
+                                <Setter TargetName="icon" Property="Fill" Value="{StaticResource primary1}" />
+                                <Setter TargetName="back" Property="Background" Value="#227EB4EA" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="icon" Property="Fill" Value="WhiteSmoke" />
-                                <Setter TargetName="back" Property="Background" Value="{StaticResource primary1}" />
+                                <Setter TargetName="icon" Property="Fill" Value="{StaticResource primary1}" />
+                                <Setter TargetName="back" Property="Background" Value="#227EB4EA    " />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
