@@ -8,13 +8,9 @@ using System.Security.Cryptography;
 using VsProject.Models;
 
 
-
 namespace VsProject.Models.Repositories
 {
-    using BCrypt.Net;
-    using System.Data.SqlTypes;
-    using System.Diagnostics;
-    using System.Text;
+    
 
     public class UserRepository : RepositoryBase, IUserRepository
     {
@@ -39,9 +35,9 @@ namespace VsProject.Models.Repositories
                         return false;
                     }
 
-                    string hash = Encoding.UTF8.GetString((byte[])reader["hash"]);
-                    string salt = Encoding.UTF8.GetString((byte[])reader["salt"]);
-                    string hashedPassword = BCrypt.HashPassword(credential.Password, salt);
+                    string hash = System.Text.Encoding.UTF8.GetString((byte[])reader["hash"]);
+                    string salt = System.Text.Encoding.UTF8.GetString((byte[])reader["salt"]);
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(credential.Password, salt);
                     validUser = string.Equals(hashedPassword, hash);
                 }
             }
@@ -59,7 +55,6 @@ namespace VsProject.Models.Repositories
                     throw new ArgumentNullException("user");
                 }
 
-                // Check if the username already exists
                 if (GetByUsername(userModel.UserName) == null)
                 {
                     connection.Open();
@@ -67,16 +62,16 @@ namespace VsProject.Models.Repositories
                     command.CommandText = "INSERT INTO [User] (username, hash, salt, email) " +
                                           "VALUES (@username, @hash, @salt, @email)";
 
-                    string salt = BCrypt.GenerateSalt();
-                    string hash = BCrypt.HashPassword(userModel.Hash, salt);
+                    string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                    string hash = BCrypt.Net.BCrypt.HashPassword(userModel.Hash, salt);
 
-                    byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
-                    byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
+                    byte[] saltBytes = System.Text.Encoding.UTF8.GetBytes(salt);
+                    byte[] hashBytes = System.Text.Encoding.UTF8.GetBytes(hash);
 
                     command.Parameters.AddWithValue("@username", userModel.UserName);
                     command.Parameters.AddWithValue("@hash", hashBytes);
                     command.Parameters.AddWithValue("@salt", saltBytes);
-                    command.Parameters.AddWithValue("@email", string.IsNullOrWhiteSpace(userModel.Email) ? DBNull.Value : userModel.Email);
+                    command.Parameters.AddWithValue("@email", userModel.Email.DBNullOrWS());
 
                     command.ExecuteNonQuery();
                 }
@@ -99,10 +94,10 @@ namespace VsProject.Models.Repositories
                 if (!string.IsNullOrWhiteSpace(userModel.Hash))
                 {
                     command.CommandText = "UPDATE [User] SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
-                    string salt = BCrypt.GenerateSalt();
-                    string hash = BCrypt.HashPassword(userModel.Hash, salt);
-                    byte[] saltBytes = Encoding.UTF8.GetBytes(salt);
-                    byte[] hashBytes = Encoding.UTF8.GetBytes(hash);
+                    string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                    string hash = BCrypt.Net.BCrypt.HashPassword(userModel.Hash, salt);
+                    byte[] saltBytes = System.Text.Encoding.UTF8.GetBytes(salt);
+                    byte[] hashBytes = System.Text.Encoding.UTF8.GetBytes(hash);
                     command.Parameters.AddWithValue("@hash", hashBytes);
                     command.Parameters.AddWithValue("@salt", saltBytes);
                 }else
@@ -110,7 +105,7 @@ namespace VsProject.Models.Repositories
                     command.CommandText = "UPDATE [User] SET username=@username, email=@email WHERE id=@id";
                 }
                 command.Parameters.AddWithValue("@username", userModel.UserName);
-                command.Parameters.AddWithValue("@email", userModel.Email);
+                command.Parameters.AddWithValue("@email", userModel.Email.DBNullOrWS());
                 command.Parameters.AddWithValue("@id", userModel.Id);
 
                 command.ExecuteNonQuery();
@@ -130,8 +125,12 @@ namespace VsProject.Models.Repositories
             }
         }
 
-        public UserModel? GetByUsername(string username)
+        public UserModel? GetByUsername(string? username)
         {
+            if(!UsernameExists(username)) 
+            {
+                return null;
+            }
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
@@ -147,7 +146,7 @@ namespace VsProject.Models.Repositories
                         {
                             Id = reader["Id"].DBValue<Guid>(),
                             UserName = reader["username"].DBValue<string>(),
-                            Hash = Encoding.UTF8.GetString(reader["hash"].DBValue<byte[]>()),
+                            Hash = System.Text.Encoding.UTF8.GetString(reader["hash"].DBValue<byte[]>()),
                             Email = reader["Email"].DBValue<string>()
                         };
                         return userModel;
@@ -187,10 +186,12 @@ namespace VsProject.Models.Repositories
             return users;
         }
 
-        public UserModel? GetById(Guid id)
+        public UserModel? GetById(Guid? id)
         {
-            UserModel user;
-
+            if (!IdExists(id))
+            {
+                return null;
+            }
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
             {
@@ -203,11 +204,11 @@ namespace VsProject.Models.Repositories
                 {
                     if (reader.Read())
                     {
-                        user = new UserModel
+                        UserModel user = new UserModel
                         {
                             Id = reader["Id"].DBValue<Guid>(),
                             UserName = reader["username"].DBValue<string>(),
-                            Hash = Encoding.UTF8.GetString(reader["hash"].DBValue<byte[]>()),
+                            Hash = System.Text.Encoding.UTF8.GetString(reader["hash"].DBValue<byte[]>()),
                             Email = reader["Email"].DBValue<string>()
                         };
                         return user;
@@ -218,6 +219,45 @@ namespace VsProject.Models.Repositories
 
         }
 
+        private bool IdExists(Guid? id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT COUNT(*) FROM [User] WHERE Id=@id";
+                command.Parameters.AddWithValue("@id", id);
+
+                return (int)command.ExecuteScalar() > 0;
+            }
+        }
+
+
+        private bool UsernameExists(string? username)
+        {
+            if (string.IsNullOrEmpty(username))
+            {
+                return false;
+            }
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "SELECT COUNT(*) FROM [User] WHERE username = @username";
+                command.Parameters.AddWithValue("@username", username);
+
+                return (int)command.ExecuteScalar() > 0;
+            }
         }
 
     }
+
+}

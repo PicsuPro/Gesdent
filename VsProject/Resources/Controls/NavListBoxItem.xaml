@@ -7,12 +7,13 @@
              mc:Ignorable="d"
              d:DesignHeight="24"
              d:DesignWidth="200"
-            HorizontalAlignment="Center"
+             HorizontalAlignment="Center"
              HorizontalContentAlignment="Center"
-             FocusVisualStyle="{x:Null}">       
+             FocusVisualStyle="{x:Null}">
 
     <ListBoxItem.Style>
         <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Foreground" Value="Gray"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
@@ -25,17 +26,17 @@
                                   HorizontalAlignment="Stretch"
                                   Data="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
                                   Stretch="Uniform"
-                                  Fill="Gray"
+                                  Fill="{TemplateBinding Foreground}"
                                   Height="24"
                                   Width="24" />
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="icon" Property="Fill" Value="{StaticResource primary1}" />
+                                <Setter Property="Foreground" Value="{StaticResource primary1}" />
                                 <Setter TargetName="back" Property="Background" Value="#227EB4EA" />
                             </Trigger>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="icon" Property="Fill" Value="{StaticResource primary1}" />
+                                <Setter Property="Foreground" Value="{StaticResource primary1}" />
                                 <Setter TargetName="back" Property="Background" Value="#227EB4EA    " />
                             </Trigger>
                         </ControlTemplate.Triggers>

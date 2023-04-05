@@ -37,7 +37,7 @@
     <Window.DataContext>
         <viewModels:MainViewModel/>
     </Window.DataContext>
-    <Grid >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition />
@@ -46,6 +46,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition />
         </Grid.RowDefinitions>
+
         <ToggleButton x:Name="SettingsButton" Grid.Row="0" Grid.Column="0"
                       Margin="0,15"
                       Background="#00000000" Width="24" Height="24" Padding="1" VerticalAlignment="Bottom" 
@@ -85,34 +86,35 @@
                 </Menu>
             </Popup>
         </ToggleButton>
+        <ListBox x:Name="sidebar" 
+                    BorderThickness="0"
+                    Background="White"
+                    Grid.Column="0"
+                    Grid.RowSpan="2"
+                    SelectionMode="Single"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center" Margin="5,0"
+                    SelectedIndex="1">
 
-        <Border  VerticalAlignment="Stretch" Background="White" Grid.Row="1" >
-            <ListBox x:Name="sidebar" 
-                     BorderThickness="0"
-                     Background="Transparent"
-                     Grid.Column="0"
-                     Grid.RowSpan="2"
-                     SelectionMode="Single"
-                     HorizontalAlignment="Center"
-                     VerticalAlignment="Center" Margin="5,0"
-                     SelectedIndex="0">
+            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
+                Navlink="HomeView.xaml"
+                Margin="0,5"
+                KeyboardNavigation.IsTabStop="False"/>
+            <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
+                                        Navlink="PatientEditView.xaml"
+                                        Margin="0,5"
+                                        KeyboardNavigation.IsTabStop="False"/>
+           <controls:NavListBoxItem Icon="{StaticResource toothIcon}"
+                                        Navlink="PatientEditView.xaml"
+                                        Margin="0,5"
+                                        KeyboardNavigation.IsTabStop="False"/>
+            <controls:NavListBoxItem Icon="{StaticResource doctorIcon}"
+                                        Navlink="StaffEditView.xaml"
+                                        Margin="0,5"
+                                        KeyboardNavigation.IsTabStop="False"/>
+        </ListBox>
 
-                <controls:NavListBoxItem 
-                    Icon="{StaticResource homeIcon}"
-                    Navlink="HomeView.xaml"
-                    Margin="0,5"
-                    KeyboardNavigation.IsTabStop="False"/>
-                <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
-                                            Navlink="HomeView.xaml"
-                                            Margin="0,5"
-                                            KeyboardNavigation.IsTabStop="False"/>
-                <controls:NavListBoxItem Icon="{StaticResource doctorIcon}"
-                                         Navlink="StaffEditView.xaml"
-                                         Margin="0,5"
-                                         KeyboardNavigation.IsTabStop="False"/>
-            </ListBox>
-        </Border>
-
+        
         <Frame Background="#F0F2F5"
                 Grid.Column="1"
                 Grid.RowSpan="2" x:Name="navFrame"   

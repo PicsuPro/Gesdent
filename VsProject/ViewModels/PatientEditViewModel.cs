@@ -8,7 +8,7 @@ using VsProject.Models;
 
 namespace VsProject.ViewModels
 {
-    public class StaffEditViewModel : ViewModelBase
+    public class PatientEditViewModel : ViewModelBase
     {
         private StaffModel _staff;
         private string _lastName = "";
@@ -145,7 +145,7 @@ namespace VsProject.ViewModels
 
 
         public ICommand SaveEditCommand { get; }
-        public StaffEditViewModel()
+        public PatientEditViewModel()
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Staff = UserPrincipal.StaffRepository.GetById(UserPrincipal.Current?.Id) ?? new StaffModel();

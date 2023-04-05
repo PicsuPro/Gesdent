@@ -40,4 +40,10 @@
     <Resource Include="Resources\Images\user.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\PatientEditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>

@@ -22,10 +22,16 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="50"/>
+            </Grid.ColumnDefinitions>
 
             <StackPanel Width="350"
+                        HorizontalAlignment="Left"
                         Orientation="Vertical"
-                        Margin="0,35,0,0"
+                        Grid.Column="1"
                         Grid.Row="1">
 
                 <TextBlock Text="Nom *"
@@ -36,7 +42,7 @@
                             Margin="0,25,0,0"/>
 
                 <TextBox x:Name="txtName"
-                         Text=""
+                         Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"/>
 
@@ -47,7 +53,7 @@
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
 
-                <TextBox Text=""
+                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"/>
 
@@ -59,58 +65,57 @@
                             FontWeight="Medium"
                              Margin="0,25,0,0"/>
                 <StackPanel Margin="0,9,0,0" Orientation="Horizontal">
-                    <RadioButton Content="Male" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" />
-                    <RadioButton Content="Femelle" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" />
+                    <RadioButton Content="Male" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
+                                 IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <RadioButton Content="Femelle" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
+                                 IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 </StackPanel>
 
-                <TextBlock Text="Téléphone"
+                <TextBlock Text="Numéro principal *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
 
-                <TextBox Text=""
+                <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"/>
 
 
-                <TextBlock Text="Téléphone mobile"
+                <TextBlock Text="Numéro secondaire"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
 
-                <TextBox Text=""
+                <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"/>
 
-                <TextBlock Text="Email"
+                <TextBlock Text="Email *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
 
-                <TextBox Text=""
+                <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"/>
 
-                <TextBlock Text="Date de naissance"
+                <TextBlock Text="Date de naissance *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <controls:DatePickerComboBoxes  x:Name="datePickerComboBoxes" 
-                                                Times="All"
-                                                Margin="0,9,0,0"/>
-                  
-                
-
-
-
+                <controls:DatePickerComboBoxes  
+                    SelectedDate="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    x:Name="datePickerComboBoxes" 
+                    Times="Past"
+                    Margin="0,9,0,0"/>
 
                 <TextBlock Text=""
                            Foreground="IndianRed"
@@ -122,8 +127,8 @@
                            TextWrapping="Wrap"/>
 
                 <Button x:Name="btnLogin"
-                        Command=""
-                        Content="Connexion"
+                        Command="{Binding SaveEditCommand}"
+                        Content="Enregistrer"
                         FontWeight="DemiBold"
                         FontSize="16"
                         Grid.Column="2"

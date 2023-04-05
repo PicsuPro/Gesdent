@@ -32,7 +32,9 @@ namespace VsProject.Resources.Controls
         public static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var datePickerComboBoxes = (DatePickerComboBoxes)d;
+            datePickerComboBoxes.isUserAction = false;
             datePickerComboBoxes.UpdateComboBoxes();
+            datePickerComboBoxes.isUserAction = true;
         }
 
         
@@ -44,6 +46,7 @@ namespace VsProject.Resources.Controls
             set
             {
                 SetValue(SelectedDateProperty, value);
+                UpdateComboBoxes();
             }
         }
 
@@ -70,6 +73,7 @@ namespace VsProject.Resources.Controls
 
         private int monthIndexCompensator = 1;
 
+        private bool isUserAction = false;
         public DatePickerComboBoxes()
         {
            
@@ -121,6 +125,11 @@ namespace VsProject.Resources.Controls
 
         private void UpdateSelectedDate()
         {
+            if (!isUserAction)
+            {
+                return;
+            }
+
             if (DayComboBox.SelectedItem == null || MonthComboBox.SelectedItem == null || YearComboBox.SelectedItem == null)
             {
                 return;
@@ -159,6 +168,10 @@ namespace VsProject.Resources.Controls
         }
         private void DayComboBox_SelectionChanged(object sender, EventArgs e)
         {
+            if (!isUserAction)
+            {
+                return;
+            }
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year &&
                 MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator &&
                 Times != DatePickerTimes.All)
@@ -184,6 +197,7 @@ namespace VsProject.Resources.Controls
 
         private void MonthComboBox_DropDownOpened(object sender, EventArgs e)
         {
+
             if(Times == DatePickerTimes.All)
             {
                 return;
@@ -209,7 +223,10 @@ namespace VsProject.Resources.Controls
 
         private void MonthComboBox_SelectionChanged(object sender, EventArgs e)
         {
-            
+            if (!isUserAction)
+            {
+                return;
+            }
 
 
             if (Times != DatePickerTimes.All && (int?)YearComboBox.SelectedItem == DateTime.Now.Year)
@@ -249,6 +266,10 @@ namespace VsProject.Resources.Controls
 
         private void YearComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!isUserAction)
+            {
+                return;
+            }
             UpdateSelectedDate();
         }
     }

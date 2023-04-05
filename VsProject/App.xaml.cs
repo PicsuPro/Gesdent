@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
+using VsProject.Models;
 using VsProject.Services;
 using VsProject.ViewModels;
 using VsProject.Views;
@@ -19,6 +22,7 @@ namespace VsProject
             var mainView = new MainView();
             //if ((bool)DialogService.Show(new LoginViewModel()))
             //{
+            UserPrincipal.Set(new NetworkCredential("mum", "mum"));
                 mainView.Show();
             //}
             //else

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using VsProject.Resources.Controls;
-using VsProject.ViewModels;
 
-namespace VsProject.Views
+namespace VsProject.Resources.Controls
 {
     /// <summary>
-    /// Interaction logic for StaffEditView.xaml
+    /// Interaction logic for DentalChart.xaml
     /// </summary>
-    public partial class PatientEditView : UserControl
+    public partial class DentalChart : UserControl
     {
-        public PatientEditView()
+        public DentalChart()
         {
             InitializeComponent();
-
         }
-       
-       
-
     }
 }

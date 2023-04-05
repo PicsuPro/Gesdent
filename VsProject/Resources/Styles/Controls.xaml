@@ -5,12 +5,10 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="Foreground" Value="{DynamicResource primaryFore1}"/>
-        <Setter Property="CaretBrush" Value="LightGray"/>
+        <Setter Property="CaretBrush" Value="DarkGray"/>
         <Setter Property="BorderBrush" Value="DarkGray"/>
         <Setter Property="BorderThickness" Value="0 0 0 1"/>
-        <Setter Property="Height" Value="28"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="0 0 25 0"/>
+        <Setter Property="Padding" Value="0 6 20 6"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
    
@@ -19,16 +17,40 @@
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="Foreground" Value="{DynamicResource primaryFore1}"/>
-        <Setter Property="CaretBrush" Value="LightGray"/>
+        <Setter Property="CaretBrush" Value="DarkGray"/>
         <Setter Property="BorderBrush" Value="DarkGray"/>
-        <Setter Property="BorderThickness" Value="0 0 0 1"/>
-        <Setter Property="Height" Value="28"/>
+        <Setter Property="BorderThickness" Value="0 5 0 5"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding" Value="0 0 25 0"/>
+        <Setter Property="Padding" Value="0 6 20 6"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
 
     <!--Button-->
+
+    <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="#555"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="DarkGray"/>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Foreground" Value="Gray"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <ControlTemplate x:Key="HamburgerMenuTemplate" TargetType="ToggleButton">
+        <Grid>
+            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                Margin="{TemplateBinding Padding}">
+                <Viewbox>
+                    <Path x:Name="icon" Fill="{TemplateBinding Foreground}" Data="{StaticResource menuIcon}" Margin="-2,-2,2,2" />
+                </Viewbox>
+            </Border>
+
+        </Grid>
+    </ControlTemplate>
+
     <Style x:Key="WindowButton" TargetType="Button">
         <Setter Property="Width" Value="25"/>
         <Setter Property="Focusable" Value="False" />

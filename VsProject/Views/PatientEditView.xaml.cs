@@ -21,9 +21,9 @@ namespace VsProject.Views
     /// <summary>
     /// Interaction logic for StaffEditView.xaml
     /// </summary>
-    public partial class PatientEditView : UserControl
+    public partial class StaffEditView : UserControl
     {
-        public PatientEditView()
+        public StaffEditView()
         {
             InitializeComponent();
 

@@ -18,6 +18,10 @@ namespace VsProject.Models.Repositories
 
             return (T)obj;
         }
+        public static object? DBNullOrWS(this string? s)
+        {
+            return string.IsNullOrWhiteSpace(s) ? DBNull.Value : s;
+        }
     }
 
     public abstract class RepositoryBase
