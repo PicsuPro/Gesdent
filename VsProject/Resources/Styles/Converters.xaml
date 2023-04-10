@@ -1,8 +1,11 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:c="clr-namespace:VsProject.Resources.Converters">
 
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
-  
+    <c:ToothDataConverter x:Key="ToothDataConverter"/>
+    <c:ToothIndexToColumnConverter x:Key="ToothIndexToColumnConverter"/>
+    <c:ToothIndexToRowConverter x:Key="ToothIndexToRowConverter"/>
 
 </ResourceDictionary>

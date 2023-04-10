@@ -8,13 +8,53 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <ListBox.ItemsPanel>
         <ItemsPanelTemplate>
-            <UniformGrid Columns="16"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+            </Grid>
         </ItemsPanelTemplate>
     </ListBox.ItemsPanel>
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Path Fill="Black" Data="{Binding PathData}"/>
+            <Viewbox  >
+                <Path SnapsToDevicePixels="True"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Stretch"
+                      Stretch="Uniform"
+                      Fill="Black" 
+                      Data="{Binding Index, Converter={StaticResource ToothDataConverter}}"/>
+            </Viewbox>
         </DataTemplate>
     </ListBox.ItemTemplate>
-   
+    <ListBox.ItemContainerStyle>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Grid.Row" Value="{Binding Path=Content.Index, RelativeSource={RelativeSource Self}, Converter={StaticResource ToothIndexToRowConverter}, ConverterParameter=16}"/>
+            <Setter Property="Grid.Column" Value="{Binding Path=Content.Index, RelativeSource={RelativeSource Self}, Converter={StaticResource ToothIndexToColumnConverter}, ConverterParameter=16}"/>
+        </Style>
+    </ListBox.ItemContainerStyle>
+
 </ListBox>

@@ -18,7 +18,7 @@ namespace VsProject.Resources.Controls
     /// <summary>
     /// Interaction logic for DentalChart.xaml
     /// </summary>
-    public partial class DentalChart : UserControl
+    public partial class DentalChart : ListBox
     {
         public DentalChart()
         {

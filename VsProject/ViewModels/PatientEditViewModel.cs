@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ namespace VsProject.ViewModels
         private StaffModel _staff;
         private string _lastName = "";
         private string _firstName = "";
+
         private bool? _isMale;
-        
         private bool? _isFemale;
         
         private string _phone = "";
@@ -23,6 +24,20 @@ namespace VsProject.ViewModels
         private DateTime? _birthDate;
         private string _errorMessage = "";
         private bool _isNewStaff = false;
+
+        private ObservableCollection<ToothModel> _teeth = new ObservableCollection<ToothModel>(
+                                                          Enumerable.Range(1, 32).Select(i => new ToothModel { Index = i })
+                                                          );
+
+        public ObservableCollection<ToothModel> Teeth
+        {
+            get => _teeth;
+            set
+            {
+                _teeth = value;
+                OnPropertyChanged(nameof(Teeth));
+            }
+        }
 
         public StaffModel Staff
         {
@@ -66,7 +81,6 @@ namespace VsProject.ViewModels
                 }
             }
         }
-
         public bool? IsFemale
         {
             get { return _isFemale; }
