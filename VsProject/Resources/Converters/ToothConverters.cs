@@ -23,17 +23,14 @@ namespace VsProject.Resources.Converters
         {
             throw new NotImplementedException();
         }
-        
-
     }
-    public class ToothIndexToRowConverter : IValueConverter
+    class ToothTopDataConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || !(value is int index) || index < 1)
-                return DependencyProperty.UnsetValue;
-
-            return (index - 1)  / 16; // Assuming 16 columns
+            int index = (int)value;
+            string resourceName = "toothTopData" + index;
+            return (Geometry)Application.Current.TryFindResource(resourceName);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -49,7 +46,37 @@ namespace VsProject.Resources.Converters
             if (value == null || !(value is int index) || index < 1)
                 return DependencyProperty.UnsetValue;
 
-            return (index - 1) % 16; // Assuming 16 columns
+            return (index - 1) % 16;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class ToothIndexToRowConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null || !(value is int index) || index < 1)
+                return DependencyProperty.UnsetValue;
+
+            return (index - 1) / 16; 
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class ReverseToothIndexToRowConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null || !(value is int index) || index < 1)
+                return DependencyProperty.UnsetValue;
+
+            return (((index - 1) / 16) == 0) ? 1 : 0; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
