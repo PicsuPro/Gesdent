@@ -45,8 +45,10 @@ namespace VsProject.Resources.Converters
         {
             if (value == null || !(value is int index) || index < 1)
                 return DependencyProperty.UnsetValue;
-
-            return (index - 1) % 16;
+            if(index  <= 16)
+                return (index - 1);
+            else 
+                return 15 - (index -  17);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -77,6 +79,21 @@ namespace VsProject.Resources.Converters
                 return DependencyProperty.UnsetValue;
 
             return (((index - 1) / 16) == 0) ? 1 : 0; 
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class ToothIndexToVerticalAlignmentConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value == null || !(value is int index) || index < 1)
+                return DependencyProperty.UnsetValue;
+
+            return  (VerticalAlignment)((index - 1) / 16) == 0 ? VerticalAlignment.Bottom : VerticalAlignment.Top; 
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
