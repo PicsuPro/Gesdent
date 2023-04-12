@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:VsProject.Resources.Controls"
         xmlns:viewModels="clr-namespace:VsProject.ViewModels" d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainView" Height="720" Width="1300"
+        Title="MainView" Height="1000" Width="1700"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
@@ -104,7 +104,7 @@
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
-           <controls:NavListBoxItem Icon="{StaticResource toothIcon}"
+           <controls:NavListBoxItem Icon="{StaticResource toothFrontData22}"
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>

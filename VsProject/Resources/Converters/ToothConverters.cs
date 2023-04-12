@@ -10,26 +10,18 @@ using System.Windows.Media;
 
 namespace VsProject.Resources.Converters
 {
+    public enum ToothDataType { Front, Top, FrontFill, TopFill }
     class ToothDataConverter : IValueConverter
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            int index = (int)value;
-            string resourceName = "toothData" + index;
-            return (Geometry)Application.Current.TryFindResource(resourceName);
-        }
+            if (value == null || !(value is int index) || index < 1)
+                return DependencyProperty.UnsetValue;
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    class ToothTopDataConverter : IValueConverter
-    {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            int index = (int)value;
-            string resourceName = "toothTopData" + index;
+            if (parameter == null || !(parameter is ToothDataType dataType))
+                throw new ArgumentException("Invalid parameter type or value.");
+
+            string resourceName = "tooth" + dataType.ToString() + "Data" + index;
             return (Geometry)Application.Current.TryFindResource(resourceName);
         }
 
@@ -62,8 +54,20 @@ namespace VsProject.Resources.Converters
         {
             if (value == null || !(value is int index) || index < 1)
                 return DependencyProperty.UnsetValue;
-
-            return (index - 1) / 16; 
+            if (parameter != null && parameter is ToothDataType dataType)
+            {
+                switch (dataType)
+                {
+                    case ToothDataType.Top:
+                        return ((index - 1) / 16) == 0 ? 3 : 0;
+                    case ToothDataType.Front:
+                        return 1;
+                    default:
+                        return 0;
+                }
+            }
+            else
+                return ((index - 1) / 16) == 0 ? 0 : 3;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -71,21 +75,8 @@ namespace VsProject.Resources.Converters
             throw new NotImplementedException();
         }
     }
-    public class ReverseToothIndexToRowConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value == null || !(value is int index) || index < 1)
-                return DependencyProperty.UnsetValue;
 
-            return (((index - 1) / 16) == 0) ? 1 : 0; 
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
     public class ToothIndexToVerticalAlignmentConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -101,4 +92,6 @@ namespace VsProject.Resources.Converters
             throw new NotImplementedException();
         }
     }
+
+
 }

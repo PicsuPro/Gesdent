@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VsProject.Resources.Controls"
+             xmlns:converters="clr-namespace:VsProject.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
          HorizontalAlignment="Center"
@@ -42,19 +43,43 @@
                 <Grid >
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
                         <RowDefinition  Height="*"/>
                     </Grid.RowDefinitions>
-                    <Path Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter}}"
+                    <TextBlock Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter}}"
+                        Text="{Binding Index}"
+                            FontSize="4"
+                            HorizontalAlignment="Center"
+                            FontFamily="Bahnschrift"
+                            Margin="0,1"/>
+                    <Path
+                          Grid.Row="1"
                           Stretch="Uniform"
-                          Fill="Black" 
-                          Data="{Binding Index, Converter={StaticResource ToothDataConverter}}"
+                          Fill="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
+                          Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.FrontFill}}"
                           HorizontalAlignment="Center"
                           VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
-                          Height="28.3"/>
-                    <Path Grid.Row="{Binding Index, Converter={StaticResource ReverseToothIndexToRowConverter}}"
+                          Height="28"/>
+                    <Path
+                          Grid.Row="1"
                           Stretch="Uniform"
-                          Fill="Black" 
-                          Data="{Binding Index, Converter={StaticResource ToothTopDataConverter}}"
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
+                          Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
+                          Height="28"/>
+
+                    <Path Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter},ConverterParameter={x:Static converters:ToothDataType.Top}}"
+                          Stretch="Uniform"
+                          Fill="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
+                          Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.TopFill}}"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
+                          Height="16"/>
+                    <Path Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter},ConverterParameter={x:Static converters:ToothDataType.Top}}"
+                          Stretch="Uniform"
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
+                          Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Top}}"
                           HorizontalAlignment="Center"
                           VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
                           Height="16"/>
@@ -64,14 +89,36 @@
     </ListBox.ItemTemplate>
     <ListBox.ItemContainerStyle>
         <Style TargetType="ListBoxItem">
+            <Setter Property="Background" Value="#05000000" />
+            <Setter Property="Foreground" Value="#50000000" />
             <Setter Property="Height" Value="200"/>
             <Setter Property="Margin" Value="0,30"/>
-            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Padding" Value="0,5"/>
             <Setter Property="VerticalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalAlignment" Value="Stretch"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Grid.Row" Value="{Binding Content.Index, RelativeSource={RelativeSource Self}, Converter={StaticResource ToothIndexToRowConverter}}"/>
             <Setter Property="Grid.Column" Value="{Binding Content.Index, RelativeSource={RelativeSource Self}, Converter={StaticResource ToothIndexToColumnConverter}}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+               <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#00000000"/>
+                    <Setter Property="Foreground" Value="#75000000" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#00000000"/>
+                    <Setter Property="Foreground" Value="#CC000000" />
+                    <Setter Property="FontWeight" Value="Bold"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </ListBox.ItemContainerStyle>
 
