@@ -9,31 +9,13 @@
              xmlns:model="clr-namespace:VsProject.Models" 
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1580"
+             d:DesignHeight="720" d:DesignWidth="1300"
              Background="#F0F2F5">
     <UserControl.DataContext>
         <viewModel:PatientEditViewModel/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <PathFigureCollection x:Key="ShoeEdgeFigures">
-            M 0.5048,0
-    C 0.7783,0 1,0.164 1,0.361 1,0.478 0.9218,0.582 0.8011,0.647
-    L 0.7952,0.65 0.8079,0.657
-    C 0.8735,0.693 0.9135,0.742 0.9135,0.795 0.9135,0.908 0.7316,1 0.5072,1
-      0.2828,1 0.101,0.908 0.101,0.795 0.101,0.742 0.1409,0.693 0.2065,0.657
-    L 0.2168,0.651 0.2085,0.647
-    C 0.0878,0.582 0,0.478 0,0.361 0,0.164 0.2313,0 0.5048,0
-    Z
-        </PathFigureCollection>
-        <PathGeometry x:Key="ShoeEdgeGeometry" Figures="{StaticResource ShoeEdgeFigures}" />
-        <PathGeometry x:Key="StaticClipGeometry" Figures="{StaticResource ShoeEdgeFigures}">
-            <PathGeometry.Transform>
-                <ScaleTransform ScaleX="100" ScaleY="200" />
-            </PathGeometry.Transform>
-        </PathGeometry>
-    </UserControl.Resources>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-        <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
+            <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
                 <RowDefinition Height="*"/>
@@ -44,7 +26,7 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
@@ -223,9 +205,12 @@
                          Margin="0,4,0,0"/>
 
             </StackPanel>
-            <controls:DentalChart  ItemsSource="{Binding Teeth}"
-                                   Grid.Column="3"
-                                   Grid.Row="1"/>
+            <local:PatientDentalChartView 
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Margin="25,0,0,0"
+                Grid.Column="3"
+                Grid.Row="1"/>
 
             <TextBlock Text=""
                            Foreground="IndianRed"
@@ -246,11 +231,10 @@
                         Margin="0,40,0,0"
                         Cursor="Hand"
                         IsDefault="True"
-                        BorderThickness="0"
                         Style="{StaticResource PopupWindowMainButton}"
                         Grid.Column="1"
-                        Grid.ColumnSpan="2"
-                       Grid.Row="2">
+                        Grid.ColumnSpan="3"
+                        Grid.Row="2">
 
                     <Button.Template>
                             <ControlTemplate TargetType="Button">
@@ -264,6 +248,6 @@
                             </ControlTemplate>
                         </Button.Template>
                     </Button>
-        </Grid>
+            </Grid>
     </ScrollViewer>
 </UserControl>

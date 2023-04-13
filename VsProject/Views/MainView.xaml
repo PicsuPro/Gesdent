@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:VsProject.Views" 
         xmlns:controls="clr-namespace:VsProject.Resources.Controls"
-        xmlns:viewModels="clr-namespace:VsProject.ViewModels" d:DataContext="{d:DesignInstance Type=viewModels:MainViewModel}"
+        xmlns:viewModels="clr-namespace:VsProject.ViewModels"
         mc:Ignorable="d"
         Title="MainView" Height="1000" Width="1700"
         WindowStartupLocation="CenterScreen">
@@ -104,8 +104,8 @@
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
-           <controls:NavListBoxItem Icon="{StaticResource toothFrontData22}"
-                                        Navlink="PatientEditView.xaml"
+            <controls:NavListBoxItem Icon="{StaticResource toothFrontData10}"
+                                        Navlink="PatientDentalChartView.xaml"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource doctorIcon}"

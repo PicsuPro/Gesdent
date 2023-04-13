@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace VsProject.Resources.Converters
 {
-    public enum ToothDataType { Front, Top, FrontFill, TopFill }
+    public enum ToothDataType { Front, Top, FrontFill, TopFill}
     class ToothDataConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

@@ -11,13 +11,13 @@
     <Compile Update="Resources\Controls\DatePickerComboBoxes.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Resources\Controls\DentalChart.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\PatientDentalChartView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\SettingsView.xaml.cs">
@@ -43,9 +43,6 @@
     <Page Update="Resources\Controls\DatePickerComboBoxes.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resources\Controls\DentalChart.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Resources\Controls\NavListBoxItem.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -62,6 +59,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PatientDentalChartView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsView.xaml">
