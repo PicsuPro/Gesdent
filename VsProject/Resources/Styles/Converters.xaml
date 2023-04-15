@@ -5,7 +5,4 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     <c:ToothDataConverter x:Key="ToothDataConverter"/>
-    <c:ToothIndexToColumnConverter x:Key="ToothIndexToColumnConverter"/>
-    <c:ToothIndexToRowConverter x:Key="ToothIndexToRowConverter"/>
-    <c:ToothIndexToVerticalAlignmentConverter x:Key="ToothIndexToVerticalAlignmentConverter"/>
 </ResourceDictionary>

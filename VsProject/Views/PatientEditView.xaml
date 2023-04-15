@@ -18,7 +18,7 @@
             <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
@@ -26,7 +26,7 @@
                 <ColumnDefinition Width="50"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
@@ -206,12 +206,9 @@
 
             </StackPanel>
             <local:PatientDentalChartView 
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
                 Margin="25,0,0,0"
                 Grid.Column="3"
                 Grid.Row="1"/>
-
             <TextBlock Text=""
                            Foreground="IndianRed"
                            FontSize="11.5"

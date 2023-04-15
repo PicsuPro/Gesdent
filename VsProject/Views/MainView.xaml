@@ -7,7 +7,7 @@
         xmlns:controls="clr-namespace:VsProject.Resources.Controls"
         xmlns:viewModels="clr-namespace:VsProject.ViewModels"
         mc:Ignorable="d"
-        Title="MainView" Height="1000" Width="1700"
+        Title="MainView" Height="700" Width="1300"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
@@ -94,7 +94,7 @@
                     SelectionMode="Single"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="1">
+                    SelectedIndex="2">
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
                 Navlink="HomeView.xaml"

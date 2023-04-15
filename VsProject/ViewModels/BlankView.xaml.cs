@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace VsProject.Views
+namespace VsProject.ViewModels
 {
     /// <summary>
-    /// Interaction logic for PatientDentalChartView.xaml
+    /// Interaction logic for BlankView.xaml
     /// </summary>
-    public partial class PatientDentalChartView : UserControl
+    public partial class BlankView : UserControl
     {
-        public PatientDentalChartView()
+        public BlankView()
         {
             InitializeComponent();
         }
-
     }
 }

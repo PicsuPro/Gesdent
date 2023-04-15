@@ -5,126 +5,100 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VsProject.Views"
              xmlns:converters="clr-namespace:VsProject.Resources.Converters"
+             xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              xmlns:viewModels="clr-namespace:VsProject.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="1000" d:DesignWidth="2000">
+             d:DesignHeight="600" d:DesignWidth="600"
+            >
     <UserControl.DataContext>
         <viewModels:PatientDentalChartViewModel/>
     </UserControl.DataContext>
-    <Viewbox Stretch="Uniform">
-    <ListBox ItemsSource="{Binding Teeth}">
-        <ListBox.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                </Grid>
-            </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <Viewbox    Stretch="Uniform" >
-                    <Grid >
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                                <RowDefinition Height="auto"/>
-                                <RowDefinition  Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter}}"
-                        Text="{Binding Index}"
-                            FontSize="4"
-                            HorizontalAlignment="Center"
-                            FontFamily="Calibri"
-                            Margin="0,1"/>
-                        <Path
-                            Grid.Row="1"
-                            Stretch="Uniform"
-                            Fill="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
-                            Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.FrontFill}}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
-                            Height="28"/>
-                        <Path
-                            Grid.Row="1"
-                            Stretch="Uniform"
-                            Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
-                            Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
-                            Height="28"/>
+    <UserControl.Resources>
+        <Style TargetType="{x:Type CheckBox}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedItem, ElementName=chart}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="toothStyle" TargetType="Path">
+            <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+        </Style>
+        <Style x:Key="toothFillStyle" TargetType="Path">
+            <Setter Property="Fill" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+        </Style>
+    </UserControl.Resources>
+    <Grid Margin="1,0,-1,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Viewbox Stretch="Uniform" 
+                    Height="525">
+        <ListBox
+            ItemsSource="{Binding Teeth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            x:Name="chart"
+                    BorderThickness="0" >
 
-                        <Path Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter},ConverterParameter={x:Static converters:ToothDataType.Top}}"
-                            Stretch="Uniform"
-                            Fill="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
-                            Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.TopFill}}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
-                            Height="16"/>
-                        <Path Grid.Row="{Binding Index, Converter={StaticResource ToothIndexToRowConverter},ConverterParameter={x:Static converters:ToothDataType.Top}}"
-                            Stretch="Uniform"
-                            Fill="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"  
-                            Data="{Binding Index, Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Top}}"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="{Binding Index, Converter={StaticResource ToothIndexToVerticalAlignmentConverter}}"
-                            Height="16"/>
-                    </Grid>
-                </Viewbox>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-        <ListBox.ItemContainerStyle>
-            <Style TargetType="ListBoxItem">
-                <Setter Property="Background" Value="#05000000" />
-                <Setter Property="Foreground" Value="#50000000" />
-                <Setter Property="Margin" Value="0,10"/>
-                <Setter Property="Padding" Value="0,5"/>
-                    <Setter Property="VerticalAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                <Setter Property="Grid.Row" Value="{Binding Content.Index, RelativeSource={RelativeSource Self}, Converter={StaticResource ToothIndexToRowConverter}}"/>
-                <Setter Property="Grid.Column" Value="{Binding Content.Index, RelativeSource={RelativeSource Self}, Converter={StaticResource ToothIndexToColumnConverter}}"/>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ListBoxItem">
-                            <ContentPresenter 
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Setter Property="Background" Value="#00000000"/>
-                        <Setter Property="Foreground" Value="#75000000" />
-                    </Trigger>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Setter Property="Background" Value="#00000000"/>
-                        <Setter Property="Foreground" Value="#CC000000" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </ListBox.ItemContainerStyle>
-    </ListBox>
-    </Viewbox>
+                <ListBox.Resources>
+                    <Style x:Key="toothFrontStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                    </Style>
+                    <Style x:Key="toothFillStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Width="180" Height="100"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Background" Value="#05000000" />
+                        <Setter Property="Foreground" Value="#50000000" />
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <ContentPresenter 
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#00000000"/>
+                                <Setter Property="Foreground" Value="#75000000" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#00000000"/>
+                                <Setter Property="Foreground" Value="#CC000000" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Fill}}" Style="{StaticResource toothFillStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Viewbox>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
+            <CheckBox Content="Decay" IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <CheckBox Content="Alpical Reaction" IsChecked="{Binding SelectedItem.AlpicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      Margin="5,0,0,0"/>
+        </StackPanel>
+
+    </Grid>
 </UserControl>
 

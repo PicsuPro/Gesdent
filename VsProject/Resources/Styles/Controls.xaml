@@ -19,8 +19,7 @@
         <Setter Property="Foreground" Value="{DynamicResource primaryFore1}"/>
         <Setter Property="CaretBrush" Value="DarkGray"/>
         <Setter Property="BorderBrush" Value="DarkGray"/>
-        <Setter Property="BorderThickness" Value="0 5 0 5"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
         <Setter Property="Padding" Value="0 6 20 6"/>
         <Setter Property="Background" Value="Transparent"/>
     </Style>
