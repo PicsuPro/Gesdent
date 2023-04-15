@@ -14,9 +14,6 @@
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="ViewModels\BlankView.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -59,9 +56,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Styles\Converters.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="ViewModels\BlankView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">

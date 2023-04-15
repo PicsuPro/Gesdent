@@ -21,12 +21,6 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        <Style x:Key="toothStyle" TargetType="Path">
-            <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
-        </Style>
-        <Style x:Key="toothFillStyle" TargetType="Path">
-            <Setter Property="Fill" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
-        </Style>
     </UserControl.Resources>
     <Grid Margin="1,0,-1,0">
         <Grid.RowDefinitions>
@@ -41,11 +35,14 @@
                     BorderThickness="0" >
 
                 <ListBox.Resources>
+                    <Style x:Key="toothFillStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                    </Style>
                     <Style x:Key="toothFrontStyle" TargetType="Path">
                         <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                     </Style>
-                    <Style x:Key="toothFillStyle" TargetType="Path">
-                        <Setter Property="Fill" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+                    <Style x:Key="toothAlpicalReactionStyle" TargetType="Path">
+                        <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                     </Style>
                 </ListBox.Resources>
                 <ListBox.ItemsPanel>
@@ -87,6 +84,8 @@
                         <Grid>
                             <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
                             <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Fill}}" Style="{StaticResource toothFillStyle}"/>
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.AlpicalReaction}}" Style="{StaticResource toothAlpicalReactionStyle}"
+                                  Visibility="{Binding AlpicalReaction,Converter={StaticResource BooleanToVisibility}}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
