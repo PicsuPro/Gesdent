@@ -13,6 +13,7 @@ namespace VsProject.Models.Repositories
 {
     public class StaffRepository : RepositoryBase, IStaffRepository
     {
+        private const string TableName = "\"Staff\"";
 
         public StaffRepository()
         {
@@ -20,7 +21,7 @@ namespace VsProject.Models.Repositories
         
         public void Add(StaffModel staffModel)
         {
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
@@ -37,7 +38,7 @@ namespace VsProject.Models.Repositories
 
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "INSERT INTO \"Staff\" (id, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
+                        command.CommandText = "INSERT INTO "+ TableName + " (id, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
                                               "VALUES (@id, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
 
 
@@ -66,12 +67,12 @@ namespace VsProject.Models.Repositories
 
         public void Edit(StaffModel staffModel)
         {
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE \"Staff\" SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE id=@id";
+                command.CommandText = "UPDATE "+ TableName + " SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE id=@id";
                 command.Parameters.AddWithValue("@id", staffModel.Id);
                 command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                 command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
@@ -89,12 +90,12 @@ namespace VsProject.Models.Repositories
         {
             var staffs = new List<StaffModel>();
 
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM \"Staff\"";
+                command.CommandText = "SELECT * FROM "+ TableName ;
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -125,12 +126,12 @@ namespace VsProject.Models.Repositories
             {
                 return null;
             }
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM \"Staff\" WHERE Id=@id";
+                command.CommandText = "SELECT * FROM "+ TableName + " WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 using (var reader = command.ExecuteReader())
@@ -161,12 +162,12 @@ namespace VsProject.Models.Repositories
                 return false;
             }
 
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM \"Staff\" WHERE Id=@id";
+                command.CommandText = "SELECT COUNT(*) FROM "+ TableName + " WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 //return (int)command.ExecuteScalar() > 0;

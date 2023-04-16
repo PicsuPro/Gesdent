@@ -33,14 +33,12 @@ namespace VsProject.Models.Repositories
             _connectionString = "Server=rogue.db.elephantsql.com;Database=mifzwhkc;User Id=mifzwhkc;Password=sD46Q-Pg0-r_KL0gTjx2lxXhqJAltQ77;";
         }
 
-        protected NpgsqlConnection GetPGConnection()
+        protected NpgsqlConnection GetConnection()
         {
+            //return new SqlConnection(_connectionString);
             return new NpgsqlConnection(_connectionString);
         }
 
-        protected SqlConnection GetConnection()
-        {
-            return new SqlConnection(_connectionString);
-        }
+    
     }
 }

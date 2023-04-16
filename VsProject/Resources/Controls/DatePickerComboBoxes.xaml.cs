@@ -26,7 +26,7 @@ namespace VsProject.Resources.Controls
     {
 
         public static readonly DependencyProperty SelectedDateProperty =
-    DependencyProperty.Register("SelectedDate", typeof(DateTime), typeof(DatePickerComboBoxes),
+    DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DatePickerComboBoxes),
         new PropertyMetadata( DateTime.Now,OnSelectedDateChanged) );
 
         public static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -39,10 +39,10 @@ namespace VsProject.Resources.Controls
 
         
 
-        public DateTime SelectedDate
+        public DateTime? SelectedDate
         {
             get { 
-                return (DateTime)GetValue(SelectedDateProperty); }
+                return (DateTime?)GetValue(SelectedDateProperty); }
             set
             {
                 SetValue(SelectedDateProperty, value);
@@ -117,9 +117,10 @@ namespace VsProject.Resources.Controls
 
         private void UpdateComboBoxes()
         {
-            DayComboBox.SelectedItem = SelectedDate.Day;
-            MonthComboBox.SelectedIndex = SelectedDate.Month - monthIndexCompensator;
-            YearComboBox.SelectedItem = SelectedDate.Year;
+            if (SelectedDate == null) return;
+            DayComboBox.SelectedItem = ((DateTime)SelectedDate).Day;
+            MonthComboBox.SelectedIndex = ((DateTime)SelectedDate).Month - monthIndexCompensator;
+            YearComboBox.SelectedItem = ((DateTime)SelectedDate).Year;
 
         }
 
@@ -145,7 +146,8 @@ namespace VsProject.Resources.Controls
 
         private void DayComboBox_DropDownOpened(object sender, EventArgs e)
         {
-            int daysInMonth = DateTime.DaysInMonth(SelectedDate.Year, SelectedDate.Month);
+            if (SelectedDate == null) return;
+            int daysInMonth = DateTime.DaysInMonth(((DateTime)SelectedDate).Year, ((DateTime)SelectedDate).Month);
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year &&
                 MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator && 
                 Times != DatePickerTimes.All)
