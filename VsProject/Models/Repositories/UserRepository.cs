@@ -14,17 +14,17 @@ namespace VsProject.Models.Repositories
 
     public class UserRepository : RepositoryBase, IUserRepository
     {
-
+        private const string TableName = "\"User\"";
         public bool AuthenticateUser(NetworkCredential credential)
         {
             bool validUser;
 
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT hash, salt FROM \"User\" WHERE username=@username";
+                command.CommandText = "SELECT hash, salt FROM "+ TableName + " WHERE username=@username";
                 command.Parameters.AddWithValue("@username", credential.UserName);
 
                 using (var reader = command.ExecuteReader())
@@ -46,7 +46,7 @@ namespace VsProject.Models.Repositories
 
         public void Add(UserModel userModel)
         {
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
@@ -59,7 +59,7 @@ namespace VsProject.Models.Repositories
                 {
                     connection.Open();
                     command.Connection = connection;
-                    command.CommandText = "INSERT INTO \"User\" (username, hash, salt, email) " +
+                    command.CommandText = "INSERT INTO "+ TableName + " (username, hash, salt, email) " +
                                           "VALUES (@username, @hash, @salt, @email)";
 
                     string salt = BCrypt.Net.BCrypt.GenerateSalt();
@@ -86,7 +86,7 @@ namespace VsProject.Models.Repositories
 
         public void Edit(UserModel userModel)
         {
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
@@ -94,7 +94,7 @@ namespace VsProject.Models.Repositories
                 command.Connection = connection;
                 if (!string.IsNullOrWhiteSpace(userModel.Hash))
                 {
-                    command.CommandText = "UPDATE \"User\" SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
+                    command.CommandText = "UPDATE "+ TableName + " SET username=@username, hash=@hash, salt=@salt, email=@email WHERE id=@id";
                     string salt = BCrypt.Net.BCrypt.GenerateSalt();
                     string hash = BCrypt.Net.BCrypt.HashPassword(userModel.Hash, salt);
                     byte[] saltBytes = System.Text.Encoding.UTF8.GetBytes(salt);
@@ -103,7 +103,7 @@ namespace VsProject.Models.Repositories
                     command.Parameters.AddWithValue("@salt", saltBytes);
                 }else
                 {
-                    command.CommandText = "UPDATE \"User\" SET username=@username, email=@email WHERE id=@id";
+                    command.CommandText = "UPDATE "+ TableName + " SET username=@username, email=@email WHERE id=@id";
                 }
                 command.Parameters.AddWithValue("@username", userModel.UserName);
                 command.Parameters.AddWithValue("@email", userModel.Email.DBNullOrWS());
@@ -115,13 +115,13 @@ namespace VsProject.Models.Repositories
 
         public void Remove(UserModel userModel)
         {
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "DELETE FROM \"User\" WHERE Id=@id";
+                command.CommandText = "DELETE FROM "+ TableName + " WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", userModel.Id);
                 command.ExecuteNonQuery();
             }
@@ -133,13 +133,13 @@ namespace VsProject.Models.Repositories
             {
                 return null;
             }
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM \"User\" WHERE username = @username";
+                command.CommandText = "SELECT * FROM "+ TableName + " WHERE username = @username";
                 command.Parameters.AddWithValue("@username", username);
                 using (var reader = command.ExecuteReader())
                 {
@@ -164,13 +164,13 @@ namespace VsProject.Models.Repositories
         {
             var users = new List<UserModel>();
 
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM \"User\"";
+                command.CommandText = "SELECT * FROM "+ TableName;
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -196,13 +196,13 @@ namespace VsProject.Models.Repositories
             {
                 return null;
             }
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             //using (var command = new SqlCommand())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM \"User\" WHERE Id=@id";
+                command.CommandText = "SELECT * FROM "+ TableName + " WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 using (var reader = command.ExecuteReader())
@@ -231,12 +231,12 @@ namespace VsProject.Models.Repositories
                 return false;
             }
 
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM \"User\" WHERE Id=@id";
+                command.CommandText = "SELECT COUNT(*) FROM "+ TableName + " WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 return (long)command.ExecuteScalar() > 0;
@@ -251,12 +251,12 @@ namespace VsProject.Models.Repositories
                 return false;
             }
 
-            using (var connection = GetPGConnection())
+            using (var connection = GetConnection())
             using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM \"User\" WHERE username = @username";
+                command.CommandText = "SELECT COUNT(*) FROM "+ TableName + " WHERE username = @username";
                 command.Parameters.AddWithValue("@username", username);
 
                 return (long)command.ExecuteScalar() > 0;
