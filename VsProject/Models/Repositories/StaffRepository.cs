@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -19,8 +20,9 @@ namespace VsProject.Models.Repositories
         
         public void Add(StaffModel staffModel)
         {
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
+            using (var connection = GetPGConnection())
+            //using (var command = new SqlCommand())
+            using (var command = new NpgsqlCommand())
             {
                 if (staffModel == null)
                 {
@@ -35,7 +37,7 @@ namespace VsProject.Models.Repositories
 
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "INSERT INTO [Staff] (id, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
+                        command.CommandText = "INSERT INTO \"Staff\" (id, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
                                               "VALUES (@id, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
 
 
@@ -64,12 +66,12 @@ namespace VsProject.Models.Repositories
 
         public void Edit(StaffModel staffModel)
         {
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
+            using (var connection = GetPGConnection())
+            using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE [Staff] SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE id=@id";
+                command.CommandText = "UPDATE \"Staff\" SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE id=@id";
                 command.Parameters.AddWithValue("@id", staffModel.Id);
                 command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                 command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
@@ -87,12 +89,12 @@ namespace VsProject.Models.Repositories
         {
             var staffs = new List<StaffModel>();
 
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
+            using (var connection = GetPGConnection())
+            using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM [Staff]";
+                command.CommandText = "SELECT * FROM \"Staff\"";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -123,12 +125,12 @@ namespace VsProject.Models.Repositories
             {
                 return null;
             }
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
+            using (var connection = GetPGConnection())
+            using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM [Staff] WHERE Id=@id";
+                command.CommandText = "SELECT * FROM \"Staff\" WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 using (var reader = command.ExecuteReader())
@@ -159,15 +161,16 @@ namespace VsProject.Models.Repositories
                 return false;
             }
 
-            using (var connection = GetConnection())
-            using (var command = new SqlCommand())
+            using (var connection = GetPGConnection())
+            using (var command = new NpgsqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM [Staff] WHERE Id=@id";
+                command.CommandText = "SELECT COUNT(*) FROM \"Staff\" WHERE Id=@id";
                 command.Parameters.AddWithValue("@id", id);
 
-                return (int)command.ExecuteScalar() > 0;
+                //return (int)command.ExecuteScalar() > 0;
+                return (long)command.ExecuteScalar() > 0;
             }
         }
     }
