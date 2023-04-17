@@ -8,31 +8,6 @@
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" Content="ID:"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}"/>
-        <Label Grid.Row="1" Grid.Column="0" Content="Name:"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Name}"/>
-        <Label Grid.Row="2" Grid.Column="0" Content="Age:"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Age}"/>
-        <Label Grid.Row="3" Grid.Column="0" Content="Gender:"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Gender}"/>
-        <Label Grid.Row="4" Grid.Column="0" Content="Phone Number:"/>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding PhoneNumber}"/>
-        <Button Grid.Row="5" Grid.Column="1" Content="Save"/>
-        <DataGrid ItemsSource="{Binding Patients}" AutoGenerateColumns="True" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" />
-
+        <local:PatientView></local:PatientView>
     </Grid>
 </UserControl>

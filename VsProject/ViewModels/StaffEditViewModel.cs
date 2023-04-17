@@ -161,6 +161,8 @@ namespace VsProject.ViewModels
             BirthDate = Staff.BirthDate;
         }
 
+
+
         private void ExecuteSaveEdit(object obj)
         {
             if(IsNewStaff)
