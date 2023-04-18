@@ -28,7 +28,7 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform" 
-                    Height="525">
+                    Height="400">
         <ListBox
             ItemsSource="{Binding Teeth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             x:Name="chart"
@@ -41,7 +41,7 @@
                     <Style x:Key="toothFrontStyle" TargetType="Path">
                         <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                     </Style>
-                    <Style x:Key="toothAlpicalReactionStyle" TargetType="Path">
+                    <Style x:Key="toothDecayStyle" TargetType="Path">
                         <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                     </Style>
                 </ListBox.Resources>
@@ -84,8 +84,8 @@
                         <Grid>
                             <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
                             <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Fill}}" Style="{StaticResource toothFillStyle}"/>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.AlpicalReaction}}" Style="{StaticResource toothAlpicalReactionStyle}"
-                                  Visibility="{Binding AlpicalReaction,Converter={StaticResource BooleanToVisibility}}"/>
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Decay}}" Style="{StaticResource toothDecayStyle}"
+                                  Visibility="{Binding Decay,Converter={StaticResource BooleanToVisibility}}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -93,8 +93,8 @@
 
         </Viewbox>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <CheckBox Content="Decay" IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
-            <CheckBox Content="Alpical Reaction" IsChecked="{Binding SelectedItem.AlpicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            <CheckBox Content="Carie" IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <CheckBox Content="Reaction Alpical" IsChecked="{Binding SelectedItem.AlpicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       Margin="5,0,0,0"/>
         </StackPanel>
 

@@ -30,19 +30,19 @@ namespace VsProject.Models.Repositories
                     throw new ArgumentNullException("user");
                 }
 
-                if (GetById(staffModel.Id) == null)
+                if (GetById(staffModel.UserId) == null)
                 {
-                    var id = UserPrincipal.Repository.GetById(staffModel.Id).Id;
-                    if (id != null)
+                    var userId = UserPrincipal.Repository.GetById(staffModel.UserId).Id;
+                    if (userId != null)
                     {
 
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "INSERT INTO "+ TableName + " (id, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
-                                              "VALUES (@id, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
+                        command.CommandText = "INSERT INTO "+ TableName + " (userId, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
+                                              "VALUES (@userId, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
 
 
-                        command.Parameters.AddWithValue("@id", id);
+                        command.Parameters.AddWithValue("@userId", userId);
                         command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                         command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
                         command.Parameters.AddWithValue("@sex", staffModel.Sex);
@@ -72,8 +72,8 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE "+ TableName + " SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE id=@id";
-                command.Parameters.AddWithValue("@id", staffModel.Id);
+                command.CommandText = "UPDATE "+ TableName + " SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE userId=@userId";
+                command.Parameters.AddWithValue("@userId", staffModel.UserId);
                 command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                 command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
                 command.Parameters.AddWithValue("@sex", staffModel.Sex);
@@ -103,7 +103,7 @@ namespace VsProject.Models.Repositories
                     {
                         StaffModel staff = new StaffModel
                         {
-                            Id = reader["Id"].DBValue<Guid>(),
+                            UserId = reader["UserId"].DBValue<Guid>(),
                             LastName = reader["lastName"].DBValue<string>(),
                             FirstName = reader["firstName"].DBValue<string>(),
                             Sex = reader["sex"].DBValue<bool>(),
@@ -120,9 +120,9 @@ namespace VsProject.Models.Repositories
             return staffs;
         }
 
-        public StaffModel? GetById(Guid? id)
+        public StaffModel? GetById(Guid? userId)
         {
-            if(!IdExists(id))
+            if(!IdExists(userId))
             {
                 return null;
             }
@@ -131,8 +131,8 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM "+ TableName + " WHERE Id=@id";
-                command.Parameters.AddWithValue("@id", id);
+                command.CommandText = "SELECT * FROM "+ TableName + " WHERE UserId=@userId";
+                command.Parameters.AddWithValue("@userId", userId);
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -140,7 +140,7 @@ namespace VsProject.Models.Repositories
                     {
                         StaffModel staff = new StaffModel
                         {
-                            Id = reader["Id"].DBValue<Guid>(),
+                            UserId = reader["UserId"].DBValue<Guid>(),
                             LastName = reader["lastName"].DBValue<string>(),
                             FirstName = reader["firstName"].DBValue<string>(),
                             Sex = reader["sex"].DBValue<bool>(),
@@ -155,9 +155,9 @@ namespace VsProject.Models.Repositories
             }
             return null;
         }
-        private bool IdExists(Guid? id)
+        private bool IdExists(Guid? userId)
         {
-            if (id == null)
+            if (userId == null)
             {
                 return false;
             }
@@ -167,8 +167,8 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM "+ TableName + " WHERE Id=@id";
-                command.Parameters.AddWithValue("@id", id);
+                command.CommandText = "SELECT COUNT(*) FROM "+ TableName + " WHERE UserId=@userId";
+                command.Parameters.AddWithValue("@userId", userId);
 
                 //return (int)command.ExecuteScalar() > 0;
                 return (long)command.ExecuteScalar() > 0;
