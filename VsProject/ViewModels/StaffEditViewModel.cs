@@ -149,7 +149,7 @@ namespace VsProject.ViewModels
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Staff = UserPrincipal.StaffRepository.GetById(UserPrincipal.Current?.Id) ?? new StaffModel();
-            IsNewStaff = Staff.Id == null;
+            IsNewStaff = Staff.UserId == null;
             Staff = Staff;
             LastName = Staff.LastName;
             FirstName = Staff.FirstName;
@@ -167,7 +167,7 @@ namespace VsProject.ViewModels
         {
             if(IsNewStaff)
             {
-                Staff.Id = UserPrincipal.Current?.Id;
+                Staff.UserId = UserPrincipal.Current?.Id;
                 UserPrincipal.StaffRepository.Add(Staff);
             }else
             {
