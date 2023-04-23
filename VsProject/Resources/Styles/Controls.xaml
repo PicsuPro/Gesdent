@@ -426,9 +426,9 @@
     <SolidColorBrush x:Key="RadioButton.Checked.Background" Color="#569DE5"/>
     <SolidColorBrush x:Key="RadioButton.Checked.Border" Color="#569DE5"/>
     <SolidColorBrush x:Key="RadioButton.Checked.Glyph" Color="#FCFCFC"/>
-    <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#FFE6E6E6"/>
-    <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#FFBCBCBC"/>
-    <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#FF707070"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Background" Color="#5000"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Border" Color="#5000"/>
+    <SolidColorBrush x:Key="RadioButton.Disabled.Glyph" Color="#0000"/>
      
       <Style x:Key="FocusVisual">
         <Setter Property="Control.Template">
@@ -490,7 +490,7 @@
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Background" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Background}"/>
                             <Setter Property="BorderBrush" TargetName="radioButtonBorder" Value="{StaticResource RadioButton.Disabled.Border}"/>
-                            <Setter Property="Background" TargetName="optionMark" Value="{StaticResource RadioButton.Disabled.Glyph}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -805,11 +805,11 @@
             <Border Grid.ColumnSpan="2" Name="Border"
                       BorderBrush="DarkGray" 
                       CornerRadius="3.5" BorderThickness="0.3, 0.3, 0.3, 0.3"
-                      Background="#FCFCFC" 
+                      Background="#AFFF" 
                         VerticalAlignment="Stretch"/>
             <Border Grid.ColumnSpan="2" Name="Line"
-                      BorderBrush="DarkGray" 
-                      CornerRadius="3.4" BorderThickness="0,0,0, 1"
+                      BorderBrush="#8D8D8D" 
+                      CornerRadius="3.4" BorderThickness="0,0,0, 0.9"
                       Background="Transparent" 
                         VerticalAlignment="Stretch"/>
             <Viewbox Stretch="Uniform" Grid.Column="1" Margin="5.5,2.75,5.5,5.5">
@@ -821,15 +821,19 @@
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" TargetName="Border" Value="White"/>
+                <Setter Property="Background" TargetName="Border" Value="#DFFF"/>
                 <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
                 <Setter Property="BorderBrush" TargetName="Line" Value="#7EB4EA"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
-                <Setter Property="Background" TargetName="Border" Value="White"/>
+                <Setter Property="Background" TargetName="Border" Value="#DFFF"/>
                 <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
                 <Setter Property="BorderBrush" TargetName="Line" Value="#569DE5"/>
                 <Setter Property="Fill" TargetName="Arrow" Value="#BB444444"/>
+
+            </Trigger>
+            <Trigger Property="ToggleButton.IsEnabled" Value="False">
+                <Setter Property="Background" TargetName="Border" Value="#5FFF"/>
 
             </Trigger>
         </ControlTemplate.Triggers>
@@ -852,7 +856,7 @@
                                         Content="{TemplateBinding SelectionBoxItem}" 
                                         ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                         ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
-                        <TextBox Name="PART_EditableTextBox" Margin="3, 3, 23, 3"                     
+                        <TextBox Name="PART_EditableTextBox" Margin="3, 3, 23, 3"   
                                      IsReadOnly="{TemplateBinding IsReadOnly}"
                                      Visibility="Hidden" Background="Transparent"
                                      HorizontalAlignment="Left" VerticalAlignment="Center"
@@ -866,6 +870,7 @@
                         </TextBox>
                         <Popup Name="Popup" 
                                    Focusable="False" AllowsTransparency="True"
+                               
                                    IsOpen="{TemplateBinding ComboBox.IsDropDownOpen}"
                                    PopupAnimation="Slide"
                                    MinWidth="{TemplateBinding Width}"
@@ -880,7 +885,11 @@
                             </Grid>
                         </Popup>
                     </Grid>
-
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

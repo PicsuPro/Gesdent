@@ -11,18 +11,19 @@ namespace VsProject.ViewModels
     public class StaffEditViewModel : ViewModelBase
     {
         private StaffModel _staff;
-        private string _lastName = "";
-        private string _firstName = "";
+        private string? _lastName = "";
+        private string? _firstName = "";
         private bool? _isMale;
         
         private bool? _isFemale;
         
-        private string _phone = "";
-        private string _phoneAlt = "";
-        private string _email = "";
+        private string? _phone = "";
+        private string? _phoneAlt = "";
+        private string? _email = "";
         private DateTime? _birthDate;
-        private string _errorMessage = "";
+        private string? _errorMessage = "";
         private bool _isNewStaff = false;
+        private bool _isEditing = false;
 
         public StaffModel Staff
         {
@@ -33,7 +34,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Staff));
             }
         }
-        public string LastName
+        public string? LastName
         {
             get => _lastName;
             set
@@ -43,7 +44,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(LastName));
             }
         }
-        public string FirstName
+        public string? FirstName
         {
             get => _firstName;
             set
@@ -80,7 +81,7 @@ namespace VsProject.ViewModels
                 }
             }
         }
-        public string Phone
+        public string? Phone
         {
             get => _phone;
             set
@@ -90,7 +91,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Phone));
             }
         }
-        public string PhoneAlt
+        public string? PhoneAlt
         {
             get => _phoneAlt;
             set
@@ -102,7 +103,7 @@ namespace VsProject.ViewModels
         }
 
 
-        public string Email
+        public string? Email
         {
             get => _email;
             set
@@ -124,7 +125,7 @@ namespace VsProject.ViewModels
         }
 
 
-        public string ErrorMessage
+        public string? ErrorMessage
         {
             get => _errorMessage; set
             {
@@ -143,14 +144,22 @@ namespace VsProject.ViewModels
             }
         }
 
+        public bool IsEditing
+        {
+            get => _isEditing; set
+            {
+                _isEditing = value;
+                OnPropertyChanged(nameof(IsEditing));
+            }
+        }
 
         public ICommand SaveEditCommand { get; }
+
         public StaffEditViewModel()
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Staff = UserPrincipal.StaffRepository.GetById(UserPrincipal.Current?.Id) ?? new StaffModel();
             IsNewStaff = Staff.UserId == null;
-            Staff = Staff;
             LastName = Staff.LastName;
             FirstName = Staff.FirstName;
             IsMale = !Staff.Sex;
@@ -171,6 +180,7 @@ namespace VsProject.ViewModels
             {
                 UserPrincipal.StaffRepository.Edit(Staff);
             }
+            IsEditing = false;
         }
 
         private bool CanExecuteSaveEdit(object obj)
@@ -180,7 +190,8 @@ namespace VsProject.ViewModels
                 && Staff.Sex != null
                 && !(string.IsNullOrWhiteSpace(Staff.Phone))
                 && !(string.IsNullOrWhiteSpace(Staff.Email))
-                && BirthDate != null ;
+                && BirthDate != null
+                && IsEditing;
 
         }
 

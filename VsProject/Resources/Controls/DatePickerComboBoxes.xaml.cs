@@ -223,7 +223,7 @@ namespace VsProject.Resources.Controls
             }
         }
 
-        private void MonthComboBox_SelectionChanged(object sender, EventArgs e)
+        private void MonthComboBox_SelectionChanged(object sender, EventArgs? e)
         {
             if (!isUserAction)
             {
@@ -272,7 +272,7 @@ namespace VsProject.Resources.Controls
             {
                 return;
             }
-            UpdateSelectedDate();
+            MonthComboBox_SelectionChanged(this,null);
         }
     }
 }

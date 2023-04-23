@@ -10,10 +10,11 @@
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="720"
-             Background="#F0F2F5">
+             Background="White">
     <UserControl.DataContext>
         <viewModel:StaffEditViewModel/>
     </UserControl.DataContext>
+
     
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
@@ -34,6 +35,22 @@
                         Grid.Column="1"
                         Grid.Row="1">
 
+                <TextBlock Text="Titre *"
+                            VerticalAlignment="Center"
+                            Foreground="#1B1B1B"
+                            FontSize="13"
+                            FontFamily="Calibri"
+                            FontWeight="Medium"
+                             Margin="0,25,0,0"/>
+                <StackPanel Margin="1,9,0,-5" Orientation="Horizontal" >
+                    <RadioButton Content="M." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
+                                 IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsEditing}"/>
+                    <RadioButton Content="Mme." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
+                                 IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsEditing}"/>
+                </StackPanel>
+                
                 <TextBlock Text="Nom *"
                             Foreground="#1B1B1B"
                             FontSize="13"
@@ -44,7 +61,8 @@
                 <TextBox x:Name="txtName"
                          Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
 
                 <TextBlock Text="Prénom *"
                             Foreground="#1B1B1B"
@@ -55,55 +73,8 @@
 
                 <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
-
-                <TextBlock Text="Sexe *"
-                            VerticalAlignment="Center"
-                            Foreground="#1B1B1B"
-                            FontSize="13"
-                            FontFamily="Calibri"
-                            FontWeight="Medium"
-                             Margin="0,25,0,0"/>
-                <StackPanel Margin="0,9,0,0" Orientation="Horizontal">
-                    <RadioButton Content="Male" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
-                                 IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <RadioButton Content="Femelle" VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
-                                 IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                </StackPanel>
-
-                <TextBlock Text="Numéro principal *"
-                            Foreground="#1B1B1B"
-                            FontSize="13"
-                            FontFamily="Calibri"
-                            FontWeight="Medium"
-                            Margin="0,25,0,0"/>
-
-                <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
-
-
-                <TextBlock Text="Numéro secondaire"
-                            Foreground="#1B1B1B"
-                            FontSize="13"
-                            FontFamily="Calibri"
-                            FontWeight="Medium"
-                            Margin="0,25,0,0"/>
-
-                <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
-
-                <TextBlock Text="Email *"
-                            Foreground="#1B1B1B"
-                            FontSize="13"
-                            FontFamily="Calibri"
-                            FontWeight="Medium"
-                            Margin="0,25,0,0"/>
-
-                <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
 
                 <TextBlock Text="Date de naissance *"
                             Foreground="#1B1B1B"
@@ -115,7 +86,47 @@
                     SelectedDate="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="datePickerComboBoxes" 
                     Times="Past"
-                    Margin="0,9,0,0"/>
+                    Margin="0,9,0,0"
+                         IsEnabled="{Binding IsEditing}"/>
+
+                <TextBlock Text="Numéro principal *"
+                            Foreground="#1B1B1B"
+                            FontSize="13"
+                            FontFamily="Calibri"
+                            FontWeight="Medium"
+                            Margin="0,25,0,0"/>
+
+                <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource FormTextBox}"
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+
+
+                <TextBlock Text="Numéro secondaire"
+                            Foreground="#1B1B1B"
+                            FontSize="13"
+                            FontFamily="Calibri"
+                            FontWeight="Medium"
+                            Margin="0,25,0,0"/>
+
+                <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource FormTextBox}"
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+
+                <TextBlock Text="Email *"
+                            Foreground="#1B1B1B"
+                            FontSize="13"
+                            FontFamily="Calibri"
+                            FontWeight="Medium"
+                            Margin="0,25,0,0"/>
+
+                <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Style="{StaticResource FormTextBox}"
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+
+                
 
                 <TextBlock Text=""
                            Foreground="IndianRed"
@@ -151,6 +162,39 @@
                         </Button.Template>
                     </Button>
             </StackPanel>
+
+            <ToggleButton Grid.Column="1"
+                          Grid.Row="1"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          Height="28"
+                          Cursor="Hand"
+                          Focusable="False"
+                           IsChecked="{Binding IsEditing, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Opacity="0.8">
+                                        <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="24" Height="24" Visibility="Collapsed" />
+                                        <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="24" Height="24" Visibility="Visible" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
+                                                <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.75"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
         </Grid>
     </ScrollViewer>
 </UserControl>

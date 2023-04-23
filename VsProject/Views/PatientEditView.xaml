@@ -10,7 +10,7 @@
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1300"
-             Background="#F0F2F5">
+             Background="White">
     <UserControl.DataContext>
         <viewModel:PatientEditViewModel/>
     </UserControl.DataContext>
@@ -43,11 +43,13 @@
                             FontFamily="Calibri"
                             FontWeight="Medium"
                              Margin="0,25,0,0"/>
-                <StackPanel Margin="0,12,0,0" Orientation="Horizontal">
+                <StackPanel Margin="1,9,0,-5" Orientation="Horizontal" >
                     <RadioButton Content="M." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
-                                 IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <RadioButton Content="Mme." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="25,0,0,0" 
-                                 IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                 IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsEditing}"/>
+                    <RadioButton Content="Mme." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
+                                 IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsEditing}"/>
                 </StackPanel>
 
                 <TextBlock Text="Nom *"

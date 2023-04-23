@@ -1,33 +1,33 @@
 import re
 
-# Open the input SVG file and read its contents
+# Define a regular expression to match Path elements
+path_regex = r'<Path.*?Name="(.*?)".*?Data="(.*?)".*?/>'
+
+# Define a natural sorting function
+def natural_sort_key(s):
+    # split the string into chunks of digits and non-digits
+    # e.g. "Path123" becomes ["Path", "123"]
+    return [int(c) if c.isdigit() else c for c in re.split(r'(\d+)', s)]
+
 with open('chart.xaml', 'r') as f:
-    svg_data = f.read()
-   
-# Define the pattern to match the tooth paths
-pattern = r'<Path Name="AlpicalReaction(\d+)" Data="(.+)"\/>'
+    xaml = f.read()
 
-# Find all the tooth paths and their data
-tooth_paths = re.findall(pattern, svg_data)
+# Find all Path elements in the XAML and extract their Name and Data attributes
+paths = re.findall(path_regex, xaml, re.DOTALL)
 
-# Define the output template for the tooth geometry elements
-geometry_template = '<Geometry x:Key="toothAlpicalReactionData{0}">{1}</Geometry>'
+# Sort the paths by their name using natural sorting
+paths = sorted(paths, key=lambda path: natural_sort_key(path[0]))
 
-# Combine the data for each tooth into a geometry element
-tooth_geometries = [geometry_template.format(tooth_num, tooth_data) for tooth_num, tooth_data in tooth_paths]
+# Create a string to store the resulting Geometry elements
+geometry_string = ''
 
-# Sort the geometries by tooth number
-tooth_geometries.sort(key=lambda x: int(re.search(r'toothAlpicalReactionData(\d+)', x).group(1)))
+# Loop through each Path element and convert it to a Geometry element
+for path in paths:
+    geometry_string += f'<Geometry x:Key="{path[0]}">{path[1]}</Geometry>\n'
 
-# Join the geometry elements into a single string
-tooth_geometries_str = '\n'.join(tooth_geometries)
-
-# Replace the tooth paths with the combined geometry elements in the SVG data
-svg_data = re.sub(pattern, '', svg_data)
-svg_data = svg_data.replace('<Canvas xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Name="svg5" Width="180" Height="100">', '<Canvas Width="180" Height="100">\n' + tooth_geometries_str + '\n</Canvas>\n')
-
-# Write the modified SVG data to the output file
-
-with open('output.xaml', 'w') as f:
-    f.write(svg_data)
-    
+# Write the resulting Geometry elements to a file
+with open('geometries.xaml', 'w') as f:
+    f.write(f'<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"\n'
+            f'                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">\n'
+            f'{geometry_string}'
+            f'</ResourceDictionary>')

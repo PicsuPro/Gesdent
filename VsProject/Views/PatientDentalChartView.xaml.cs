@@ -25,5 +25,9 @@ namespace VsProject.Views
             InitializeComponent();
         }
 
+        private void chart_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

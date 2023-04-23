@@ -55,7 +55,7 @@
                       Template="{StaticResource HamburgerMenuTemplate}"
                       Style="{StaticResource HamburgerMenuStyle}">
             <Popup IsOpen="{Binding IsChecked,Mode=TwoWay, ElementName=SettingsButton}" StaysOpen="False" 
-                   PlacementTarget="{Binding  ElementName=SettingsButton}" Placement="Left" 
+                   PlacementTarget="{Binding  ElementName=SettingsButton}" Placement="Right" 
                    HorizontalOffset="5" VerticalOffset="4"
                    AllowsTransparency="True">
                 <Menu  Background="{StaticResource Menu.Static.Background}"
@@ -93,7 +93,7 @@
                     Grid.RowSpan="2"
                     SelectionMode="Single"
                     HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Margin="5,0"
+                    VerticalAlignment="Top" Margin="5,100"
                     SelectedIndex="2">
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
@@ -104,18 +104,15 @@
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
-            <controls:NavListBoxItem Icon="{StaticResource toothFrontData10}"
-                                        Navlink="PatientDentalChartView.xaml"
-                                        Margin="0,5"
-                                        KeyboardNavigation.IsTabStop="False"/>
+
             <controls:NavListBoxItem Icon="{StaticResource doctorIcon}"
                                         Navlink="StaffEditView.xaml"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
         </ListBox>
 
-        
-        <Frame Background="#F0F2F5"
+
+        <Frame Background="White"
                 Grid.Column="1"
                 Grid.RowSpan="2" x:Name="navFrame"   
                Source="{Binding SelectedItem.Navlink, ElementName=sidebar}"

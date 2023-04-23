@@ -9,7 +9,7 @@
              xmlns:viewModels="clr-namespace:VsProject.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
-            >
+             Background="White">
     <UserControl.DataContext>
         <viewModels:PatientDentalChartViewModel/>
     </UserControl.DataContext>
@@ -41,13 +41,10 @@
                     <Style x:Key="toothFrontStyle" TargetType="Path">
                         <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
                     </Style>
-                    <Style x:Key="toothDecayStyle" TargetType="Path">
-                        <Setter Property="Fill" Value="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
-                    </Style>
                 </ListBox.Resources>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Width="180" Height="100"/>
+                        <Canvas Width="190" Height="120"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
                 <ListBox.ItemContainerStyle>
@@ -82,9 +79,10 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
                             <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Fill}}" Style="{StaticResource toothFillStyle}"/>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Decay}}" Style="{StaticResource toothDecayStyle}"
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Index}}" Style="{StaticResource toothFrontStyle}"/>
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
+                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Decay}}" Style="{StaticResource toothFrontStyle}"
                                   Visibility="{Binding Decay,Converter={StaticResource BooleanToVisibility}}"/>
                         </Grid>
                     </DataTemplate>

@@ -26,8 +26,8 @@
         </Style>
     </Window.Style>
 
- 
-    
+
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="1"  
         CornerRadius ="0"
@@ -112,34 +112,34 @@
                                 FontWeight="Medium"
                                 Margin="0,20,0,0"
                             Grid.Column="0"/>
-                        <CheckBox Name="editPassword" 
+                            <ToggleButton Name="editPassword" 
                                   Grid.Column="1"
                                     Cursor="Hand"
                                     Focusable="False"
-                                    Margin="0,0,0,-1"
+                                    Margin="13,0,0,0"
                                     IsChecked="{Binding IsEditingPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                  HorizontalAlignment="Right">
-                            <ToggleButton.Style>
-                                <Style TargetType="{x:Type ToggleButton}">
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
+                                  HorizontalAlignment="Left" Height="37" VerticalAlignment="Top">
+                                <ToggleButton.Style>
+                                    <Style TargetType="{x:Type ToggleButton}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
                                                         <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="17" Height="17" Visibility="Collapsed" />
                                                         <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="17" Height="17" Visibility="Visible" />
-                                                </StackPanel>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsChecked" Value="True">
-                                                        <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
-                                                        <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </ToggleButton.Style>
-                        </CheckBox>
+                                                    </StackPanel>
+                                                    <ControlTemplate.Triggers>
+                                                        <Trigger Property="IsChecked" Value="True">
+                                                            <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
+                                                            <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ToggleButton.Style>
+                            </ToggleButton>
 
                         </Grid>
 
@@ -150,18 +150,18 @@
                                                                 Height="28"
                                                                 Margin="0,4,0,0"
                                                           IsEnabled="{Binding  IsChecked, ElementName=editPassword}">
-                                <controls:BindablePasswordBox.Style>
-                                    <Style TargetType="controls:BindablePasswordBox">
-                                        <Setter Property="Opacity" Value="1"/>
-                                        <Style.Triggers>
-                                            <Trigger Property="IsEnabled" Value="False">
-                                                <Setter Property="Opacity" Value="0.5"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </controls:BindablePasswordBox.Style>
-                            </controls:BindablePasswordBox>
-                           
+                            <controls:BindablePasswordBox.Style>
+                                <Style TargetType="controls:BindablePasswordBox">
+                                    <Setter Property="Opacity" Value="1"/>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Opacity" Value="0.5"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </controls:BindablePasswordBox.Style>
+                        </controls:BindablePasswordBox>
+
 
                         <TextBlock Text="Email"
                                 Foreground="#1B1B1B"

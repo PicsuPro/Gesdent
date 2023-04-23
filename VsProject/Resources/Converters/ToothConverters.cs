@@ -11,7 +11,7 @@ using System.Windows.Media;
 namespace VsProject.Resources.Converters
 {
 
-    public enum ToothDataType { Front, Fill, Decay, AlpicalReaction }
+    public enum ToothDataType { Front, Fill, Index, Decay, AlpicalReaction }
     public enum Point { X, Y}
     public class ToothDataConverter : IValueConverter
     {
