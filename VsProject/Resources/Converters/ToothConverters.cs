@@ -12,7 +12,6 @@ namespace VsProject.Resources.Converters
 {
 
     public enum ToothDataType { Front, Fill, Index, Decay, AlpicalReaction }
-    public enum Point { X, Y}
     public class ToothDataConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
