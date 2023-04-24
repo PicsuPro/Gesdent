@@ -190,7 +190,7 @@
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding PreferedDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox Text="{Binding PreferredDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          Margin="0,4,0,0"/>
@@ -201,7 +201,7 @@
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Parent, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox Text="{Binding ParentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          Margin="0,4,0,0"/>

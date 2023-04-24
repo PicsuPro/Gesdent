@@ -11,41 +11,43 @@ namespace VsProject.ViewModels
 {
     public class PatientEditViewModel : ViewModelBase
     {
-        private StaffModel _staff;
+    
+
+        private PatientModel _patient;
         private string _lastName = "";
         private string _firstName = "";
-
+        private string _surname = "";
         private bool? _isMale;
+
         private bool? _isFemale;
-        
+
         private string _phone = "";
         private string _phoneAlt = "";
         private string _email = "";
         private DateTime? _birthDate;
         private string _errorMessage = "";
-        private bool _isNewStaff = false;
+        private bool _isNewPatient = false;
+        private bool _isEditng = false;
+
+        private string _profession = "";
+        private string _adress = "";
+        private string _motive = "";
+        private string _orientedBy = "";
+        private string _preferredDay = "";
+        private string _parentName = "";
+
 
         private ObservableCollection<ToothModel> _teeth = new ObservableCollection<ToothModel>(
                                                           Enumerable.Range(1, 32).Select(i => new ToothModel { Index = i })
                                                           );
 
-        public ObservableCollection<ToothModel> Teeth
+        public PatientModel Patient
         {
-            get => _teeth;
+            get => _patient;
             set
             {
-                _teeth = value;
-                OnPropertyChanged(nameof(Teeth));
-            }
-        }
-
-        public StaffModel Staff
-        {
-            get => _staff;
-            set
-            {
-                _staff = value;
-                OnPropertyChanged(nameof(Staff));
+                _patient = value;
+                OnPropertyChanged(nameof(Patient));
             }
         }
         public string LastName
@@ -54,7 +56,7 @@ namespace VsProject.ViewModels
             set
             {
                 _lastName = value;
-                Staff.LastName = value;
+                Patient.LastName = value;
                 OnPropertyChanged(nameof(LastName));
             }
         }
@@ -64,8 +66,18 @@ namespace VsProject.ViewModels
             set
             {
                 _firstName = value;
-                Staff.FirstName = value;
+                Patient.FirstName = value;
                 OnPropertyChanged(nameof(FirstName));
+            }
+        }
+        public string Surname
+        {
+            get => _surname;
+            set
+            {
+                _surname = value;
+                Patient.Surname = value;
+                OnPropertyChanged(nameof(Surname));
             }
         }
         public bool? IsMale
@@ -76,7 +88,7 @@ namespace VsProject.ViewModels
                 if (_isMale != value)
                 {
                     _isMale = value;
-                    Staff.Sex = !value;
+                    Patient.Sex = !value;
                     OnPropertyChanged(nameof(IsMale));
                 }
             }
@@ -89,7 +101,7 @@ namespace VsProject.ViewModels
                 if (_isFemale != value)
                 {
                     _isFemale = value;
-                    Staff.Sex = value;
+                    Patient.Sex = value;
                     OnPropertyChanged(nameof(IsFemale));
                 }
             }
@@ -100,7 +112,7 @@ namespace VsProject.ViewModels
             set
             {
                 _phone = value;
-                Staff.Phone = value;
+                Patient.Phone = value;
                 OnPropertyChanged(nameof(Phone));
             }
         }
@@ -110,19 +122,17 @@ namespace VsProject.ViewModels
             set
             {
                 _phoneAlt = value;
-                Staff.PhoneAlt = value;
+                Patient.PhoneAlt = value;
                 OnPropertyChanged(nameof(PhoneAlt));
             }
         }
-
-
         public string Email
         {
             get => _email;
             set
             {
                 _email = value;
-                Staff.Email = value;
+                Patient.Email = value;
                 OnPropertyChanged(nameof(Email));
             }
         }
@@ -132,12 +142,81 @@ namespace VsProject.ViewModels
             set
             {
                 _birthDate = value;
-                Staff.BirthDate = value;
+                Patient.BirthDate = value;
                 OnPropertyChanged(nameof(BirthDate));
             }
         }
+        public string Profession
+        {
+            get => _profession;
+            set
+            {
+                _profession = value;
+                Patient.Profession = value;
+                OnPropertyChanged(nameof(Profession));
+            }
+        }
+        public string Adress
+        {
+            get => _adress;
+            set
+            {
+                _adress = value;
+                Patient.Adress = value;
+                OnPropertyChanged(nameof(Adress));
+            }
+        }
+       public string Motive
+        {
+            get => _motive;
+            set
+            {
+                _motive = value;
+                Patient.Motive = value;
+                OnPropertyChanged(nameof(Motive));
+            }
+        }
+       public string OrientedBy
+        {
+            get => _orientedBy;
+            set
+            {
+                _orientedBy = value;
+                Patient.OrientedBy = value;
+                OnPropertyChanged(nameof(OrientedBy));
+            }
+        }
+   
+        public string PreferredDay
+        {
+            get => _preferredDay;
+            set
+            {
+                _preferredDay = value;
+                Patient.PreferredDay = value;
+                OnPropertyChanged(nameof(PreferredDay));
+            }
+        }
+        public string ParentName
+        {
+            get => _parentName;
+            set
+            {
+                _parentName = value;
+                Patient.ParentName = value;
+                OnPropertyChanged(nameof(ParentName));
+            }
+        }
 
-
+        public ObservableCollection<ToothModel> Teeth
+        {
+            get => _teeth;
+            set
+            {
+                _teeth = value;
+                OnPropertyChanged(nameof(Teeth));
+            }
+        }
         public string ErrorMessage
         {
             get => _errorMessage; set
@@ -146,55 +225,63 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-
-
-        public bool IsNewStaff
+        public bool IsNewPatient
         {
-            get => _isNewStaff; set
+            get => _isNewPatient; set
             {
-                _isNewStaff = value;
-                OnPropertyChanged(nameof(IsNewStaff));
+                _isNewPatient = value;
+                OnPropertyChanged(nameof(IsNewPatient));
             }
         }
-
 
         public ICommand SaveEditCommand { get; }
         public PatientEditViewModel()
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
-            Staff = UserPrincipal.StaffRepository.GetById(UserPrincipal.Current?.Id) ?? new StaffModel();
-            IsNewStaff = Staff.UserId == null;
-            Staff = Staff;
-            LastName = Staff.LastName;
-            FirstName = Staff.FirstName;
-            IsMale = !Staff.Sex;
-            IsFemale = Staff.Sex;
-            Phone = Staff.Phone;
-            PhoneAlt = Staff.PhoneAlt;
-            Email = Staff.Email;
-            BirthDate = Staff.BirthDate;
+            Patient = new PatientModel();
+            IsNewPatient = Patient.Id == null;
+            LastName = Patient.LastName;
+            FirstName = Patient.FirstName;
+            Surname = Patient.Surname;
+            IsMale = !Patient.Sex;
+            IsFemale = Patient.Sex;
+            Phone = Patient.Phone;
+            PhoneAlt = Patient.PhoneAlt;
+            Email = Patient.Email;
+            BirthDate = Patient.BirthDate;
+            Profession = Patient.Profession;
+            Adress = Patient.Adress;
+            Motive = Patient.Motive;
+            OrientedBy = Patient.OrientedBy;
+            Adress = Patient.Adress;
+            PreferredDay = Patient.PreferredDay;
+            ParentName = Patient.ParentName;
         }
+
+
 
         private void ExecuteSaveEdit(object obj)
         {
-            if(IsNewStaff)
+            if (IsNewPatient)
             {
-                Staff.UserId = UserPrincipal.Current?.Id;
-                UserPrincipal.StaffRepository.Add(Staff);
-            }else
+                UserPrincipal.PatientRepository.Add(Patient);
+            }
+            else
             {
-                UserPrincipal.StaffRepository.Edit(Staff);
+                UserPrincipal.PatientRepository.Edit(Patient);
             }
         }
 
         private bool CanExecuteSaveEdit(object obj)
         {
-            return !(string.IsNullOrWhiteSpace(Staff.LastName))
-                && !(string.IsNullOrWhiteSpace(Staff.FirstName))
-                && Staff.Sex != null
-                && !(string.IsNullOrWhiteSpace(Staff.Phone))
-                && !(string.IsNullOrWhiteSpace(Staff.Email))
-                && BirthDate != null ;
+            return !(string.IsNullOrWhiteSpace(Patient.LastName))
+                && !(string.IsNullOrWhiteSpace(Patient.FirstName))
+                && Patient.Sex != null
+                && !(string.IsNullOrWhiteSpace(Patient.Phone))
+                && !(string.IsNullOrWhiteSpace(Patient.Email))
+                && !(string.IsNullOrWhiteSpace(Patient.Profession))
+                && !(string.IsNullOrWhiteSpace(Patient.Adress))
+                && BirthDate != null;
 
         }
 

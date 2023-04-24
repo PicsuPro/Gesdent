@@ -7,7 +7,5 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
-    <Grid>
-        <local:PatientView></local:PatientView>
-    </Grid>
+
 </UserControl>

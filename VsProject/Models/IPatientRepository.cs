@@ -12,7 +12,7 @@ namespace VsProject.Models
         void Add(PatientModel patientModel);
         void Edit(PatientModel patientModel);
 
-        PatientModel? GetById(Guid? id);
+        PatientModel? GetById(int? id);
 
         IEnumerable<PatientModel> GetAll();
     }

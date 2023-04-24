@@ -25,37 +25,26 @@ namespace VsProject.Models.Repositories
 
                 if (((IPatientRepository)this).GetById(patientModel.Id) == null)
                 {
-                    var id = UserPrincipal.Repository.GetById(patientModel.Id).Id;
-                    if (id != null)
-                    {
 
-                        connection.Open();
-                        command.Connection = connection;
-                        command.CommandText = "INSERT INTO " + TableName + " (id, lastName, firstName, sex, phone, phoneAlt, email, birthDate,profession,adresse,pattern,preferredDay,parentName) " +
-                                              "VALUES (@id, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate,@profession,@adresse,@pattern,@preferredDay,@parentName)";
-
-
-                        command.Parameters.AddWithValue("@id", id);
-                        command.Parameters.AddWithValue("@lastName", patientModel.LastName);
-                        command.Parameters.AddWithValue("@firstName", patientModel.FirstName);
-                        command.Parameters.AddWithValue("@sex", patientModel.Sex);
-                        command.Parameters.AddWithValue("@phone", patientModel.Phone);
-                        command.Parameters.AddWithValue("@phoneAlt", patientModel.PhoneAlt.DBNullOrWS());
-                        command.Parameters.AddWithValue("@email", patientModel.Email);
-                        command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate);
-                        command.Parameters.AddWithValue("@profession", patientModel.Profession);
-                        command.Parameters.AddWithValue("@adresse", patientModel.Adresse);
-                        command.Parameters.AddWithValue("@pattern", patientModel.Pattern);
-                        command.Parameters.AddWithValue("@preferredDay", patientModel.PreferredDay);
-                        command.Parameters.AddWithValue("@parentName", patientModel.ParentName);
-
-
-                        command.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        throw new ArgumentNullException("Patient does not exist");
-                    }
+                    connection.Open();
+                    command.Connection = connection;
+                    command.CommandText = "INSERT INTO " + TableName + " ( lastName, firstName, surname,sex,phone,phoneAlt,email,birthDate,profession,adress,motive,orientedBy,preferredDay  ,parentName) " +
+                                            "VALUES ( @lastName, @firstName, @surname, @sex, @phone, @phoneAlt, @email, @birthDate,@profession,@adress,@motive,@orientedBy,@preferredDay ,@parentName)";
+                    command.Parameters.AddWithValue("@lastName", patientModel.LastName);
+                    command.Parameters.AddWithValue("@firstName", patientModel.FirstName);
+                    command.Parameters.AddWithValue("@surname", patientModel.Surname.DBNullOrWS());
+                    command.Parameters.AddWithValue("@sex", patientModel.Sex);
+                    command.Parameters.AddWithValue("@phone", patientModel.Phone);
+                    command.Parameters.AddWithValue("@phoneAlt", patientModel.PhoneAlt.DBNullOrWS());
+                    command.Parameters.AddWithValue("@email", patientModel.Email);
+                    command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate);
+                    command.Parameters.AddWithValue("@profession", patientModel.Profession);
+                    command.Parameters.AddWithValue("@adress", patientModel.Adress);
+                    command.Parameters.AddWithValue("@motive", patientModel.Motive.DBNullOrWS());
+                    command.Parameters.AddWithValue("@orientedBy", patientModel.OrientedBy.DBNullOrWS());
+                    command.Parameters.AddWithValue("@preferredDay", patientModel.PreferredDay.DBNullOrWS());
+                    command.Parameters.AddWithValue("@parentName", patientModel.ParentName.DBNullOrWS());
+                    command.ExecuteNonQuery();
                 }
                 else
                 {
@@ -71,21 +60,23 @@ namespace VsProject.Models.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE " + TableName + " SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate,profession=@profession,adresse=@adresse,pattern=@pattern,preferredDay=@preferredDay,parentName=@parentName WHERE id=@id";
+                command.CommandText = "UPDATE " + TableName + " SET lastName=@lastName, firstName=@firstName, surname=@surname, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate,profession=@profession,adress=@adress,motive=@motive,orientedBy=@orientedBy,preferredDay=@preferredDay,parentName=@parentName WHERE id=@id";
 
                 command.Parameters.AddWithValue("@id", patientModel.Id);
                 command.Parameters.AddWithValue("@lastName", patientModel.LastName);
                 command.Parameters.AddWithValue("@firstName", patientModel.FirstName);
+                command.Parameters.AddWithValue("@surname", patientModel.Surname.DBNullOrWS());
                 command.Parameters.AddWithValue("@sex", patientModel.Sex);
                 command.Parameters.AddWithValue("@phone", patientModel.Phone);
                 command.Parameters.AddWithValue("@phoneAlt", patientModel.PhoneAlt.DBNullOrWS());
                 command.Parameters.AddWithValue("@email", patientModel.Email);
                 command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate);
                 command.Parameters.AddWithValue("@profession", patientModel.Profession);
-                command.Parameters.AddWithValue("@adresse", patientModel.Adresse);
-                command.Parameters.AddWithValue("@pattern", patientModel.Pattern);
-                command.Parameters.AddWithValue("@preferredDay", patientModel.PreferredDay);
-                command.Parameters.AddWithValue("@parentName", patientModel.ParentName);
+                command.Parameters.AddWithValue("@adress", patientModel.Adress);
+                command.Parameters.AddWithValue("@motive", patientModel.Motive.DBNullOrWS());
+                command.Parameters.AddWithValue("@orientedBy", patientModel.OrientedBy.DBNullOrWS());
+                command.Parameters.AddWithValue("@preferredDay", patientModel.PreferredDay.DBNullOrWS());
+                command.Parameters.AddWithValue("@parentName", patientModel.ParentName.DBNullOrWS());
 
                 command.ExecuteNonQuery();
             }
@@ -108,17 +99,19 @@ namespace VsProject.Models.Repositories
                     {
                         PatientModel patient = new PatientModel
                         {
-                            Id = reader["Id"].DBValue<Guid>(),
+                            Id = reader["Id"].DBValue<int>(),
                             LastName = reader["lastName"].DBValue<string>(),
                             FirstName = reader["firstName"].DBValue<string>(),
+                            Surname = reader["surname"].DBValue<string>(),
                             Sex = reader["sex"].DBValue<bool>(),
                             Phone = reader["phone"].DBValue<string>(),
                             PhoneAlt = reader["phoneAlt"].DBValue<string>(),
                             Email = reader["Email"].DBValue<string>(),
                             BirthDate = reader["birthDate"].DBValue<DateTime>(),
                             Profession = reader["profession"].DBValue<string>(),
-                            Adresse = reader["adresse"].DBValue<string>(),
-                            Pattern = reader["pattern"].DBValue<string>(),
+                            Adress = reader["adress"].DBValue<string>(),
+                            Motive = reader["motive"].DBValue<string>(),
+                            OrientedBy = reader["orientedBy"].DBValue<string>(),
                             PreferredDay = reader["preferredDay"].DBValue<string>(),
                             ParentName = reader["parentName"].DBValue<string>()
                         };
@@ -130,7 +123,7 @@ namespace VsProject.Models.Repositories
             return patients;
         }
 
-        PatientModel? IPatientRepository.GetById(Guid? id)
+        PatientModel? IPatientRepository.GetById(int? id)
         {
             if (!IdExists(id))
             {
@@ -150,17 +143,19 @@ namespace VsProject.Models.Repositories
                     {
                         PatientModel patient = new PatientModel
                         {
-                            Id = reader["Id"].DBValue<Guid>(),
+                            Id = reader["Id"].DBValue<int>(),
                             LastName = reader["lastName"].DBValue<string>(),
                             FirstName = reader["firstName"].DBValue<string>(),
+                            Surname = reader["surname"].DBValue<string>(),
                             Sex = reader["sex"].DBValue<bool>(),
                             Phone = reader["phone"].DBValue<string>(),
                             PhoneAlt = reader["phoneAlt"].DBValue<string>(),
                             Email = reader["Email"].DBValue<string>(),
                             BirthDate = reader["birthDate"].DBValue<DateTime>(),
                             Profession = reader["profession"].DBValue<string>(),
-                            Adresse = reader["adresse"].DBValue<string>(),
-                            Pattern = reader["pattern"].DBValue<string>(),
+                            Adress = reader["adress"].DBValue<string>(),
+                            Motive = reader["motive"].DBValue<string>(),
+                            OrientedBy = reader["orientedBy"].DBValue<string>(),
                             PreferredDay = reader["preferredDay"].DBValue<string>(),
                             ParentName = reader["parentName"].DBValue<string>()
                         };
@@ -171,7 +166,7 @@ namespace VsProject.Models.Repositories
             return null;
             
         }
-        private bool IdExists(Guid? id)
+        private bool IdExists(int? id)
         {
             if (id == null)
             {
