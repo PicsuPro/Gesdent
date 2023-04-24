@@ -61,7 +61,8 @@
                 <TextBox x:Name="txtName"
                          Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Prénom *"
                             Foreground="#1B1B1B"
@@ -71,7 +72,8 @@
                             Margin="0,25,0,0"/>
                 <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Surnom"
                             Foreground="#1B1B1B"
@@ -81,7 +83,8 @@
                             Margin="0,25,0,0"/>
                 <TextBox Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Date de naissance *"
                             Foreground="#1B1B1B"
@@ -93,7 +96,8 @@
                     SelectedDate="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="datePickerComboBoxes" 
                     Times="Past"
-                    Margin="0,9,0,0"/>
+                    Margin="0,9,0,0"
+                    IsEnabled="{Binding IsEditing}"/>
 
                 <TextBlock Text="Numéro principal *"
                             Foreground="#1B1B1B"
@@ -103,7 +107,8 @@
                             Margin="0,25,0,0"/>
                 <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Numéro secondaire"
                             Foreground="#1B1B1B"
@@ -113,7 +118,8 @@
                             Margin="0,25,0,0"/>
                 <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
 
                 <TextBlock Text="Email *"
@@ -124,7 +130,8 @@
                             Margin="0,25,0,0"/>
                 <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
             </StackPanel>
 
@@ -144,7 +151,8 @@
                 <TextBox Text="{Binding Profession, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Adresse *"
                             Foreground="#1B1B1B"
@@ -156,7 +164,8 @@
                          Style="{StaticResource FormTextBox}"
                          TextWrapping="Wrap"
                          Height="Auto"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Motif"
                             Foreground="#1B1B1B"
@@ -170,7 +179,8 @@
                          AcceptsReturn="True"
                          Height="Auto"
                          MinHeight="60"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Orienté par"
                             Foreground="#1B1B1B"
@@ -182,7 +192,8 @@
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          MinHeight="28"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Jour Préféré"
                             Foreground="#1B1B1B"
@@ -193,7 +204,8 @@
                 <TextBox Text="{Binding PreferredDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Nom du parent"
                             Foreground="#1B1B1B"
@@ -204,13 +216,15 @@
                 <TextBox Text="{Binding ParentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
-                         Margin="0,4,0,0"/>
+                         Margin="0,4,0,0"
+                         IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
             </StackPanel>
             <local:PatientDentalChartView 
                 Margin="25,0,0,0"
                 Grid.Column="3"
-                Grid.Row="1"/>
+                Grid.Row="1"
+                IsEnabled="{Binding DataContext.IsEditing,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
             <TextBlock Text=""
                            Foreground="IndianRed"
                            FontSize="11.5"
@@ -247,6 +261,40 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
+
+            <ToggleButton Grid.ColumnSpan="5"
+                          Grid.Row="1"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top"
+                          Height="40"
+                          Cursor="Hand"
+                          Focusable="False"
+                           IsChecked="{Binding IsEditing, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                    <ToggleButton.Style>
+                        <Style TargetType="{x:Type ToggleButton}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Opacity="0.8">
+                                        <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="24" Height="24" Visibility="Collapsed" />
+                                        <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="24" Height="24" Visibility="Visible" />
+                                        </StackPanel>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
+                                                <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
+                                            </Trigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Opacity" Value="0.75"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
         </Grid>
     </ScrollViewer>
 </UserControl>

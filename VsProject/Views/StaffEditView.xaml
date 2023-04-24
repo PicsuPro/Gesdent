@@ -62,7 +62,7 @@
                          Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
-                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Prénom *"
                             Foreground="#1B1B1B"
@@ -74,7 +74,7 @@
                 <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
-                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Date de naissance *"
                             Foreground="#1B1B1B"
@@ -99,7 +99,7 @@
                 <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
-                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"/>
 
 
                 <TextBlock Text="Numéro secondaire"
@@ -112,7 +112,7 @@
                 <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
-                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"/>
 
                 <TextBlock Text="Email *"
                             Foreground="#1B1B1B"
@@ -124,7 +124,7 @@
                 <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
-                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBooleanConverter}}"/>
+                         IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"/>
 
                 
 

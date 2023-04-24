@@ -5,5 +5,5 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     <c:ToothDataConverter x:Key="ToothDataConverter"/>
-    <c:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
+    <c:InverseBoolean x:Key="InverseBoolean"/>
 </ResourceDictionary>

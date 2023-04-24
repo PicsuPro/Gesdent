@@ -13,26 +13,19 @@
     <UserControl.DataContext>
         <viewModels:PatientDentalChartViewModel/>
     </UserControl.DataContext>
-    <UserControl.Resources>
-        <Style TargetType="{x:Type CheckBox}">
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding SelectedItem, ElementName=chart}" Value="{x:Null}">
-                    <Setter Property="IsEnabled" Value="False" />
-                </DataTrigger>
-            </Style.Triggers>
-        </Style>
-    </UserControl.Resources>
+
     <Grid Margin="1,0,-1,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform" 
-                    Height="400">
+                    Height="350">
         <ListBox
             ItemsSource="{Binding Teeth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
             x:Name="chart"
-                    BorderThickness="0" >
+                    BorderThickness="0" 
+            IsEnabled="{Binding IsEnabled,RelativeSource={RelativeSource AncestorType=local:PatientDentalChartView},UpdateSourceTrigger=PropertyChanged}">
 
                 <ListBox.Resources>
                     <Style x:Key="toothFillStyle" TargetType="Path">
@@ -91,9 +84,11 @@
 
         </Viewbox>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <CheckBox Content="Carie" IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <CheckBox Content="Carie" IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            IsEnabled="{Binding IsEnabled,RelativeSource={RelativeSource AncestorType=local:PatientDentalChartView},UpdateSourceTrigger=PropertyChanged}"/>
             <CheckBox Content="Reaction Alpical" IsChecked="{Binding SelectedItem.AlpicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5,0,0,0"/>
+                      Margin="5,0,0,0"
+            IsEnabled="{Binding IsEnabled,RelativeSource={RelativeSource AncestorType=local:PatientDentalChartView},UpdateSourceTrigger=PropertyChanged}"/>
         </StackPanel>
 
     </Grid>

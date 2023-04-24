@@ -9,7 +9,7 @@ namespace VsProject.Resources.Converters
 {
 
         [ValueConversion(typeof(bool), typeof(bool))]
-        public class InverseBooleanConverter : IValueConverter
+        public class InverseBoolean : IValueConverter
         {
             #region IValueConverter Members
 

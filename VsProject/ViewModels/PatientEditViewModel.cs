@@ -27,7 +27,7 @@ namespace VsProject.ViewModels
         private DateTime? _birthDate;
         private string _errorMessage = "";
         private bool _isNewPatient = false;
-        private bool _isEditng = false;
+        private bool _isEditing = false;
 
         private string _profession = "";
         private string _adress = "";
@@ -233,6 +233,14 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(IsNewPatient));
             }
         }
+        public bool IsEditing
+        {
+            get => _isEditing; set
+            {
+                _isEditing = value;
+                OnPropertyChanged(nameof(IsEditing));
+            }
+        }
 
         public ICommand SaveEditCommand { get; }
         public PatientEditViewModel()
@@ -270,6 +278,7 @@ namespace VsProject.ViewModels
             {
                 UserPrincipal.PatientRepository.Edit(Patient);
             }
+            IsEditing = false;
         }
 
         private bool CanExecuteSaveEdit(object obj)
