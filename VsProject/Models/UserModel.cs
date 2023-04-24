@@ -26,6 +26,7 @@ namespace VsProject.Models
         public static UserModel? Current { get; private set; }
         public static readonly IUserRepository Repository = new UserRepository();
         public static readonly IStaffRepository StaffRepository = new StaffRepository();
+        public static readonly IPatientRepository PatientRepository = new PatientRepository();
         public static bool Set(NetworkCredential credential)
         {
             bool isValidUser = Repository.AuthenticateUser(credential);

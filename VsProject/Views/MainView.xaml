@@ -93,8 +93,13 @@
                     Grid.RowSpan="2"
                     SelectionMode="Single"
                     HorizontalAlignment="Center"
+<<<<<<< HEAD
                     VerticalAlignment="Top" Margin="5,100"
                     SelectedIndex="2">
+=======
+                    VerticalAlignment="Center" Margin="5,0"
+                    SelectedIndex="1">
+>>>>>>> yacineProg
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
                 Navlink="HomeView.xaml"
