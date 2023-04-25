@@ -8,17 +8,9 @@ using VsProject.Repositories;
 
 namespace VsProject.Models
 {
-    public class PatientModel
+    public class PatientModel : PersonModel
     {
         public int? Id { get; set; }
-        public string? LastName { get; set; }
-        public string? FirstName { get; set; }
-        public string? Surname { get; set; }
-        public bool? Sex { get; set; }
-        public string? Phone { get; set; }
-        public string? PhoneAlt { get; set; }
-        public string? Email { get; set; }
-        public DateTime? BirthDate { get; set; }
         public string? Profession { get; set; }
         public string? Adress { get; set; }
         public string? Motive { get; set; }
