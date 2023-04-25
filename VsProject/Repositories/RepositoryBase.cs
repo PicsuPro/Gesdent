@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using Npgsql;
 
-namespace VsProject.Models.Repositories
+namespace VsProject.Repositories
 {
 
     public static class DbExtensions
@@ -15,7 +15,7 @@ namespace VsProject.Models.Repositories
         public static T? DBValue<T>(this object obj)
         {
             if (obj == DBNull.Value)
-                return default(T);
+                return default;
 
             return (T)obj;
         }
@@ -39,6 +39,6 @@ namespace VsProject.Models.Repositories
             return new NpgsqlConnection(_connectionString);
         }
 
-    
+
     }
 }

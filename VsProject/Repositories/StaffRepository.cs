@@ -9,7 +9,7 @@ using System.Net;
 using VsProject.Models;
 
 
-namespace VsProject.Models.Repositories
+namespace VsProject.Repositories
 {
     public class StaffRepository : RepositoryBase, IStaffRepository
     {

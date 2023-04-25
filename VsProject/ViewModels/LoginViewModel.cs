@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
-using VsProject.Models.Repositories;
+using VsProject.Repositories;
 
 namespace VsProject.ViewModels
 {

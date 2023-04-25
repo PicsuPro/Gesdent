@@ -4,8 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using VsProject.Models;
 
-namespace VsProject.Models
+namespace VsProject.Repositories
 {
     public interface IPatientRepository
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VsProject.Models;
 
-namespace VsProject.Models.Repositories
+namespace VsProject.Repositories
 {
     public class PatientRepository : RepositoryBase, IPatientRepository
     {

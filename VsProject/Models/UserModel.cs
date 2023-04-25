@@ -8,7 +8,8 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using VsProject.Models.Repositories;
+using VsProject.Repositories;
+using VsProject.Repositories;
 
 namespace VsProject.Models
 {

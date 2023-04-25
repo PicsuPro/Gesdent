@@ -8,7 +8,7 @@ using System.Security.Cryptography;
 using VsProject.Models;
 
 
-namespace VsProject.Models.Repositories
+namespace VsProject.Repositories
 {
     
 
