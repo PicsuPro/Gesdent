@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -264,8 +265,7 @@ namespace VsProject.ViewModels
             Adress = Patient.Adress;
             PreferredDay = Patient.PreferredDay;
             ParentName = Patient.ParentName;
-        }
-
+    }
 
 
         private void ExecuteSaveEdit(object obj)

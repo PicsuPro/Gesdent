@@ -94,7 +94,7 @@
                     SelectionMode="Single"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="1">
+                    SelectedIndex="0">
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
                 Navlink="HomeView.xaml"
