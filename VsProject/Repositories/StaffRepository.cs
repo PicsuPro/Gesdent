@@ -1,5 +1,4 @@
-﻿using Npgsql;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -11,9 +10,18 @@ using VsProject.Models;
 
 namespace VsProject.Repositories
 {
+
     public class StaffRepository : RepositoryBase, IStaffRepository
     {
-        private const string TableName = "\"Staff\"";
+        private const string TABLENAME = "staff";
+        private const string USERID = "user_id";
+        private const string LASTNAME = "last_name";
+        private const string FIRSTNAME = "first_name";
+        private const string SEX = "sex";
+        private const string PHONE = "phone";
+        private const string PHONEALT = "phone_alt";
+        private const string EMAIL = "email";
+        private const string BIRTHDATE = "birth_date";
 
         public StaffRepository()
         {
@@ -22,8 +30,8 @@ namespace VsProject.Repositories
         public void Add(StaffModel staffModel)
         {
             using (var connection = GetConnection())
+            using (var command = new SqlCommand())
             //using (var command = new SqlCommand())
-            using (var command = new NpgsqlCommand())
             {
                 if (staffModel == null)
                 {
@@ -38,7 +46,7 @@ namespace VsProject.Repositories
 
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = "INSERT INTO "+ TableName + " (userId, lastName, firstName, sex, phone, phoneAlt, email, birthDate) " +
+                        command.CommandText = $"INSERT INTO {TABLENAME} ({USERID}, {LASTNAME}, {FIRSTNAME}, {SEX}, {PHONE}, {PHONEALT}, {EMAIL},{BIRTHDATE}) " +
                                               "VALUES (@userId, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
 
 
@@ -68,11 +76,11 @@ namespace VsProject.Repositories
         public void Edit(StaffModel staffModel)
         {
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE "+ TableName + " SET lastName=@lastName, firstName=@firstName, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate WHERE userId=@userId";
+                command.CommandText = $"UPDATE {TABLENAME} SET {LASTNAME}=@lastName, {FIRSTNAME}=@firstName, {SEX}=@sex, {PHONE}=@phone, {PHONEALT}=@phoneAlt, {EMAIL}=@email, {BIRTHDATE}=@birthDate WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", staffModel.UserId);
                 command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                 command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
@@ -91,11 +99,11 @@ namespace VsProject.Repositories
             var staffs = new List<StaffModel>();
 
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM "+ TableName ;
+                command.CommandText = "SELECT * FROM "+ TABLENAME ;
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -103,14 +111,14 @@ namespace VsProject.Repositories
                     {
                         StaffModel staff = new StaffModel
                         {
-                            UserId = reader["UserId"].DBValue<Guid>(),
-                            LastName = reader["lastName"].DBValue<string>(),
-                            FirstName = reader["firstName"].DBValue<string>(),
-                            Sex = reader["sex"].DBValue<bool>(),
-                            Phone = reader["phone"].DBValue<string>(),
-                            PhoneAlt = reader["phoneAlt"].DBValue<string>(),
-                            Email = reader["Email"].DBValue<string>(),
-                            BirthDate = reader["birthDate"].DBValue<DateTime>()
+                            UserId = reader[USERID].DBValue<Guid>(),
+                            LastName = reader[LASTNAME].DBValue<string>(),
+                            FirstName = reader[FIRSTNAME].DBValue<string>(),
+                            Sex = reader[SEX].DBValue<bool>(),
+                            Phone = reader[PHONE].DBValue<string>(),
+                            PhoneAlt = reader[PHONEALT].DBValue<string>(),
+                            Email = reader[EMAIL].DBValue<string>(),
+                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>()
                         };
                         staffs.Add(staff);
                     }
@@ -127,11 +135,11 @@ namespace VsProject.Repositories
                 return null;
             }
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM "+ TableName + " WHERE UserId=@userId";
+                command.CommandText = $"SELECT * FROM {TABLENAME} WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", userId);
 
                 using (var reader = command.ExecuteReader())
@@ -140,14 +148,14 @@ namespace VsProject.Repositories
                     {
                         StaffModel staff = new StaffModel
                         {
-                            UserId = reader["UserId"].DBValue<Guid>(),
-                            LastName = reader["lastName"].DBValue<string>(),
-                            FirstName = reader["firstName"].DBValue<string>(),
-                            Sex = reader["sex"].DBValue<bool>(),
-                            Phone = reader["phone"].DBValue<string>(),
-                            PhoneAlt = reader["phoneAlt"].DBValue<string>(),
-                            Email = reader["Email"].DBValue<string>(),
-                            BirthDate = reader["birthDate"].DBValue<DateTime>()
+                            UserId = reader[USERID].DBValue<Guid>(),
+                            LastName = reader[LASTNAME].DBValue<string>(),
+                            FirstName = reader[FIRSTNAME].DBValue<string>(),
+                            Sex = reader[SEX].DBValue<bool>(),
+                            Phone = reader[PHONE].DBValue<string>(),
+                            PhoneAlt = reader[PHONEALT].DBValue<string>(),
+                            Email = reader[EMAIL].DBValue<string>(),
+                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>()
                         };
                         return staff;
                     }
@@ -163,15 +171,15 @@ namespace VsProject.Repositories
             }
 
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM "+ TableName + " WHERE UserId=@userId";
+                command.CommandText = $"SELECT COUNT(*) FROM {TABLENAME} WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", userId);
 
-                //return (int)command.ExecuteScalar() > 0;
-                return (long)command.ExecuteScalar() > 0;
+                return (int)command.ExecuteScalar() > 0;
+                //return (long)command.ExecuteScalar() > 0;
             }
         }
     }

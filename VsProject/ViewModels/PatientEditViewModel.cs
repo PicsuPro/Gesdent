@@ -290,7 +290,8 @@ namespace VsProject.ViewModels
                 && !(string.IsNullOrWhiteSpace(Patient.Email))
                 && !(string.IsNullOrWhiteSpace(Patient.Profession))
                 && !(string.IsNullOrWhiteSpace(Patient.Adress))
-                && BirthDate != null;
+                && BirthDate != null
+                && IsEditing;
 
         }
 

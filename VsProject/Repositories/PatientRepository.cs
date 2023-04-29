@@ -1,4 +1,4 @@
-﻿using Npgsql;
+﻿using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +10,28 @@ namespace VsProject.Repositories
 {
     public class PatientRepository : RepositoryBase, IPatientRepository
     {
-        private const string TableName = "\"Patient\"";
+        private const string TABLENAME = "Patient";
+        private const string ID = "id";
+        private const string LASTNAME = "last_name";
+        private const string FIRSTNAME = "first_name";
+        private const string SURNAME = "surname";
+        private const string SEX = "sex";
+        private const string PHONE = "phone";
+        private const string PHONEALT = "phone_alt";
+        private const string EMAIL = "email";
+        private const string BIRTHDATE = "birth_date";
+        private const string PROFESSION = "profession";
+        private const string ADDRESS = "address";
+        private const string MOTIVE = "motive";
+        private const string ORIENTEDBY = "oriented_by";
+        private const string PREFERREDDAY = "preferred_day";
+        private const string PARENTNAME = "parent_name";
 
         public void Add(PatientModel patientModel)
         {
             using (var connection = GetConnection())
             //using (var command = new SqlCommand())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 if (patientModel == null)
                 {
@@ -28,7 +43,7 @@ namespace VsProject.Repositories
 
                     connection.Open();
                     command.Connection = connection;
-                    command.CommandText = "INSERT INTO " + TableName + " ( lastName, firstName, surname,sex,phone,phoneAlt,email,birthDate,profession,adress,motive,orientedBy,preferredDay  ,parentName) " +
+                    command.CommandText = $"INSERT INTO {TABLENAME} ( {LASTNAME}, {FIRSTNAME}, {SURNAME},{SEX},{PHONE},{PHONEALT},{EMAIL},{BIRTHDATE},{PROFESSION},{ADDRESS},{MOTIVE},{ORIENTEDBY},{PREFERREDDAY},{PARENTNAME}) " +
                                             "VALUES ( @lastName, @firstName, @surname, @sex, @phone, @phoneAlt, @email, @birthDate,@profession,@adress,@motive,@orientedBy,@preferredDay ,@parentName)";
                     command.Parameters.AddWithValue("@lastName", patientModel.LastName);
                     command.Parameters.AddWithValue("@firstName", patientModel.FirstName);
@@ -56,11 +71,11 @@ namespace VsProject.Repositories
         public void Edit(PatientModel patientModel)
         {
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE " + TableName + " SET lastName=@lastName, firstName=@firstName, surname=@surname, sex=@sex, phone=@phone, phoneAlt=@phoneAlt, email=@email, birthDate=@birthDate,profession=@profession,adress=@adress,motive=@motive,orientedBy=@orientedBy,preferredDay=@preferredDay,parentName=@parentName WHERE id=@id";
+                command.CommandText = $"UPDATE {TABLENAME} SET {LASTNAME}=@lastName, {FIRSTNAME}=@firstName, {SURNAME}=@surname, {SEX}=@sex, {PHONE}=@phone, {PHONEALT}=@phoneAlt, {EMAIL}=@email, {BIRTHDATE}=@birthDate,{PROFESSION}=@profession,{ADDRESS}=@adress,{MOTIVE}=@motive,{ORIENTEDBY}=@orientedBy,{PREFERREDDAY}=@preferredDay,{PARENTNAME}=@parentName WHERE {ID}=@id";
 
                 command.Parameters.AddWithValue("@id", patientModel.Id);
                 command.Parameters.AddWithValue("@lastName", patientModel.LastName);
@@ -87,11 +102,11 @@ namespace VsProject.Repositories
             var patients = new List<PatientModel>();
 
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM " + TableName;
+                command.CommandText = $"SELECT * FROM {TABLENAME}";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -99,21 +114,21 @@ namespace VsProject.Repositories
                     {
                         PatientModel patient = new PatientModel
                         {
-                            Id = reader["Id"].DBValue<int>(),
-                            LastName = reader["lastName"].DBValue<string>(),
-                            FirstName = reader["firstName"].DBValue<string>(),
-                            Surname = reader["surname"].DBValue<string>(),
-                            Sex = reader["sex"].DBValue<bool>(),
-                            Phone = reader["phone"].DBValue<string>(),
-                            PhoneAlt = reader["phoneAlt"].DBValue<string>(),
-                            Email = reader["Email"].DBValue<string>(),
-                            BirthDate = reader["birthDate"].DBValue<DateTime>(),
-                            Profession = reader["profession"].DBValue<string>(),
-                            Adress = reader["adress"].DBValue<string>(),
-                            Motive = reader["motive"].DBValue<string>(),
-                            OrientedBy = reader["orientedBy"].DBValue<string>(),
-                            PreferredDay = reader["preferredDay"].DBValue<string>(),
-                            ParentName = reader["parentName"].DBValue<string>()
+                            Id = reader[ID].DBValue<int>(),
+                            LastName = reader[LASTNAME].DBValue<string>(),
+                            FirstName = reader[FIRSTNAME].DBValue<string>(),
+                            Surname = reader[SURNAME].DBValue<string>(),
+                            Sex = reader[SEX].DBValue<bool>(),
+                            Phone = reader[PHONE].DBValue<string>(),
+                            PhoneAlt = reader[PHONEALT].DBValue<string>(),
+                            Email = reader[EMAIL].DBValue<string>(),
+                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>(),
+                            Profession = reader[PROFESSION].DBValue<string>(),
+                            Adress = reader[ADDRESS].DBValue<string>(),
+                            Motive = reader[MOTIVE].DBValue<string>(),
+                            OrientedBy = reader[ORIENTEDBY].DBValue<string>(),
+                            PreferredDay = reader[PREFERREDDAY].DBValue<string>(),
+                            ParentName = reader[PARENTNAME].DBValue<string>()
                         };
                         patients.Add(patient);
                     }
@@ -130,11 +145,11 @@ namespace VsProject.Repositories
                 return null;
             }
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM " + TableName + " WHERE Id=@id";
+                command.CommandText = $"SELECT * FROM {TABLENAME} WHERE {ID}=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 using (var reader = command.ExecuteReader())
@@ -143,21 +158,21 @@ namespace VsProject.Repositories
                     {
                         PatientModel patient = new PatientModel
                         {
-                            Id = reader["Id"].DBValue<int>(),
-                            LastName = reader["lastName"].DBValue<string>(),
-                            FirstName = reader["firstName"].DBValue<string>(),
-                            Surname = reader["surname"].DBValue<string>(),
-                            Sex = reader["sex"].DBValue<bool>(),
-                            Phone = reader["phone"].DBValue<string>(),
-                            PhoneAlt = reader["phoneAlt"].DBValue<string>(),
-                            Email = reader["Email"].DBValue<string>(),
-                            BirthDate = reader["birthDate"].DBValue<DateTime>(),
-                            Profession = reader["profession"].DBValue<string>(),
-                            Adress = reader["adress"].DBValue<string>(),
-                            Motive = reader["motive"].DBValue<string>(),
-                            OrientedBy = reader["orientedBy"].DBValue<string>(),
-                            PreferredDay = reader["preferredDay"].DBValue<string>(),
-                            ParentName = reader["parentName"].DBValue<string>()
+                            Id = reader[ID].DBValue<int>(),
+                            LastName = reader[LASTNAME].DBValue<string>(),
+                            FirstName = reader[FIRSTNAME].DBValue<string>(),
+                            Surname = reader[SURNAME].DBValue<string>(),
+                            Sex = reader[SEX].DBValue<bool>(),
+                            Phone = reader[PHONE].DBValue<string>(),
+                            PhoneAlt = reader[PHONEALT].DBValue<string>(),
+                            Email = reader[EMAIL].DBValue<string>(),
+                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>(),
+                            Profession = reader[PROFESSION].DBValue<string>(),
+                            Adress = reader[ADDRESS].DBValue<string>(),
+                            Motive = reader[MOTIVE].DBValue<string>(),
+                            OrientedBy = reader[ORIENTEDBY].DBValue<string>(),
+                            PreferredDay = reader[PREFERREDDAY].DBValue<string>(),
+                            ParentName = reader[PARENTNAME].DBValue<string>()
                         };
                         return patient;
                     }
@@ -174,11 +189,11 @@ namespace VsProject.Repositories
             }
 
             using (var connection = GetConnection())
-            using (var command = new NpgsqlCommand())
+            using (var command = new SqlCommand())
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT COUNT(*) FROM " + TableName + " WHERE Id=@id";
+                command.CommandText = $"SELECT COUNT(*) FROM {TABLENAME} WHERE {ID}=@id";
                 command.Parameters.AddWithValue("@id", id);
 
                 //return (int)command.ExecuteScalar() > 0;

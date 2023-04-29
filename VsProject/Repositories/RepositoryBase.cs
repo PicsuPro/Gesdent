@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Npgsql;
 
 namespace VsProject.Repositories
 {
@@ -30,13 +29,13 @@ namespace VsProject.Repositories
         private readonly string _connectionString;
         public RepositoryBase()
         {
-            _connectionString = "Server=rogue.db.elephantsql.com;Database=mifzwhkc;User Id=mifzwhkc;Password=sD46Q-Pg0-r_KL0gTjx2lxXhqJAltQ77;";
+            _connectionString = "Server=(local)\\SQLEXPRESS;Database=Gesdentdb;Trusted_Connection=True;";
         }
 
-        protected NpgsqlConnection GetConnection()
+        protected SqlConnection GetConnection()
         {
-            //return new SqlConnection(_connectionString);
-            return new NpgsqlConnection(_connectionString);
+            return new SqlConnection(_connectionString);
+            //return new NpgsqlConnection(_connectionString);
         }
 
 
