@@ -20,6 +20,9 @@
     <Compile Update="Views\PatientDentalChartView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\PatientListView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\SettingsView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -62,6 +65,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PatientDentalChartView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PatientListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\SettingsView.xaml">
