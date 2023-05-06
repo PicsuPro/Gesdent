@@ -8,7 +8,8 @@
         xmlns:viewModels="clr-namespace:VsProject.ViewModels"
         mc:Ignorable="d"
         Title="MainView" Height="700" Width="1300"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
     <Window.Resources>
         <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
