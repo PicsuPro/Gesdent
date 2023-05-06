@@ -26,8 +26,9 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
-                    Grid.ColumnSpan="3"/>
-        <ListBox x:Name="sidebar" 
+                    Grid.ColumnSpan="3"
+                    Orientation="Horizontal">
+            <ListBox x:Name="sidebar" 
                     BorderThickness="0"
                     Background="White"
                     Grid.Column="0"
@@ -37,14 +38,19 @@
                     VerticalAlignment="Center" Margin="5,0"
                     SelectedIndex="0">
 
-            <controls:NavListBoxItem Icon="{StaticResource returnIcon}"
+                <controls:NavListBoxItem Icon="{StaticResource returnIcon}"
                 Navlink="HomeView.xaml"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
 
-        </ListBox>
-        <TextBlock TextWrapping="Wrap" Text="cddcd csda"/>
-
+            </ListBox>
+            <TextBlock Text="Add Patient"
+                       FontWeight="Bold"
+                       FontSize="19"
+                       VerticalAlignment="Center"
+                       Foreground="#aaa"
+                       />
+        </StackPanel>
 
         <StackPanel Width="250"
                         HorizontalAlignment="Center"
