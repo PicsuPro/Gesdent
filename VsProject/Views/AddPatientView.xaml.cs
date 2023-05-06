@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace VsProject.Views
 {
     /// <summary>
-    /// Interaction logic for AddPatient.xaml
+    /// Interaction logic for AddPatientView.xaml
     /// </summary>
-    public partial class AddPatient : UserControl
+    public partial class AddPatientView : UserControl
     {
-        public AddPatient()
+        public AddPatientView()
         {
             InitializeComponent();
         }
