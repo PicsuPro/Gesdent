@@ -14,7 +14,7 @@
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddPatient.xaml.cs">
+    <Compile Update="Views\AddPatientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
@@ -64,7 +64,7 @@
     <Page Update="Resources\Styles\Converters.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddPatient.xaml">
+    <Page Update="Views\AddPatientView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">
