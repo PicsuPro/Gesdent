@@ -48,8 +48,7 @@
                        FontWeight="Bold"
                        FontSize="19"
                        VerticalAlignment="Center"
-                       Foreground="#aaa"
-                       />
+                       Foreground="#aaa"/>
         </StackPanel>
 
         <StackPanel Width="250"
