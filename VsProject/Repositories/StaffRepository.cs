@@ -38,9 +38,9 @@ namespace VsProject.Repositories
                     throw new ArgumentNullException("user");
                 }
 
-                if (GetById(staffModel.UserId) == null)
+                if (GetByUserId(staffModel.UserId) == null)
                 {
-                    var userId = UserPrincipal.Repository.GetById(staffModel.UserId).Id;
+                    var userId = UserPrincipal.UserRepository.GetById(staffModel.UserId)?.Id;
                     if (userId != null)
                     {
 
@@ -128,7 +128,7 @@ namespace VsProject.Repositories
             return staffs;
         }
 
-        public StaffModel? GetById(Guid? userId)
+        public StaffModel? GetByUserId(Guid? userId)
         {
             if(!IdExists(userId))
             {
@@ -139,7 +139,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT * FROM {TABLENAME} WHERE {USERID}=@userId";
+                command.CommandText = $"SELECT {LASTNAME}, {FIRSTNAME}, {SEX}, {PHONE}, {PHONEALT}, {EMAIL},{BIRTHDATE} FROM {TABLENAME} WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", userId);
 
                 using (var reader = command.ExecuteReader())

@@ -146,11 +146,11 @@ namespace VsProject.Resources.Controls
 
         private void DayComboBox_DropDownOpened(object sender, EventArgs e)
         {
-            if (SelectedDate == null) return;
-            int daysInMonth = DateTime.DaysInMonth(((DateTime)SelectedDate).Year, ((DateTime)SelectedDate).Month);
-            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year &&
-                MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator && 
-                Times != DatePickerTimes.All)
+            int daysInMonth = daysInMonth = DateTime.DaysInMonth((int)YearComboBox.SelectedItem, MonthComboBox.SelectedIndex + monthIndexCompensator); 
+                
+            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year 
+                && MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator
+                && Times != DatePickerTimes.All)
             {
                 int currentDay = DateTime.Now.Day;
                 if (Times == DatePickerTimes.Past)
@@ -174,9 +174,9 @@ namespace VsProject.Resources.Controls
             {
                 return;
             }
-            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year &&
-                MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator &&
-                Times != DatePickerTimes.All)
+            if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year
+                && MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator
+                && Times != DatePickerTimes.All)
             {
                 int currentDay = DateTime.Now.Day;
                 if (Times == DatePickerTimes.Past)

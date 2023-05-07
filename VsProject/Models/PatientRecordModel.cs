@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace VsProject.Models
 {
-    public class ToothModel
+    public class PatientRecordModel
     {
-        public int Number { get; set; }
-        public bool ApicalReaction { get; set; }
-        public bool Decay { get; set; }
+        public int? PatientId { get; set; }
     }
 }

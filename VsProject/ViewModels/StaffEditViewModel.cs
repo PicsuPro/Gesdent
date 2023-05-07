@@ -158,7 +158,7 @@ namespace VsProject.ViewModels
         public StaffEditViewModel()
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
-            Staff = UserPrincipal.StaffRepository.GetById(UserPrincipal.Current?.Id) ?? new StaffModel();
+            Staff = UserPrincipal.StaffRepository.GetByUserId(UserPrincipal.Current?.Id) ?? new StaffModel();
             IsNewStaff = Staff.UserId == null;
             LastName = Staff.LastName;
             FirstName = Staff.FirstName;
