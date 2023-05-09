@@ -15,6 +15,7 @@ namespace VsProject.Repositories
     {
         private const string TABLENAME = "staff";
         private const string USERID = "user_id";
+        private const string SURNAME = "surname";
         private const string LASTNAME = "last_name";
         private const string FIRSTNAME = "first_name";
         private const string SEX = "sex";
@@ -46,11 +47,12 @@ namespace VsProject.Repositories
 
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = $"INSERT INTO {TABLENAME} ({USERID}, {LASTNAME}, {FIRSTNAME}, {SEX}, {PHONE}, {PHONEALT}, {EMAIL},{BIRTHDATE}) " +
-                                              "VALUES (@userId, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
+                        command.CommandText = $"INSERT INTO {TABLENAME} ({USERID}, {SURNAME}, {LASTNAME}, {FIRSTNAME}, {SEX}, {PHONE}, {PHONEALT}, {EMAIL},{BIRTHDATE}) " +
+                                              "VALUES (@userId, @surname, @lastName, @firstName, @sex, @phone, @phoneAlt, @email, @birthDate)";
 
 
                         command.Parameters.AddWithValue("@userId", userId);
+                        command.Parameters.AddWithValue("@surname", staffModel.Surname);
                         command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                         command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
                         command.Parameters.AddWithValue("@sex", staffModel.Sex);
@@ -80,8 +82,9 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"UPDATE {TABLENAME} SET {LASTNAME}=@lastName, {FIRSTNAME}=@firstName, {SEX}=@sex, {PHONE}=@phone, {PHONEALT}=@phoneAlt, {EMAIL}=@email, {BIRTHDATE}=@birthDate WHERE {USERID}=@userId";
+                command.CommandText = $"UPDATE {TABLENAME} SET {SURNAME}=@surname,  {LASTNAME}=@lastName, {FIRSTNAME}=@firstName, {SEX}=@sex, {PHONE}=@phone, {PHONEALT}=@phoneAlt, {EMAIL}=@email, {BIRTHDATE}=@birthDate WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", staffModel.UserId);
+                command.Parameters.AddWithValue("@surname", staffModel.Surname);
                 command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                 command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
                 command.Parameters.AddWithValue("@sex", staffModel.Sex);
@@ -109,9 +112,10 @@ namespace VsProject.Repositories
                 {
                     while (reader.Read())
                     {
-                        StaffModel staff = new StaffModel
+                        var staff = new StaffModel
                         {
                             UserId = reader[USERID].DBValue<Guid>(),
+                            Surname = reader[SURNAME].DBValue<string>(),
                             LastName = reader[LASTNAME].DBValue<string>(),
                             FirstName = reader[FIRSTNAME].DBValue<string>(),
                             Sex = reader[SEX].DBValue<bool>(),
@@ -139,7 +143,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT {LASTNAME}, {FIRSTNAME}, {SEX}, {PHONE}, {PHONEALT}, {EMAIL},{BIRTHDATE} FROM {TABLENAME} WHERE {USERID}=@userId";
+                command.CommandText = $"SELECT {SURNAME}, {LASTNAME}, {FIRSTNAME}, {SEX}, {PHONE}, {PHONEALT}, {EMAIL},{BIRTHDATE} FROM {TABLENAME} WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", userId);
 
                 using (var reader = command.ExecuteReader())
@@ -149,6 +153,7 @@ namespace VsProject.Repositories
                         StaffModel staff = new StaffModel
                         {
                             UserId = userId,
+                            Surname = reader[SURNAME].DBValue<string>(),
                             LastName = reader[LASTNAME].DBValue<string>(),
                             FirstName = reader[FIRSTNAME].DBValue<string>(),
                             Sex = reader[SEX].DBValue<bool>(),

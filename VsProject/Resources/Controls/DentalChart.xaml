@@ -9,6 +9,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              Background="White">
+    <UserControl.Resources>
+        <Style TargetType="CheckBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedItem, ElementName=chart}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
 
     <Grid Margin="1,0,-1,0">
         <Grid.RowDefinitions>
@@ -81,7 +91,8 @@
         </Viewbox>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
             <CheckBox Content="Carie" 
-                      IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                      IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      />
             <CheckBox Content="Reaction Alpical" 
                       IsChecked="{Binding SelectedItem.ApicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       Margin="5,0,0,0"/>
