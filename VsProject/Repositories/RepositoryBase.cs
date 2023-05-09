@@ -8,22 +8,6 @@ using System.Data.SqlClient;
 namespace VsProject.Repositories
 {
 
-    public static class DbExtensions
-    {
-
-        public static T? DBValue<T>(this object obj)
-        {
-            if (obj == DBNull.Value)
-                return default;
-
-            return (T)obj;
-        }
-        public static object? DBNullOrWS(this string? s)
-        {
-            return string.IsNullOrWhiteSpace(s) ? DBNull.Value : s;
-        }
-    }
-
     public abstract class RepositoryBase
     {
         private readonly string _connectionString;
@@ -40,4 +24,18 @@ namespace VsProject.Repositories
 
 
     }
+
+    public static class DBExtensions
+    {
+
+        public static T? DBValue<T>(this object obj)
+        {
+            return (obj == DBNull.Value) ? default : (T)obj;
+        }
+        public static object? DBNullOrWS(this string? s)
+        {
+            return string.IsNullOrWhiteSpace(s) ? DBNull.Value : s;
+        }
+    }
+
 }
