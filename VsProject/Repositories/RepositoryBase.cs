@@ -10,11 +10,7 @@ namespace VsProject.Repositories
 
     public abstract class RepositoryBase
     {
-        private readonly string _connectionString;
-        public RepositoryBase()
-        {
-            _connectionString = "Server=(local)\\SQLEXPRESS;Database=Gesdentdb;Trusted_Connection=True;";
-        }
+        private const string _connectionString = "Server=(local)\\SQLEXPRESS;Database=Gesdentdb;Trusted_Connection=True;";
 
         protected SqlConnection GetConnection()
         {

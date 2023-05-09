@@ -16,18 +16,13 @@ using System.Windows.Shapes;
 namespace VsProject.Views
 {
     /// <summary>
-    /// Interaction logic for PatientDentalChartView.xaml
+    /// Interaction logic for CalendarView.xaml
     /// </summary>
-    public partial class PatientDentalChartView : UserControl
+    public partial class CalendarView : UserControl
     {
-        public PatientDentalChartView()
+        public CalendarView()
         {
             InitializeComponent();
-        }
-
-        private void chart_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

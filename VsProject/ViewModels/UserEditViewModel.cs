@@ -97,8 +97,11 @@ namespace VsProject.ViewModels
             {
                 _isNewUser = value;
                 OnPropertyChanged(nameof(IsNewUser));
+                OnPropertyChanged(nameof(IsNotNewUser));
             }
         }
+        public bool IsNotNewUser => !_isNewUser;
+        
 
 
         //-> Commands

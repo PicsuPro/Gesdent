@@ -118,6 +118,7 @@
                                     Focusable="False"
                                     Margin="13,0,0,0"
                                     IsChecked="{Binding IsEditingPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                    Visibility="{Binding IsNotNewUser,Converter={StaticResource BooleanToVisibility}}"
                                   HorizontalAlignment="Left" Height="37" VerticalAlignment="Top">
                                 <ToggleButton.Style>
                                     <Style TargetType="{x:Type ToggleButton}">

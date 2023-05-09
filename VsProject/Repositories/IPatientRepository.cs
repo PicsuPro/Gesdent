@@ -10,7 +10,7 @@ namespace VsProject.Repositories
 {
     public interface IPatientRepository
     {
-        void Add(PatientModel patientModel);
+        int Add(PatientModel patientModel);
         void Edit(PatientModel patientModel);
 
         PatientModel? GetById(int? id);

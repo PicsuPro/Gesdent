@@ -25,21 +25,23 @@ namespace VsProject.Models
     public static class UserPrincipal
     {
         public static UserModel? Current { get; private set; }
-        public static readonly IUserRepository Repository = new UserRepository();
+        public static readonly IUserRepository UserRepository = new UserRepository();
         public static readonly IStaffRepository StaffRepository = new StaffRepository();
         public static readonly IPatientRepository PatientRepository = new PatientRepository();
+        public static readonly IPatientRecordRepository PatientRecordRepository = new PatientRecordRepository();
+        public static readonly IToothRepository ToothRepository = new ToothRepository();
         public static bool Set(NetworkCredential credential)
         {
-            bool isValidUser = Repository.AuthenticateUser(credential);
+            bool isValidUser = UserRepository.AuthenticateUser(credential);
             if(isValidUser)
             {
-                Current = Repository.GetByUsername(credential.UserName);
+                Current = UserRepository.GetByUsername(credential.UserName);
             }
             return isValidUser;
         }
         public static void Set(UserModel user)
         {
-                Current = Repository.GetById((Guid)user.Id);
+                Current = UserRepository.GetById((Guid)user.Id);
         }
     }
 

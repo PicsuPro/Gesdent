@@ -27,7 +27,7 @@ namespace VsProject.Repositories
         private const string PREFERREDDAY = "preferred_day";
         private const string PARENTNAME = "parent_name";
 
-        public void Add(PatientModel patientModel)
+        public int Add(PatientModel patientModel)
         {
             using (var connection = GetConnection())
             //using (var command = new SqlCommand())
@@ -38,7 +38,7 @@ namespace VsProject.Repositories
                     throw new ArgumentNullException("user");
                 }
 
-                if (((IPatientRepository)this).GetById(patientModel.Id) == null)
+                if (GetById(patientModel.Id) == null)
                 {
 
                     connection.Open();
@@ -60,6 +60,10 @@ namespace VsProject.Repositories
                     command.Parameters.AddWithValue("@preferredDay", patientModel.PreferredDay.DBNullOrWS());
                     command.Parameters.AddWithValue("@parentName", patientModel.ParentName.DBNullOrWS());
                     command.ExecuteNonQuery();
+                    //get the generated ID
+                    command.CommandText = "SELECT @@IDENTITY";
+                    return Convert.ToInt32(command.ExecuteScalar());
+
                 }
                 else
                 {
@@ -138,7 +142,7 @@ namespace VsProject.Repositories
             return patients;
         }
 
-        PatientModel? IPatientRepository.GetById(int? id)
+        public PatientModel? GetById(int? id)
         {
             if (!IdExists(id))
             {
@@ -179,8 +183,8 @@ namespace VsProject.Repositories
                 }
             }
             return null;
-            
         }
+
         private bool IdExists(int? id)
         {
             if (id == null)
@@ -196,8 +200,8 @@ namespace VsProject.Repositories
                 command.CommandText = $"SELECT COUNT(*) FROM {TABLENAME} WHERE {ID}=@id";
                 command.Parameters.AddWithValue("@id", id);
 
-                //return (int)command.ExecuteScalar() > 0;
-                return (long)command.ExecuteScalar() > 0;
+                return (int)command.ExecuteScalar() > 0;
+                //return (long)command.ExecuteScalar() > 0;
             }
         }
     } 
