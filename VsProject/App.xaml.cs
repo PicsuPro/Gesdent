@@ -20,15 +20,15 @@ namespace VsProject
 
             VMVMappings.Initialize();
             var mainView = new MainView();
-            //if ((bool)DialogService.Show(new LoginViewModel()))
-            //{
-            UserPrincipal.Set(new NetworkCredential("yes", "yes"));
+            if ((bool)DialogService.Show(new LoginViewModel()))
+            {
+            //UserPrincipal.Set(new NetworkCredential("yes", "yes"));
                 mainView.Show();
-            //}
-            //else
-            //{
-            //    Shutdown();
-            //}
+            }
+            else
+            {
+                Shutdown();
+            }
         }
     }
 }

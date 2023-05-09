@@ -148,7 +148,7 @@ namespace VsProject.Repositories
                     {
                         StaffModel staff = new StaffModel
                         {
-                            UserId = reader[USERID].DBValue<Guid>(),
+                            UserId = userId,
                             LastName = reader[LASTNAME].DBValue<string>(),
                             FirstName = reader[FIRSTNAME].DBValue<string>(),
                             Sex = reader[SEX].DBValue<bool>(),
