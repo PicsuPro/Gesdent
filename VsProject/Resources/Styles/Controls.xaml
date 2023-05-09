@@ -769,7 +769,8 @@
     </Style>
 
     <!--ComboBox-->
-
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#FF7EB4EA"/>
+    <SolidColorBrush x:Key="ComboBox.Focus.Border" Color="#FF569DE5"/>
     <Style TargetType="{x:Type ComboBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -796,7 +797,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <ControlTemplate TargetType="ToggleButton" x:Key="ComboBoxToggleButtonTemplate">
         <Grid >
             <Grid.ColumnDefinitions>
@@ -804,13 +805,13 @@
                 <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
             <Border Grid.ColumnSpan="2" Name="Border"
-                      BorderBrush="DarkGray" 
+                      BorderBrush="#8D8D8D" 
                       CornerRadius="3.5" BorderThickness="0.3, 0.3, 0.3, 0.3"
                       Background="#AFFF" 
                         VerticalAlignment="Stretch"/>
             <Border Grid.ColumnSpan="2" Name="Line"
                       BorderBrush="#8D8D8D" 
-                      CornerRadius="3.4" BorderThickness="0,0,0, 0.9"
+                      CornerRadius="3.4" BorderThickness="0,0,0, 1.1"
                       Background="Transparent" 
                         VerticalAlignment="Stretch"/>
             <Viewbox Stretch="Uniform" Grid.Column="1" Margin="5.5,2.75,5.5,5.5">
@@ -824,12 +825,12 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="#DFFF"/>
                 <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
-                <Setter Property="BorderBrush" TargetName="Line" Value="#7EB4EA"/>
+                <Setter Property="BorderBrush" TargetName="Line" Value="{StaticResource ComboBox.MouseOver.Border}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="#DFFF"/>
                 <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
-                <Setter Property="BorderBrush" TargetName="Line" Value="#569DE5"/>
+                <Setter Property="BorderBrush" TargetName="Line" Value="{StaticResource ComboBox.Focus.Border}"/>
                 <Setter Property="Fill" TargetName="Arrow" Value="#BB444444"/>
 
             </Trigger>
@@ -954,7 +955,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                    <Grid Name="HeaderGrid" Background="#F0F2F5" Margin="0,3,0,3">
+                    <Grid Name="HeaderGrid" Background="#0000" Margin="0,3,0,3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
