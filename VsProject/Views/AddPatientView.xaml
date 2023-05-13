@@ -15,7 +15,6 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
-
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -24,31 +23,12 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
+        
         <StackPanel Grid.Row="0"
                     Grid.Column="0"
                     Grid.ColumnSpan="3"
                     Orientation="Horizontal">
-            <ListBox x:Name="sidebar" 
-                    BorderThickness="0"
-                    Background="White"
-                    Grid.Column="0"
-                    Grid.RowSpan="2"
-                    SelectionMode="Single"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="0">
-
-                <controls:NavListBoxItem Icon="{StaticResource returnIcon}"
-                Navlink="HomeView.xaml"
-                Margin="0,5"
-                KeyboardNavigation.IsTabStop="False"/>
-
-            </ListBox>
-            <TextBlock Text="Add Patient"
-                       FontWeight="Bold"
-                       FontSize="19"
-                       VerticalAlignment="Center"
-                       Foreground="#aaa"/>
+            
         </StackPanel>
 
         <StackPanel Width="250"
