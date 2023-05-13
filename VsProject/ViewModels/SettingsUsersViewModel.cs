@@ -70,7 +70,7 @@ namespace VsProject.ViewModels
                 Users.Insert(index, UserPrincipal.UserRepository.GetById((Guid)user.Id));
                 if (user.Id == UserPrincipal.Current?.Id)
                 {
-                    UserPrincipal.Set(user);
+                    UserPrincipal.SetUser(user);
                 }
             }
 

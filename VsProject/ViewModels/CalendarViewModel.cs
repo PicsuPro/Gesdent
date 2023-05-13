@@ -16,22 +16,21 @@ namespace VsProject.ViewModels
         {
            new ObservableCollection<Appointment>
             {
+                new Appointment { StartTime = new DateTime(2023, 5, 8, 19, 0, 0), EndTime = new DateTime(2023, 5, 8, 21, 0, 0), Subject = "Meeting with MF" },
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 7, 0, 0), EndTime = new DateTime(2023, 5, 8, 8, 0, 0), Subject = "Meeting with MF" },
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Do thing" },
             },
             new ObservableCollection<Appointment>
             {
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 9, 0, 0), EndTime = new DateTime(2023, 5, 8, 10, 0, 0), Subject = "Meeting with John" },
-                new Appointment { StartTime = new DateTime(2023, 5, 8, 10, 0, 0), EndTime = new DateTime(2023, 5, 8, 12, 0, 0), Subject = "Lunch with Sarah" },
+                new Appointment { StartTime = new DateTime(2023, 5, 8, 8, 0, 0), EndTime = new DateTime(2023, 5, 8, 12, 0, 0), Subject = "Lunch with Sarah" },
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 14, 0, 0), Subject = "Phone call with Alex" },
-                new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Phone call with BITCH" },
             },
             new ObservableCollection<Appointment>
             {
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 9, 0, 0), EndTime = new DateTime(2023, 5, 8, 10, 0, 0), Subject = "Meeting with John" },
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 10, 0, 0), EndTime = new DateTime(2023, 5, 8, 12, 0, 0), Subject = "Lunch with Sarah" },
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 14, 0, 0), Subject = "Phone call with Alex" },
-                new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Phone call with BITCH" },
             },
              new ObservableCollection<Appointment>
             {
@@ -41,12 +40,10 @@ namespace VsProject.ViewModels
               new ObservableCollection<Appointment>
             {
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 7, 0, 0), EndTime = new DateTime(2023, 5, 8, 8, 0, 0), Subject = "Meeting with MF" },
-                new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Do thing" },
             } ,
               new ObservableCollection<Appointment>
             {
                 new Appointment { StartTime = new DateTime(2023, 5, 8, 9, 0, 0), EndTime = new DateTime(2023, 5, 8, 10, 0, 0), Subject = "Meeting with John" },
-                new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Phone call with BITCH" },
             },
               new ObservableCollection<Appointment>
             {

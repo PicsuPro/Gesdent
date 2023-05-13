@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using VsProject.Repositories;
-using VsProject.Repositories;
 
 namespace VsProject.Models
 {
@@ -30,7 +29,7 @@ namespace VsProject.Models
         public static readonly IPatientRepository PatientRepository = new PatientRepository();
         public static readonly IPatientRecordRepository PatientRecordRepository = new PatientRecordRepository();
         public static readonly IToothRepository ToothRepository = new ToothRepository();
-        public static bool Set(NetworkCredential credential)
+        public static bool SetUser(NetworkCredential credential)
         {
             bool isValidUser = UserRepository.AuthenticateUser(credential);
             if(isValidUser)
@@ -39,7 +38,7 @@ namespace VsProject.Models
             }
             return isValidUser;
         }
-        public static void Set(UserModel user)
+        public static void SetUser(UserModel user)
         {
                 Current = UserRepository.GetById((Guid)user.Id);
         }

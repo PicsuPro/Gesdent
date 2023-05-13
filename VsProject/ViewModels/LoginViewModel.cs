@@ -60,7 +60,7 @@ namespace VsProject.ViewModels
 
         private void ExecuteLoginCommand(object obj)
         {
-            if (UserPrincipal.Set(new NetworkCredential(Username, Password)))
+            if (UserPrincipal.SetUser(new NetworkCredential(Username, Password)))
             {
                 End();
             }

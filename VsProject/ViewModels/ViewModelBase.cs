@@ -10,15 +10,16 @@ namespace VsProject.ViewModels
     public abstract class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public event EventHandler? Ending;
         protected virtual void End()
         {
             Ending?.Invoke(this, EventArgs.Empty);
         }
-        public void OnPropertyChanged (string propertyName) 
-        {
-            PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
-        }
+     
     }
 }

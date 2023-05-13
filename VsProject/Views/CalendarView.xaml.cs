@@ -31,11 +31,12 @@ namespace VsProject.Views
     {
 
 
-        static readonly TimeOnly startHour = new TimeOnly(7, 0); // Set the start time to 7:00 
-        static readonly TimeOnly endHour = new TimeOnly(20, 0); // Set the start time to 20:00 
+        static readonly TimeOnly startHour = new TimeOnly(7, 0); // SetUser the start time to 7:00 
+        static readonly TimeOnly endHour = new TimeOnly(20, 0); // SetUser the start time to 20:00 
         public List<string> HourList = Enumerable.Range(0, (int)(endHour - startHour).TotalHours + 1)
                 .Select(i => startHour.AddHours(i).ToString(DateTimeFormatInfo.CurrentInfo.ShortTimePattern).Replace(":00", ""))
                 .ToList();
+            public string[] WeekDaysList = CultureInfo.CurrentCulture.DateTimeFormat.DayNames;
 
         public CalendarView()
         {
@@ -49,8 +50,8 @@ namespace VsProject.Views
 
         private Point dragStartPoint;
         private FrameworkElement? draggedItem;
-        private Canvas draggingCanvas;
-        Appointment appointment;
+        private Canvas? draggingCanvas;
+        Appointment? appointment;
 
         private void Appointment_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -86,6 +87,8 @@ namespace VsProject.Views
         private void Canvas_Drop(object sender, DragEventArgs e)
         {
             draggedItem = null;
+            draggingCanvas = null;
+            appointment = null;
             dragStartPoint = default;
         }
     }

@@ -22,7 +22,7 @@ namespace VsProject
             var mainView = new MainView();
             //if ((bool)DialogService.Show(new LoginViewModel()))
             //{
-            UserPrincipal.Set(new NetworkCredential("yes", "yes"));
+            UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
                 mainView.Show();
             //}
             //else

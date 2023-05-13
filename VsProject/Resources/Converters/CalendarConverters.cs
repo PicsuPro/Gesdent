@@ -14,7 +14,7 @@ using VsProject.Views;
 
 namespace VsProject.Resources.Converters
 {
-
+ 
 
     public class StartTimeToTopConverter :  IMultiValueConverter
     {
@@ -58,7 +58,51 @@ namespace VsProject.Resources.Converters
             throw new NotImplementedException();
         }
     }
+    
+    public class DataGridWidthToRowWidthConverter : IValueConverter
+    {
 
-   
+
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double dataGridWidth && parameter is double columnHeaderWidth)
+            {
+                return (dataGridWidth - columnHeaderWidth -2) / 7;
+
+            }
+            return Binding.DoNothing;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double rowWidth && parameter is double columnHeaderWidth)
+            {
+                return ((rowWidth * 7) + columnHeaderWidth);
+
+            }
+            return Binding.DoNothing;
+        }
+    }
+
+    public class ExcludeFirstItemConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is IEnumerable<object> items)
+            {
+                return items.Skip(1);
+            }
+
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+
+
+
 
 }
