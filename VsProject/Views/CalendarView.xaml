@@ -8,35 +8,18 @@
              xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
              mc:Ignorable="d" 
              d:DesignHeight="710" d:DesignWidth="1227"
-             DragOver="Canvas_DragOver" Drop="Canvas_Drop"
+             
              AllowDrop="True"
              xmlns:c="clr-namespace:VsProject.Resources.Converters"
              Background="{Binding Background,ElementName=CustomDataGrid}">
+    
     <UserControl.Resources>
         <CornerRadius x:Key="GridLinesCornerRadius">0</CornerRadius>
-        <sys:Double x:Key="RowHeaderHeight">20</sys:Double>
-        <Thickness  x:Key="ColumnGridLinesMargin"  Top="{StaticResource RowHeaderHeight}"/>
+        <sys:Double x:Key="RowHeaderHeight">30</sys:Double>
+        <Thickness  x:Key="ColumnsMargin"  Top="{StaticResource RowHeaderHeight}"/>
         <sys:Double x:Key="ColumnHeaderWidth">40</sys:Double>
         <sys:Double x:Key="RowMinWidth">40</sys:Double>
-        <Style x:Key="{ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}" TargetType="{x:Type Button}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Grid>
-                            <Rectangle x:Name="Border" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" SnapsToDevicePixels="True"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Stroke" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter Property="Fill" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+
         <ControlTemplate x:Key="CalendarDataGridTemplate" TargetType="{x:Type DataGrid}">
             <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
                 <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
@@ -61,29 +44,24 @@
                                         </TransformGroup>
                                     </DataGridColumnHeadersPresenter.LayoutTransform>
                                 </DataGridColumnHeadersPresenter>
-                                <ItemsControl Margin="{StaticResource ColumnGridLinesMargin}" 
+                                <ItemsControl Margin="{StaticResource ColumnsMargin}" 
                                               ItemsSource="{Binding Path=Columns, RelativeSource={RelativeSource AncestorType=DataGrid},Converter={StaticResource ExcludeFirstItem}}" 
-                                              Grid.RowSpan="2" Grid.Column="1">
+                                              Grid.RowSpan="2" Grid.ColumnSpan="2">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <UniformGrid Rows="1"/>
+                                            <UniformGrid Columns="1"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Border 
-                                               Width="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=DataGrid}}"
-                                                       BorderBrush="LightGray"
-                                                       BorderThickness="0.25"
-                                                CornerRadius="{StaticResource GridLinesCornerRadius}"/>
+                                            <Rectangle 
+                                                Stroke="LightGray"
+                                                StrokeThickness="0.25"
+                                                >
+                                            </Rectangle>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
-                                    <ItemsControl.LayoutTransform>
-                                        <TransformGroup>
-                                            <RotateTransform Angle="90"/>
-                                            <MatrixTransform Matrix="-1,0,0,1,0,0"/>
-                                        </TransformGroup>
-                                    </ItemsControl.LayoutTransform>
+                                    
                                 </ItemsControl>
                                 <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" Grid.RowSpan="2" Grid.Column="1"/>
 
@@ -105,20 +83,18 @@
         <Style x:Key="CalendarDataGridRowStyle" TargetType="{x:Type DataGridRow}">
             <Setter Property="MinWidth" Value="{StaticResource RowMinWidth}"/>
             <Setter Property="Width" Value="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType=DataGrid},Converter={StaticResource DataGridWidthToRowWidth}, ConverterParameter={StaticResource ColumnHeaderWidth}}"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-            <Setter Property="VerticalAlignment" Value="Stretch"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
             <Setter Property="AllowDrop" Value="True"/>
             <Setter Property="Background" Value="#0000"/>
             <Setter Property="BorderBrush" Value="LightGray"/>
-            <Setter Property="BorderThickness" Value="0.1"/>
+            <Setter Property="BorderThickness" Value="0.25,0.25,0,0.25"/>
             <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridRow}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource GridLinesCornerRadius}" SnapsToDevicePixels="True">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource GridLinesCornerRadius}" SnapsToDevicePixels="True"
+                                >
                             <SelectiveScrollingGrid>
                                 <SelectiveScrollingGrid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -127,10 +103,11 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </SelectiveScrollingGrid.RowDefinitions>
-                                <ItemsControl  ItemsSource="{Binding}" Grid.Row="1"  Margin="0" Padding="0">
+                                <DataGridRowHeader  Grid.ColumnSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                <ItemsControl ItemsSource="{Binding Value}" Grid.Row="1"  Margin="0" Padding="0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
-                                            <Canvas Background="#0000" />
+                                            <Canvas Background="#0000" DragOver="Canvas_DragOver" Drop="Canvas_Drop"/>
                                         </ItemsPanelTemplate>
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemContainerStyle>
@@ -159,7 +136,7 @@
                                    
                                     <ItemsControl.ItemTemplate >
                                         <DataTemplate >
-                                            <Border Background="Blue" Opacity="0.7" CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                                            <Border Background="Honeydew" Opacity="0.7" CornerRadius="5" BorderBrush="Black" BorderThickness="1"
                                                         HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                                                             MouseLeftButtonDown="Appointment_MouseLeftButtonDown">
                                                 <TextBlock Text="{Binding Subject}" Margin="5" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
@@ -167,7 +144,6 @@
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
-                                <DataGridRowHeader  Grid.ColumnSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
                             </SelectiveScrollingGrid>
                         </Border>
                     </ControlTemplate>
@@ -189,50 +165,45 @@
         <viewModel:CalendarViewModel/>
     </UserControl.DataContext>
     <Grid >
- 
 
 
 
-        <DataGrid 
-            RowStyle="{DynamicResource CalendarDataGridRowStyle}"  Template="{DynamicResource CalendarDataGridTemplate}" x:Name="CustomDataGrid"
-                  ItemsSource="{Binding WeekAppointments, Mode=TwoWay}"
-                  Background="#0000"
-                  Margin="0"
-                  Padding="0"
-                  HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  HorizontalContentAlignment="Stretch"
-                  VerticalContentAlignment="Stretch" 
-                  CanUserSortColumns="False"
-                  CanUserAddRows="False"
-                  AutoGenerateColumns="False"
-                  CanUserReorderColumns="False"
-                  ColumnWidth="*"
-                  HeadersVisibility="All"
+
+        <DataGrid x:Name="CustomDataGrid"
+            RowStyle="{DynamicResource CalendarDataGridRowStyle}"  Template="{DynamicResource CalendarDataGridTemplate}" 
+            ItemsSource="{Binding WeekAppointments, Mode=TwoWay}"
+            Background="#0000"
+            FontFamily="Calibri" FontWeight="Medium" 
+            Margin="0"
+            Padding="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch" 
+            CanUserSortColumns="False"
+            CanUserAddRows="False"
+            AutoGenerateColumns="False"
+            CanUserReorderColumns="False"
+            ColumnWidth="*"
+            HeadersVisibility="All"
             GridLinesVisibility="All">
 
-            <!--<DataGrid.LayoutTransform>
-                <TransformGroup>
-                    <RotateTransform Angle="90"/>
-                    <MatrixTransform Matrix="-1,0,0,1,0,0"/>
-                </TransformGroup>
-            </DataGrid.LayoutTransform>-->
-
-            <DataGrid.Columns>
-                <DataGridTextColumn Width="20"/>
-            </DataGrid.Columns>
             <DataGrid.RowHeaderStyle>
                 <Style TargetType="{x:Type DataGridRowHeader}"
                 BasedOn="{StaticResource {x:Type DataGridRowHeader}}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="Height" Value="{StaticResource RowHeaderHeight}"/>
-                    <Setter Property="Margin" Value="0,0,0,0"/>
+                    <Setter Property="Margin" Value="0"/>
                     <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Background" Value="#0000"/>
                     <Setter Property="Background" Value="#0000"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
-                                <Border Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5" SnapsToDevicePixels="True">
-                                    <TextBlock Text="Monday" TextAlignment="Center"/>
+                                <Border Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                        VerticalAlignment="{TemplateBinding VerticalAlignment}" CornerRadius="5" SnapsToDevicePixels="True">
+                                    <TextBlock Text="{Binding Key,Converter={StaticResource IntToDayString}}" Foreground="Gray" FontSize="15" TextAlignment="Center"/>
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
@@ -244,10 +215,6 @@
                 <Style TargetType="{x:Type DataGridColumnHeader}"
                 BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
                     <Setter Property="Background" Value="#0000"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="HorizontalAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
-                    <Setter Property="VerticalContentAlignment" Value="Center"/>
                     <Setter Property="Width" Value="{StaticResource ColumnHeaderWidth}"/>
                     <Setter Property="Margin" Value="0"/>
                     <Setter Property="Padding" Value="0"/>

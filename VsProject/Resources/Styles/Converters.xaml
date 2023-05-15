@@ -11,4 +11,5 @@
     <c:MathConverter x:Key="MathConverter"/>
     <c:DataGridWidthToRowWidthConverter x:Key="DataGridWidthToRowWidth"/>
     <c:ExcludeFirstItemConverter x:Key="ExcludeFirstItem"/>
+    <c:IntToDayStringConverter x:Key="IntToDayString"/>
 </ResourceDictionary>

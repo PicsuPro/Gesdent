@@ -36,11 +36,11 @@ namespace VsProject.Views
         public List<string> HourList = Enumerable.Range(0, (int)(endHour - startHour).TotalHours + 1)
                 .Select(i => startHour.AddHours(i).ToString(DateTimeFormatInfo.CurrentInfo.ShortTimePattern).Replace(":00", ""))
                 .ToList();
-            public string[] WeekDaysList = CultureInfo.CurrentCulture.DateTimeFormat.DayNames;
 
         public CalendarView()
         {
             InitializeComponent();
+            CustomDataGrid.Columns.Add(new DataGridTextColumn() { Width = (double)Resources["RowHeaderHeight"] });
             foreach (var hour in HourList)
             {
                 CustomDataGrid.Columns.Add(new DataGridTextColumn() { Header = hour });
@@ -80,17 +80,29 @@ namespace VsProject.Views
             var endTime = startTime.AddMinutes(totalMinutes) ;
             appointment.StartTimeOnly = startTime;
             appointment.EndTimeOnly = endTime;
-
+            
         }
 
 
         private void Canvas_Drop(object sender, DragEventArgs e)
         {
+
+            Canvas canvas = (Canvas)sender;
+            ObservableCollection<Appointment> oldAppointmentList = ((KeyValuePair<int, ObservableCollection<Appointment>>)draggingCanvas.DataContext).Value;
+            ObservableCollection<Appointment> newappointmentList = ((KeyValuePair<int, ObservableCollection<Appointment>>)canvas.DataContext).Value;
+            oldAppointmentList.Remove(appointment);
+            newappointmentList.Add(appointment);
+            var currentDate = DateTime.Now;
+            var startOfWeek = currentDate.AddDays(-(int)currentDate.DayOfWeek);
+            var daysInWeek = Enumerable.Range(0, 7).Select(i => startOfWeek.AddDays(i)).ToList();
             draggedItem = null;
             draggingCanvas = null;
             appointment = null;
             dragStartPoint = default;
+           
+
         }
+
     }
 
 }

@@ -86,20 +86,17 @@
                 </Menu>
             </Popup>
         </ToggleButton>
-        <ListBox x:Name="sidebar" 
-                    BorderThickness="0"
-                    Background="White"
-                    Grid.Column="0"
-                    Grid.RowSpan="2"
-                    SelectionMode="Single"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="1">
+        <ListBox 
+            x:Name="sidebar" 
+            BorderThickness="0"
+            Background="White"
+            Grid.Column="0"
+            Grid.RowSpan="2"
+            SelectionMode="Single"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" Margin="5,0"
+            SelectedIndex="0">
 
-            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
-                Navlink="HomeView.xaml"
-                Margin="0,5"
-                KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
                 Navlink="CalendarView.xaml"
                 Margin="0,5"
