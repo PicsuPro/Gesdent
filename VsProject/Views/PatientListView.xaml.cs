@@ -25,19 +25,6 @@ namespace VsProject.Views
         {
             InitializeComponent();
         }
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
-        {
-            PatientFrame.Navigate(new Uri("/Views/AddPatientView.xaml", UriKind.Relative));
-            btnAdd.Visibility=Visibility.Hidden;
-            btnRemove.Visibility = Visibility.Hidden;
-            txtAdd.Visibility=Visibility.Visible;
-            returnn.Visibility=Visibility.Visible;
-
-        }
-
-        private void NavListBoxItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+        
     }
 }

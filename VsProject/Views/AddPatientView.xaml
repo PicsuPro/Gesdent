@@ -23,13 +23,13 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Row="0"
-                    Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    Orientation="Horizontal">
-            
-        </StackPanel>
+
+        <TextBlock Text="Ajouter un patient"
+                   FontSize="30"
+                   Grid.Column="1"
+                   Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"/>
 
         <StackPanel Width="250"
                         HorizontalAlignment="Center"

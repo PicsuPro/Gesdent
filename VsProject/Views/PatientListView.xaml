@@ -7,117 +7,25 @@
              xmlns:viewModel="clr-namespace:VsProject.ViewModels"
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="447.725" d:DesignWidth="809.101" Background="White">
+             d:DesignHeight="600" d:DesignWidth="800" Background="White">
     
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="100"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        
-        <StackPanel Grid.Row="0"
-                    Orientation="Horizontal">
-            <ListBox x:Name="sidebar" 
-                    Visibility="Visible"
-                    BorderThickness="0 "
-                    Background="White" 
-                    Grid.Column="0"
-                    Grid.RowSpan="2"
-                    SelectionMode="Single"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center" Margin="5,0"
-                    >
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-
-                    <controls:NavListBoxItem Icon="{StaticResource returnIcon}"
-                                            Navlink="ListView.xaml"
-                                            Margin="0,5"
-                                             Visibility="Hidden"
-                                             x:Name="returnn"
-                                            Cursor="Hand"
-                                            KeyboardNavigation.IsTabStop="False"/>  
-                
-                <ListBoxItem >
-                    <TextBlock Text="Add Patient"
-                       x:Name="txtAdd"
-                       Visibility="Hidden"
-                       FontWeight="Bold"
-                       FontSize="19"
-                       VerticalAlignment="Center"
-                       Foreground="#aaa"/>
-                </ListBoxItem>
-                
-
-                <ListBoxItem>
-                    <Button x:Name="btnAdd"
-                    Click="btnAdd_Click"
-                            Content="Add Patient +"
-                            Command="{Binding AddPatientCommand}"
-                            FontWeight="DemiBold"
-                            FontSize="15"
-                            Margin="15,2"
-                            Cursor="Hand"
-                            IsDefault="True"
-                            BorderThickness="0"
-                            Style="{StaticResource PopupWindowMainButton}">
-
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        Height="40"
-                                        Width="130"
-                                        CornerRadius="20">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                        HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </ListBoxItem>
-
-                <ListBoxItem >
-                    <Button x:Name="btnRemove"
-                            Content="Remove"
-                            Command="{Binding RemovePatientCommand}"
-                            FontWeight="DemiBold"
-                            FontSize="15"
-                            Margin="15,2"
-                            Cursor="Hand"
-                            IsDefault="True"
-                            BorderThickness="0"
-                            Style="{StaticResource PopupWindowMainButton}">
-
-                        <Button.Template>
-                            <ControlTemplate TargetType="Button">
-                                <Border Background="{TemplateBinding Background}"
-                                        Height="40"
-                                        Width="130"
-                                        CornerRadius="20">
-                                    <ContentPresenter VerticalAlignment="Center"
-                                                        HorizontalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </ListBoxItem>
-            </ListBox>
-                                   
-        </StackPanel>
-        
-
-        
-        <Grid Grid.Row="1">
-            <Frame Background="White"
-               Name="PatientFrame"   
-               Source="{Binding SelectedItem.Navlink, ElementName=sidebar}"
-               NavigationUIVisibility="Hidden"/>
-        </Grid>
-        
-        
+    <Grid Background="#fff">
+        <Border CornerRadius="10"
+                Padding="30"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+            <TabControl Width="800" Height="700" Margin="0">
+                <TabItem Header="List" >
+                    <local:ListView/>
+                </TabItem>
+                <TabItem Header="Add Patient" >
+                    <ScrollViewer>
+                        <local:AddPatientView/>
+                    </ScrollViewer>
+                </TabItem>
+            </TabControl>
+        </Border>
+               
 
     </Grid>
 
