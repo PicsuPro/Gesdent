@@ -7,6 +7,7 @@
         xmlns:controls="clr-namespace:VsProject.Resources.Controls"
         xmlns:viewModels="clr-namespace:VsProject.ViewModels"
         mc:Ignorable="d"
+        WindowState="Maximized"
         Title="MainView" Height="720" Width="1300"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -94,12 +95,17 @@
                     SelectionMode="Single"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="1">
+                    SelectedIndex="0">
 
+            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
+                Navlink="PatientListView.xaml"
+                Margin="0,5"
+                KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
                 Navlink="CalendarView.xaml"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
+            
             <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"
