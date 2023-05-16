@@ -6,4 +6,10 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
     <c:ToothDataConverter x:Key="ToothDataConverter"/>
     <c:InverseBoolean x:Key="InverseBoolean"/>
+    <c:DurationToHeightConverter x:Key="DurationToHeightConverter"/>
+    <c:StartTimeToTopConverter x:Key="StartTimeToTopConverter"/>
+    <c:MathConverter x:Key="MathConverter"/>
+    <c:DataGridWidthToRowWidthConverter x:Key="DataGridWidthToRowWidth"/>
+    <c:ExcludeFirstItemConverter x:Key="ExcludeFirstItem"/>
+    <c:IntToDayStringConverter x:Key="IntToDayString"/>
 </ResourceDictionary>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Security;
@@ -19,10 +20,11 @@ namespace VsProject
         {
 
             VMVMappings.Initialize();
+            CultureInfo.CurrentCulture = new CultureInfo("fr-FR");
             var mainView = new MainView();
             //if ((bool)DialogService.Show(new LoginViewModel()))
             //{
-            UserPrincipal.Set(new NetworkCredential("yes", "yes"));
+            UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
                 mainView.Show();
             //}
             //else

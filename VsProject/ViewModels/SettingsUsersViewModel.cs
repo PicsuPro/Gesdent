@@ -38,7 +38,7 @@ namespace VsProject.ViewModels
         public SettingsUsersViewModel()
         {
 
-            Users = new ObservableCollection<UserModel>(UserPrincipal.Repository.GetAll());
+            Users = new ObservableCollection<UserModel>(UserPrincipal.UserRepository.GetAll());
 
             AddUserCommand = new ViewModelCommand(ExecuteAddUserCommand);
             EditUserCommand = new ViewModelCommand((user) => ExecuteEditUserCommand((UserModel)user));
@@ -53,8 +53,8 @@ namespace VsProject.ViewModels
 
             if (DialogService.Show(new UserEditViewModel(newUser)) == true)
             {
-                    UserPrincipal.Repository.Add(newUser);
-                    Users.Add(UserPrincipal.Repository.GetByUsername(newUser.UserName));
+                    UserPrincipal.UserRepository.Add(newUser);
+                    Users.Add(UserPrincipal.UserRepository.GetByUsername(newUser.UserName));
             }
 
 
@@ -64,13 +64,13 @@ namespace VsProject.ViewModels
         {
             if (DialogService.Show(new UserEditViewModel(user)) == true)
             {
-                UserPrincipal.Repository.Edit(user);
+                UserPrincipal.UserRepository.Edit(user);
                 var index = Users.IndexOf(user);
                 Users.Remove(user);
-                Users.Insert(index, UserPrincipal.Repository.GetById((Guid)user.Id));
+                Users.Insert(index, UserPrincipal.UserRepository.GetById((Guid)user.Id));
                 if (user.Id == UserPrincipal.Current?.Id)
                 {
-                    UserPrincipal.Set(user);
+                    UserPrincipal.SetUser(user);
                 }
             }
 
@@ -79,7 +79,7 @@ namespace VsProject.ViewModels
 
         private void ExecuteRemoveUserCommand(UserModel user)
         {
-            UserPrincipal.Repository.Remove(user);
+            UserPrincipal.UserRepository.Remove(user);
             Users.Remove(user);
         }
 

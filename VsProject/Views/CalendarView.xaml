@@ -1,0 +1,233 @@
+﻿<UserControl x:Class="VsProject.Views.CalendarView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:VsProject.Views"
+             xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
+             mc:Ignorable="d" 
+             d:DesignHeight="710" d:DesignWidth="1227"
+             
+             AllowDrop="True"
+             xmlns:c="clr-namespace:VsProject.Resources.Converters"
+             Background="{Binding Background,ElementName=CustomDataGrid}">
+    
+    <UserControl.Resources>
+        <CornerRadius x:Key="GridLinesCornerRadius">0</CornerRadius>
+        <sys:Double x:Key="RowHeaderHeight">30</sys:Double>
+        <Thickness  x:Key="ColumnsMargin"  Top="{StaticResource RowHeaderHeight}"/>
+        <sys:Double x:Key="ColumnHeaderWidth">40</sys:Double>
+        <sys:Double x:Key="RowMinWidth">40</sys:Double>
+
+        <ControlTemplate x:Key="CalendarDataGridTemplate" TargetType="{x:Type DataGrid}">
+            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+                <ScrollViewer x:Name="DG_ScrollViewer" Focusable="false">
+                    <ScrollViewer.Template>
+                        <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <DataGridColumnHeadersPresenter x:Name="PART_ColumnHeadersPresenter" Grid.Row="1" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Column}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}">
+                                    <DataGridColumnHeadersPresenter.LayoutTransform>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="90"/>
+                                            <MatrixTransform Matrix="-1,0,0,1,0,0"/>
+                                        </TransformGroup>
+                                    </DataGridColumnHeadersPresenter.LayoutTransform>
+                                </DataGridColumnHeadersPresenter>
+                                <ItemsControl Margin="{StaticResource ColumnsMargin}" 
+                                              ItemsSource="{Binding Path=Columns, RelativeSource={RelativeSource AncestorType=DataGrid},Converter={StaticResource ExcludeFirstItem}}" 
+                                              Grid.RowSpan="2" Grid.ColumnSpan="2">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <UniformGrid Columns="1"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Rectangle 
+                                                Stroke="LightGray"
+                                                StrokeThickness="0.25"
+                                                >
+                                            </Rectangle>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    
+                                </ItemsControl>
+                                <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" Grid.RowSpan="2" Grid.Column="1"/>
+
+                            </Grid>
+                        </ControlTemplate>
+                    </ScrollViewer.Template>
+                    <ItemsPresenter  SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" >
+
+                        <ItemsPresenter.LayoutTransform>
+                            <TransformGroup>
+                                <RotateTransform Angle="90"/>
+                                <MatrixTransform Matrix="-1,0,0,1,0,0"/>
+                            </TransformGroup>
+                        </ItemsPresenter.LayoutTransform>
+                    </ItemsPresenter>
+                </ScrollViewer>
+            </Border>
+        </ControlTemplate>
+        <Style x:Key="CalendarDataGridRowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="MinWidth" Value="{StaticResource RowMinWidth}"/>
+            <Setter Property="Width" Value="{Binding ActualWidth,RelativeSource={RelativeSource AncestorType=DataGrid},Converter={StaticResource DataGridWidthToRowWidth}, ConverterParameter={StaticResource ColumnHeaderWidth}}"/>
+            <Setter Property="AllowDrop" Value="True"/>
+            <Setter Property="Background" Value="#0000"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="0.25,0.25,0,0.25"/>
+            <Setter Property="Margin" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridRow}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource GridLinesCornerRadius}" SnapsToDevicePixels="True"
+                                >
+                            <SelectiveScrollingGrid>
+                                <SelectiveScrollingGrid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </SelectiveScrollingGrid.ColumnDefinitions>
+                                <SelectiveScrollingGrid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </SelectiveScrollingGrid.RowDefinitions>
+                                <DataGridRowHeader  Grid.ColumnSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
+                                <ItemsControl ItemsSource="{Binding Value}" Grid.Row="1"  Margin="0" Padding="0">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <Canvas Background="#0000" DragOver="Canvas_DragOver" Drop="Canvas_Drop"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemContainerStyle>
+                                        <Style TargetType="ContentPresenter">
+                                            <Style.Setters>
+                                                <Setter Property="Canvas.Top" >
+                                                    <Setter.Value>
+                                                        <MultiBinding Converter="{StaticResource StartTimeToTopConverter}">
+                                                            <Binding Path="StartTimeOnly"/>
+                                                            <Binding  Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type Canvas}}"/>
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Height" >
+                                                    <Setter.Value>
+                                                        <MultiBinding Converter="{StaticResource DurationToHeightConverter}">
+                                                            <Binding Path="Duration"/>
+                                                            <Binding  Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type Canvas}}" />
+                                                        </MultiBinding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                                <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource  AncestorType={x:Type Canvas}}}"/>
+                                            </Style.Setters>
+                                        </Style>
+                                    </ItemsControl.ItemContainerStyle>
+                                   
+                                    <ItemsControl.ItemTemplate >
+                                        <DataTemplate >
+                                            <Border Background="Honeydew" Opacity="0.7" CornerRadius="5" BorderBrush="Black" BorderThickness="1"
+                                                        HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                                                            MouseLeftButtonDown="Appointment_MouseLeftButtonDown">
+                                                <TextBlock Text="{Binding Subject}" Margin="5" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </SelectiveScrollingGrid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="LayoutTransform" >
+                <Setter.Value>
+                    <TransformGroup>
+                        <RotateTransform Angle="90"/>
+                        <MatrixTransform Matrix="-1,0,0,1,0,0"/>
+                    </TransformGroup>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+   
+    <UserControl.DataContext>
+        <viewModel:CalendarViewModel/>
+    </UserControl.DataContext>
+    <Grid >
+
+
+
+
+        <DataGrid x:Name="CustomDataGrid"
+            RowStyle="{DynamicResource CalendarDataGridRowStyle}"  Template="{DynamicResource CalendarDataGridTemplate}" 
+            ItemsSource="{Binding WeekAppointments, Mode=TwoWay}"
+            Background="#0000"
+            FontFamily="Calibri" FontWeight="Medium" 
+            Margin="0"
+            Padding="0"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch" 
+            CanUserSortColumns="False"
+            CanUserAddRows="False"
+            AutoGenerateColumns="False"
+            CanUserReorderColumns="False"
+            ColumnWidth="*"
+            HeadersVisibility="All"
+            GridLinesVisibility="All">
+
+            <DataGrid.RowHeaderStyle>
+                <Style TargetType="{x:Type DataGridRowHeader}"
+                BasedOn="{StaticResource {x:Type DataGridRowHeader}}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                    <Setter Property="Height" Value="{StaticResource RowHeaderHeight}"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Background" Value="#0000"/>
+                    <Setter Property="Background" Value="#0000"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridRowHeader}">
+                                <Border Margin="{TemplateBinding Margin}" Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                        VerticalAlignment="{TemplateBinding VerticalAlignment}" CornerRadius="5" SnapsToDevicePixels="True">
+                                    <TextBlock Text="{Binding Key,Converter={StaticResource IntToDayString}}" Foreground="Gray" FontSize="15" TextAlignment="Center"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowHeaderStyle>
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}"
+                BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
+                    <Setter Property="Background" Value="#0000"/>
+                    <Setter Property="Width" Value="{StaticResource ColumnHeaderWidth}"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="LayoutTransform">
+                        <Setter.Value>
+                            <TransformGroup>
+                                <RotateTransform Angle="90"/>
+                                <MatrixTransform Matrix="-1,0,0,1,0,0"/>
+                            </TransformGroup>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
+    </Grid>
+</UserControl>

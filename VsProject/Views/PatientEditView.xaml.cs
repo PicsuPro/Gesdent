@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using VsProject.Models;
 using VsProject.Resources.Controls;
 using VsProject.ViewModels;
 
@@ -21,15 +22,15 @@ namespace VsProject.Views
     /// <summary>
     /// Interaction logic for StaffEditView.xaml
     /// </summary>
-    public partial class StaffEditView : UserControl
+
+    public partial class PatientEditView : UserControl
     {
-        public StaffEditView()
+        public PatientEditView()
         {
             InitializeComponent();
-
         }
-       
-       
+
+
 
     }
 }

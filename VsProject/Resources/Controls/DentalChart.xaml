@@ -1,31 +1,37 @@
-﻿<UserControl x:Class="VsProject.Views.PatientDentalChartView"
+﻿<UserControl x:Class="VsProject.Resources.Controls.DentalChart"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:VsProject.Views"
+             xmlns:local="clr-namespace:VsProject.Resources.Controls"
              xmlns:converters="clr-namespace:VsProject.Resources.Converters"
-             xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              xmlns:viewModels="clr-namespace:VsProject.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
              Background="White">
-    <UserControl.DataContext>
-        <viewModels:PatientDentalChartViewModel/>
-    </UserControl.DataContext>
+    <UserControl.Resources>
+        <Style TargetType="CheckBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding SelectedItem, ElementName=chart}" Value="{x:Null}">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
 
     <Grid Margin="1,0,-1,0">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform" 
                     Height="350">
         <ListBox
-            ItemsSource="{Binding Teeth,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            ItemsSource="{Binding TeethSource, RelativeSource={RelativeSource AncestorType=local:DentalChart}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="chart"
-                    BorderThickness="0" 
-            IsEnabled="{Binding IsEnabled,RelativeSource={RelativeSource AncestorType=local:PatientDentalChartView},UpdateSourceTrigger=PropertyChanged}">
+                    BorderThickness="0" >
 
                 <ListBox.Resources>
                     <Style x:Key="toothFillStyle" TargetType="Path">
@@ -72,10 +78,10 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Fill}}" Style="{StaticResource toothFillStyle}"/>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Index}}" Style="{StaticResource toothFrontStyle}"/>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
-                            <Path Data="{Binding Index,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Decay}}" Style="{StaticResource toothFrontStyle}"
+                            <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Fill}}" Style="{StaticResource toothFillStyle}"/>
+                            <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Number}}" Style="{StaticResource toothFrontStyle}"/>
+                            <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
+                            <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Decay}}" Style="{StaticResource toothFrontStyle}"
                                   Visibility="{Binding Decay,Converter={StaticResource BooleanToVisibility}}"/>
                         </Grid>
                     </DataTemplate>
@@ -84,11 +90,12 @@
 
         </Viewbox>
         <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center">
-            <CheckBox Content="Carie" IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-            IsEnabled="{Binding IsEnabled,RelativeSource={RelativeSource AncestorType=local:PatientDentalChartView},UpdateSourceTrigger=PropertyChanged}"/>
-            <CheckBox Content="Reaction Alpical" IsChecked="{Binding SelectedItem.AlpicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                      Margin="5,0,0,0"
-            IsEnabled="{Binding IsEnabled,RelativeSource={RelativeSource AncestorType=local:PatientDentalChartView},UpdateSourceTrigger=PropertyChanged}"/>
+            <CheckBox Content="Carie" 
+                      IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      />
+            <CheckBox Content="Reaction Alpical" 
+                      IsChecked="{Binding SelectedItem.ApicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                      Margin="5,0,0,0"/>
         </StackPanel>
 
     </Grid>

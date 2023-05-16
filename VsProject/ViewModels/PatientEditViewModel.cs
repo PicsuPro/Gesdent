@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace VsProject.ViewModels
 {
@@ -37,10 +38,10 @@ namespace VsProject.ViewModels
         private string _preferredDay = "";
         private string _parentName = "";
 
+        private PatientRecordModel _patientRecord;
 
-        private ObservableCollection<ToothModel> _teeth = new ObservableCollection<ToothModel>(
-                                                          Enumerable.Range(1, 32).Select(i => new ToothModel { Index = i })
-                                                          );
+
+        private ObservableCollection<ToothModel> _teeth;
 
         public PatientModel Patient
         {
@@ -83,7 +84,7 @@ namespace VsProject.ViewModels
         }
         public bool? IsMale
         {
-            get { return _isMale; }
+            get => _isMale; 
             set
             {
                 if (_isMale != value)
@@ -96,7 +97,7 @@ namespace VsProject.ViewModels
         }
         public bool? IsFemale
         {
-            get { return _isFemale; }
+            get => _isFemale; 
             set
             {
                 if (_isFemale != value)
@@ -209,6 +210,16 @@ namespace VsProject.ViewModels
             }
         }
 
+        public PatientRecordModel PatientRecord
+        {
+            get => _patientRecord;
+            set
+            {
+                _patientRecord = value;
+                OnPropertyChanged(nameof(PatientRecord));
+            }
+        }
+
         public ObservableCollection<ToothModel> Teeth
         {
             get => _teeth;
@@ -226,14 +237,16 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public bool IsNewPatient
+        public bool IsNewPatient 
         {
-            get => _isNewPatient; set
+            get => _isNewPatient;
+            set
             {
                 _isNewPatient = value;
                 OnPropertyChanged(nameof(IsNewPatient));
-            }
+            } 
         }
+
         public bool IsEditing
         {
             get => _isEditing; set
@@ -244,11 +257,25 @@ namespace VsProject.ViewModels
         }
 
         public ICommand SaveEditCommand { get; }
+        
+
         public PatientEditViewModel()
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Patient = new PatientModel();
-            IsNewPatient = Patient.Id == null;
+            PatientRecord = new PatientRecordModel();
+            Teeth = new ObservableCollection<ToothModel>(
+                                                        Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i })
+                                                        );
+            IsNewPatient =  true;
+        }
+        public PatientEditViewModel(PatientModel patient, PatientRecordModel patientRecord, IEnumerable<ToothModel> teeth)
+        {
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
+            Patient = patient;
+            PatientRecord = patientRecord;
+            PatientRecord.PatientId = Patient.Id;
+            Teeth = new ObservableCollection<ToothModel>(teeth);
             LastName = Patient.LastName;
             FirstName = Patient.FirstName;
             Surname = Patient.Surname;
@@ -265,18 +292,25 @@ namespace VsProject.ViewModels
             Adress = Patient.Adress;
             PreferredDay = Patient.PreferredDay;
             ParentName = Patient.ParentName;
-    }
+
+            IsNewPatient = Patient.Id == null;
+        }
 
 
         private void ExecuteSaveEdit(object obj)
         {
             if (IsNewPatient)
             {
-                UserPrincipal.PatientRepository.Add(Patient);
+                Patient.Id = UserPrincipal.PatientRepository.Add(Patient);
+                PatientRecord.PatientId = Patient.Id;
+                UserPrincipal.PatientRecordRepository.Add(PatientRecord);
+                UserPrincipal.ToothRepository.AddAll(Teeth.ToList(), PatientRecord.PatientId);
             }
             else
             {
                 UserPrincipal.PatientRepository.Edit(Patient);
+                //UserPrincipal.PatientRecordRepository.Edit();
+                UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
             }
             IsEditing = false;
         }
@@ -290,7 +324,8 @@ namespace VsProject.ViewModels
                 && !(string.IsNullOrWhiteSpace(Patient.Email))
                 && !(string.IsNullOrWhiteSpace(Patient.Profession))
                 && !(string.IsNullOrWhiteSpace(Patient.Adress))
-                && BirthDate != null;
+                && BirthDate != null
+                && IsEditing;
 
         }
 

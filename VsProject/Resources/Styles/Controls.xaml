@@ -118,10 +118,10 @@
     <SolidColorBrush x:Key="Menu.Static.Foreground" Color="#FF212121"/>
     <SolidColorBrush x:Key="Menu.Static.Separator" Color="#FFD7D7D7"/>
     <SolidColorBrush x:Key="Menu.Disabled.Foreground" Color="#FF707070"/>
-    <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="#3D666666"/>
-    <SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF666666"/>
-    <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#3D555555"/>
-    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF555555"/>
+    <SolidColorBrush x:Key="MenuItem.Selected.Background" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Selected.Border" Color="#FF26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Highlight.Background" Color="#3D26A0DA"/>
+    <SolidColorBrush x:Key="MenuItem.Highlight.Border" Color="#FF26A0DA"/>
     <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Background" Color="#0A000000"/>
     <SolidColorBrush x:Key="MenuItem.Highlight.Disabled.Border" Color="#21000000"/>
     <MenuScrollingVisibilityConverter x:Key="MenuScrollingVisibilityConverter"/>
@@ -129,13 +129,12 @@
     <Geometry x:Key="UpArrow">M 0,4 L 3.5,0 L 7,4 Z</Geometry>
     <Geometry x:Key="RightArrow">M 0,0 L 4,3.5 L 0,7 Z</Geometry>
     <Geometry x:Key="Checkmark">F1 M 10.0,1.2 L 4.7,9.1 L 4.5,9.1 L 0,5.2 L 1.3,3.5 L 4.3,6.1L 8.3,0 L 10.0,1.2 Z</Geometry>
-    
     <Style x:Key="MenuScrollButton" BasedOn="{x:Null}" TargetType="{x:Type RepeatButton}">
         <Setter Property="ClickMode" Value="Hover"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border x:Name="templateRoot" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" SnapsToDevicePixels="true" CornerRadius="4">
+                    <Border x:Name="templateRoot" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="true">
                         <ContentPresenter HorizontalAlignment="Center" Margin="6" VerticalAlignment="Center"/>
                     </Border>
                 </ControlTemplate>
@@ -188,8 +187,7 @@
         </Setter>
     </Style>
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
-        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true"
-                CornerRadius="4">
+        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -197,7 +195,7 @@
                 </Grid.ColumnDefinitions>
                 <ContentPresenter x:Name="Icon" ContentSource="Icon" HorizontalAlignment="Center" Height="16" Margin="3" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" Width="16"/>
                 <Path x:Name="GlyphPanel" Data="{StaticResource Checkmark}" FlowDirection="LeftToRight" Fill="{StaticResource Menu.Static.Foreground}" Margin="3" VerticalAlignment="Center" Visibility="Collapsed"/>
-                <ContentPresenter  VerticalAlignment="Center" ContentSource="Header" Grid.Column="1" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                <ContentPresenter ContentSource="Header" Grid.Column="1" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
             </Grid>
         </Border>
         <ControlTemplate.Triggers>
@@ -227,8 +225,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
-        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true"
-                >
+        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
             <Grid VerticalAlignment="Center">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -278,8 +275,7 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}" TargetType="{x:Type MenuItem}">
-        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Height="22" SnapsToDevicePixels="true"
-                CornerRadius="4">
+        <Border x:Name="templateRoot" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Height="22" SnapsToDevicePixels="true">
             <Grid Margin="-1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition MinWidth="22" SharedSizeGroup="MenuItemIconColumnGroup" Width="Auto"/>
@@ -293,7 +289,7 @@
                 <Border x:Name="GlyphPanel" Background="{StaticResource MenuItem.Selected.Background}" BorderBrush="{StaticResource MenuItem.Selected.Border}" BorderThickness="1" ClipToBounds="False" HorizontalAlignment="Center" Height="22" Margin="-1,0,0,0" VerticalAlignment="Center" Visibility="Hidden" Width="22">
                     <Path x:Name="Glyph" Data="{StaticResource Checkmark}" FlowDirection="LeftToRight" Fill="{StaticResource Menu.Static.Foreground}" Height="11" Width="10"/>
                 </Border>
-                <ContentPresenter x:Name="menuHeaderContainer" ContentSource="Header" Grid.Column="2" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                <ContentPresenter x:Name="menuHeaderContainer" ContentSource="Header" Grid.Column="2" HorizontalAlignment="Left" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
                 <TextBlock x:Name="menuGestureText" Grid.Column="4" Margin="{TemplateBinding Padding}" Opacity="0.7" Text="{TemplateBinding InputGestureText}" VerticalAlignment="Center"/>
             </Grid>
         </Border>
@@ -382,7 +378,7 @@
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-    <Style TargetType="{x:Type MenuItem}">
+    <Style x:Key="MenuItemStyle1" TargetType="{x:Type MenuItem}">
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -412,7 +408,6 @@
         </Style.Triggers>
     </Style>
 
-
     <!--RadioButton-->
   
     <SolidColorBrush x:Key="RadioButton.Static.Background" Color="#569DE5"/>
@@ -434,7 +429,7 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    <Rectangle  Margin="2" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -443,12 +438,13 @@
         <Setter Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="14,0,-3,0" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
+                    <Rectangle  Margin="14,0,-3,0" StrokeDashArray="1 2" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SnapsToDevicePixels="true" StrokeThickness="1"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
     <Style TargetType="{x:Type RadioButton}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="Background" Value="{StaticResource RadioButton.Static.Background}"/>
         <Setter Property="BorderBrush" Value="{StaticResource RadioButton.Static.Border}"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -461,10 +457,10 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="radioButtonBorder" Padding="0"  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0,0,1,0">
-                            <Border x:Name="optionMark" Background="{StaticResource RadioButton.Static.Glyph}" Padding="5" CornerRadius="100" />
+                        <Border SnapsToDevicePixels="true" x:Name="radioButtonBorder" Padding="0"  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="100" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="0,0,1,0">
+                            <Border  SnapsToDevicePixels="true" x:Name="optionMark" Background="{StaticResource RadioButton.Static.Glyph}" Padding="5" CornerRadius="100" />
                         </Border>
-                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ContentPresenter  x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasContent" Value="true">
@@ -768,7 +764,8 @@
     </Style>
 
     <!--ComboBox-->
-
+    <SolidColorBrush x:Key="ComboBox.MouseOver.Border" Color="#FF7EB4EA"/>
+    <SolidColorBrush x:Key="ComboBox.Focus.Border" Color="#FF569DE5"/>
     <Style TargetType="{x:Type ComboBoxItem}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
@@ -795,7 +792,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-
+    
     <ControlTemplate TargetType="ToggleButton" x:Key="ComboBoxToggleButtonTemplate">
         <Grid >
             <Grid.ColumnDefinitions>
@@ -803,13 +800,13 @@
                 <ColumnDefinition Width="20" />
             </Grid.ColumnDefinitions>
             <Border Grid.ColumnSpan="2" Name="Border"
-                      BorderBrush="DarkGray" 
+                      BorderBrush="#8D8D8D" 
                       CornerRadius="3.5" BorderThickness="0.3, 0.3, 0.3, 0.3"
                       Background="#AFFF" 
                         VerticalAlignment="Stretch"/>
             <Border Grid.ColumnSpan="2" Name="Line"
                       BorderBrush="#8D8D8D" 
-                      CornerRadius="3.4" BorderThickness="0,0,0, 0.9"
+                      CornerRadius="3.4" BorderThickness="0,0,0, 1.1"
                       Background="Transparent" 
                         VerticalAlignment="Stretch"/>
             <Viewbox Stretch="Uniform" Grid.Column="1" Margin="5.5,2.75,5.5,5.5">
@@ -823,12 +820,12 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="#DFFF"/>
                 <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
-                <Setter Property="BorderBrush" TargetName="Line" Value="#7EB4EA"/>
+                <Setter Property="BorderBrush" TargetName="Line" Value="{StaticResource ComboBox.MouseOver.Border}"/>
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="True">
                 <Setter Property="Background" TargetName="Border" Value="#DFFF"/>
                 <Setter Property="BorderThickness" TargetName="Border" Value="0.4, 0.4, 0.4, 0.4"/>
-                <Setter Property="BorderBrush" TargetName="Line" Value="#569DE5"/>
+                <Setter Property="BorderBrush" TargetName="Line" Value="{StaticResource ComboBox.Focus.Border}"/>
                 <Setter Property="Fill" TargetName="Arrow" Value="#BB444444"/>
 
             </Trigger>
@@ -895,7 +892,7 @@
         </Setter>
     </Style>
     
-    <!--DATAGRID-->
+    <!--DataGrid-->
     <Style x:Key="DropHeaderStyle" TargetType="{x:Type Separator}">
         <Setter Property="BorderThickness"  Value="5"/>
         <Setter Property="BorderBrush" Value="#0049B3"/>
@@ -947,13 +944,13 @@
         </Setter>
 
     </Style>
-
+    <SolidColorBrush x:Key="DataGridColumnHeader.Foreground" Color="Gray"/>
     <Style TargetType="DataGridColumnHeader">
-        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="Foreground" Value="{StaticResource DataGridColumnHeader.Foreground}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                    <Grid Name="HeaderGrid" Background="#F0F2F5" Margin="0,3,0,3">
+                    <Grid Name="HeaderGrid" Background="#0000" Margin="0,3,0,3">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />

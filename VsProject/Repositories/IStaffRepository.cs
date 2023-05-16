@@ -12,7 +12,7 @@ namespace VsProject.Models
         void Add(StaffModel staffModel);
         void Edit(StaffModel staffModel);
 
-        StaffModel? GetById(Guid? id);
+        StaffModel? GetByUserId(Guid? id);
 
         IEnumerable<StaffModel> GetAll();
     }

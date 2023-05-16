@@ -14,7 +14,10 @@
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\AddPatientView.xaml.cs">
+      <Compile Update="Views\CalendarView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+     <Compile Update="Views\AddPatientView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
@@ -24,6 +27,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\PatientDentalChartView.xaml.cs">
+    <Compile Update="Resources\Controls\DentalChart.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\PatientListView.xaml.cs">
@@ -67,13 +71,7 @@
     <Page Update="Resources\Styles\Converters.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\AddPatientView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="Views\HomeView.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\ListView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\PatientDentalChartView.xaml">
