@@ -25,9 +25,5 @@ namespace VsProject.Views
             InitializeComponent();
         }
 
-        private void list_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
     }
 }

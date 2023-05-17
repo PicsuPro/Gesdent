@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <UserControl.DataContext>
-        <viewModel:PatientListViewModel/>
+        <viewModel:ListViewModel/>
     </UserControl.DataContext>
     
     <Grid>
@@ -16,19 +16,77 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <Viewbox Width="20"
+                  Height="20">
+                <Path HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Fill="#222"
+                  Data="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
+            </Viewbox>
+            <TextBox x:Name="Search"
+                     Width="200" 
+                     Height="40"
+                     Margin="10 0"
+                     FontSize="20"
+                     Style="{StaticResource FormTextBox}"
+                     VerticalAlignment="Center"/>
+        </StackPanel>
+
         <DataGrid Grid.Row="1" Background="White" 
                   Name="list"
                   ItemsSource="{Binding Patients}" 
-                  IsReadOnly="True"/>
-        <!--<StackPanel Grid.Row="2" HorizontalAlignment="Right">
-            <TextBlock x:Name="numberPatient"
-                       Text="Number Patient : 12" 
+                  IsReadOnly="True" 
+                  AutoGenerateColumns="False" >
+            <DataGrid.Columns >
+                <DataGridTemplateColumn Header="Action">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="left">
+                                <Button Command="{Binding DataContext.EditPatinetCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                            Margin="0,0,6,0"
+                                        Background="White"
+                                            ToolTip="Modifier">
+                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18"/>
+                                </Button>
+                                <Button Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Background="White"
+                                            ToolTip="Supprimer">
+                                    <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Nom" Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Prenom" Binding="{Binding FirstName }"/>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+                <DataGridTextColumn Header="Date de Naissance" Binding="{Binding BirthDate}"/>
+                <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
+                
+                <!--<DataGridTextColumn Header="Sex" Binding="{Binding Sex}"/>-->
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <TextBlock Text="Number des Patient : " 
                        FontWeight="DemiBold"
                        Height="40"
                        Width="170"
                        FontSize="15"
-                       Margin="15,2"
+                       Margin="15 15 0 15"
                        />
-        </StackPanel>-->
+            <TextBlock Text="{Binding Patients.Count}" 
+                       FontWeight="DemiBold"
+                       Height="40"
+                       Width="30"
+                       FontSize="15"
+                       Margin="0 15 15 15"
+                       />
+        </StackPanel>
     </Grid>
 </UserControl>

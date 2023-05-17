@@ -185,6 +185,11 @@ namespace VsProject.Repositories
             return null;
         }
 
+        public void Remove(PatientModel patient)
+        {
+            throw new NotImplementedException();
+        }
+
         private bool IdExists(int? id)
         {
             if (id == null)

@@ -16,5 +16,6 @@ namespace VsProject.Repositories
         PatientModel? GetById(int? id);
 
         IEnumerable<PatientModel> GetAll();
+        void Remove(PatientModel patient);
     }
 }

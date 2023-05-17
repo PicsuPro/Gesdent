@@ -6,14 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
-using VsProject.Services;
 
 namespace VsProject.ViewModels
 {
-    public class PatientListViewModel : ViewModelBase
+    class ListViewModel: ViewModelBase
     {
 
         private ObservableCollection<PatientModel> _patients;
+        private PatientModel patient;
 
         public ObservableCollection<PatientModel> Patients
         {
@@ -28,14 +28,14 @@ namespace VsProject.ViewModels
         public ICommand EditPatientCommand { get; }
         public ICommand RemovePatientCommand { get; }
 
-        public PatientListViewModel()
+        public ListViewModel()
         {
 
             Patients = new ObservableCollection<PatientModel>(UserPrincipal.PatientRepository.GetAll());
 
-           // AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
-           // EditPatientCommand = new ViewModelCommand((patient) => ExecuteEditPatientCommand((PatientModel)patient));
-           // RemovePatientCommand = new ViewModelCommand((user) => ExecuteRemovePatientCommand((PatientModel)patient));
+            // AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
+            // EditPatientCommand = new ViewModelCommand((patient) => ExecuteEditPatientCommand((PatientModel)patient));
+            RemovePatientCommand = new ViewModelCommand((user) => ExecuteRemovePatientCommand((PatientModel)patient));
         }
 
 
@@ -62,13 +62,12 @@ namespace VsProject.ViewModels
         //}
 
 
-        //private void ExecuteRemovePatientCommand(PatientModel patient)
-        //{
-        //    UserPrincipal.PatientRepository.Remove(patient);
-        //    Patients.Remove(patient);
-        //}
+        private void ExecuteRemovePatientCommand(PatientModel patient)
+        {
+            UserPrincipal.PatientRepository.Remove(patient);
+            Patients.Remove(patient);
+        }
 
-      
+
     }
 }
-
