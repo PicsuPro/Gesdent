@@ -27,6 +27,7 @@
                   Data="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/>
             </Viewbox>
             <TextBox x:Name="Search"
+                     Text="{Binding SearchPatient, UpdateSourceTrigger=PropertyChanged}"
                      Width="200" 
                      Height="40"
                      Margin="10 0"
@@ -39,23 +40,31 @@
                   Name="list"
                   ItemsSource="{Binding Patients}" 
                   IsReadOnly="True" 
-                  AutoGenerateColumns="False" >
+                  AutoGenerateColumns="False"
+                  CanUserReorderColumns="False"
+                  CanUserResizeColumns="False">
             <DataGrid.Columns >
                 <DataGridTemplateColumn Header="Action">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="left">
-                                <Button Command="{Binding DataContext.EditPatinetCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                <Button x:Name="editButton"
+                                        Command="{Binding DataContext.EditPatinetCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
-                                            Margin="0,0,6,0"
+                                        Margin="0,0,6,0"
                                         Background="White"
-                                            ToolTip="Modifier">
-                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18"/>
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        BorderBrush="White"
+                                        ToolTip="Modifier">
+                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
                                 </Button>
-                                <Button Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                <Button x:Name="removeButton"
+                                        Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
                                         Background="White"
-                                            ToolTip="Supprimer">
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        Visibility="Visible"
+                                        ToolTip="Supprimer">
                                     <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
                                 </Button>
                             </StackPanel>
@@ -66,11 +75,34 @@
                 <DataGridTextColumn Header="Nom" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Prenom" Binding="{Binding FirstName }"/>
                 <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
-                <DataGridTextColumn Header="Date de Naissance" Binding="{Binding BirthDate}"/>
+                <DataGridTextColumn Header="Date de Naissance" Binding="{Binding BirthDate ,StringFormat={}{0:dd/MM/yyyy}}"/>
                 <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
-                
-                <!--<DataGridTextColumn Header="Sex" Binding="{Binding Sex}"/>-->
-            </DataGrid.Columns>
+
+                <DataGridTemplateColumn Header="Sex">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock >
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Sex}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Setter Property="Text" Value="Femme" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Sex}" Value="False">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Setter Property="Text" Value="Homme" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns >
         </DataGrid>
         <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <TextBlock Text="Number des Patient : " 
@@ -88,5 +120,6 @@
                        Margin="0 15 15 15"
                        />
         </StackPanel>
+            
     </Grid>
 </UserControl>

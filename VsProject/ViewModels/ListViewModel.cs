@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Data;
 using System.Windows.Input;
 using VsProject.Models;
 
 namespace VsProject.ViewModels
 {
-    class ListViewModel: ViewModelBase
+    class ListViewModel : ViewModelBase
     {
-
         private ObservableCollection<PatientModel> _patients;
-        private PatientModel patient;
+        private ICollectionView _patientCollectionView;
+        private string _searchPatient;
 
         public ObservableCollection<PatientModel> Patients
         {
@@ -24,50 +23,52 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Patients));
             }
         }
-        public ICommand AddPatientCommand { get; }
-        public ICommand EditPatientCommand { get; }
+
+        public string SearchPatient
+        {
+            get => _searchPatient;
+            set
+            {
+                _searchPatient = value;
+                _patientCollectionView.Refresh(); // Refresh the collection view when search text changes
+                OnPropertyChanged(nameof(SearchPatient));
+            }
+        }
+
         public ICommand RemovePatientCommand { get; }
 
         public ListViewModel()
         {
 
             Patients = new ObservableCollection<PatientModel>(UserPrincipal.PatientRepository.GetAll());
+            _patientCollectionView = CollectionViewSource.GetDefaultView(Patients);
+            _patientCollectionView.Filter = FilterBySearchText;
 
-            // AddPatientCommand = new ViewModelCommand(ExecuteAddPatientCommand);
-            // EditPatientCommand = new ViewModelCommand((patient) => ExecuteEditPatientCommand((PatientModel)patient));
-            RemovePatientCommand = new ViewModelCommand((user) => ExecuteRemovePatientCommand((PatientModel)patient));
+            RemovePatientCommand = new ViewModelCommand(RemovePatient);
         }
 
-
-
-        //private void ExecuteAddPatientCommand(object obj)
-        //{
-        //    var newPatient = new PatientModel();
-
-        //    {
-        //        UserPrincipal.PatientRepository.Add(newPatient);
-        //        Patients.Add(UserPrincipal.PatientRepository.GetByPatientname(newPatient.PatientName));
-        //    }
-
-
-        //}
-
-        //private void ExecuteEditPatientCommand(PatientModel user)
-        //{
-        //        PatientPrincipal.PatientRepository.Edit(user);
-        //        var index = Patients.IndexOf(user);
-        //        Patients.Remove(user);
-        //        Patients.Insert(index, PatientPrincipal.PatientRepository.GetById((Guid)user.Id));
-
-        //}
-
-
-        private void ExecuteRemovePatientCommand(PatientModel patient)
+        private void RemovePatient(object parameter)
         {
-            UserPrincipal.PatientRepository.Remove(patient);
-            Patients.Remove(patient);
+            var patient = parameter as PatientModel;
+            if (patient != null)
+            {
+                Patients.Remove(patient);
+                UserPrincipal.PatientRepository.Remove(patient);
+            }
         }
 
+        private bool FilterBySearchText(object item)
+        {
+            if (string.IsNullOrEmpty(_searchPatient))
+                return true;
+
+            var patient = item as PatientModel;
+            if (patient == null)
+                return false;
+
+            var fullName = $"{patient.LastName} {patient.FirstName} {patient.Surname}".ToLower();
+            return fullName.Contains(_searchPatient.ToLower());
+        }
 
     }
 }

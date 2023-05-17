@@ -187,8 +187,18 @@ namespace VsProject.Repositories
 
         public void Remove(PatientModel patient)
         {
-            throw new NotImplementedException();
+            using (var connection = GetConnection())
+            //using (var command = new SqlCommand())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = $"DELETE FROM {TABLENAME} WHERE {ID}=@id";
+                command.Parameters.AddWithValue("@id", patient.Id);
+                command.ExecuteNonQuery();
+            }
         }
+        
 
         private bool IdExists(int? id)
         {
