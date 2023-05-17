@@ -21,10 +21,11 @@ namespace VsProject.Resources.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values[0] is TimeOnly startTime && values[1] is double canvasHeight)
+            if (values[0] is TimeOnly startTime && values[1] is double canvasHeight && values[2] is int hourCount && values[3] is TimeOnly startHour)
             {
-                var columnHeight = canvasHeight / (21 - 7);
-                double top = (startTime.Hour - 7) * columnHeight + (startTime.Minute / 60.0) * columnHeight; // Convert the time difference to the corresponding distance in pixels
+
+                var columnHeight = canvasHeight / (hourCount);
+                double top = (startTime.Hour - startHour.Hour) * columnHeight + (startTime.Minute / 60.0) * columnHeight; // Convert the time difference to the corresponding distance in pixels
                 return top;
             }
             return Binding.DoNothing;
@@ -42,9 +43,9 @@ namespace VsProject.Resources.Converters
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values[0] is TimeSpan duration && values[1] is double canvasHeight)
+            if (values[0] is TimeSpan duration && values[1] is double canvasHeight && values[2] is int hourCount)
             {
-                var columnHeight = canvasHeight / (21 - 7);
+                var columnHeight = canvasHeight / (hourCount);
                 var height = (duration.TotalMinutes * columnHeight) / 60.0;
                 return height;
 
@@ -59,29 +60,24 @@ namespace VsProject.Resources.Converters
         }
     }
     
-    public class DataGridWidthToRowWidthConverter : IValueConverter
+    public class DataGridWidthToRowWidthConverter : IMultiValueConverter
     {
-
-
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double dataGridWidth && parameter is double columnHeaderWidth)
+            if (values[0] is int columnCount && values[1] is double rowPresenterWidth)
             {
-                return (dataGridWidth - columnHeaderWidth -2) / 7;
+                return (rowPresenterWidth - 2) / columnCount;
 
             }
             return Binding.DoNothing;
+
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            if (value is double rowWidth && parameter is double columnHeaderWidth)
-            {
-                return ((rowWidth * 7) + columnHeaderWidth);
-
-            }
-            return Binding.DoNothing;
+            throw new NotImplementedException();
         }
+      
     }
 
     public class ExcludeFirstItemConverter : IValueConverter
@@ -102,13 +98,13 @@ namespace VsProject.Resources.Converters
         }
     }
 
-    public class IntToDayStringConverter : IValueConverter
+    public class DateToDayOfWeekStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is int i)
+            if (value is DateOnly date)
             {
-                return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(CultureInfo.CurrentCulture.DateTimeFormat.DayNames[i]);
+                return date.DayOfWeek.ToString();
             }
 
             return value;
