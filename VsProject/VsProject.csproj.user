@@ -14,7 +14,7 @@
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\CalendarView.xaml.cs">
+    <Compile Update="Resources\Controls\AppointmentScheduler.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
@@ -61,7 +61,7 @@
     <Page Update="Resources\Styles\Converters.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\CalendarView.xaml">
+    <Page Update="Resources\Controls\AppointmentScheduler.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">

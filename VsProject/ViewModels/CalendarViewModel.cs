@@ -18,6 +18,7 @@ using VsProject.Services;
 using System.Windows;
 using System.Runtime.InteropServices.JavaScript;
 using VsProject.Models;
+using System.Windows.Input;
 
 namespace VsProject.ViewModels
 {
@@ -33,7 +34,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartDate));
             }
         }
-        public DateOnly _endDate { get; set; } = new DateOnly(2023, 05, 14);
+        public DateOnly _endDate { get; set; } = new DateOnly(2023, 05, 13);
         public DateOnly EndDate
         {
             get => _endDate;
@@ -43,7 +44,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(EndDate));
             }
         }
-        public TimeOnly _startHour { get; set; } = new TimeOnly(7,0);
+        public TimeOnly _startHour { get; set; } = new TimeOnly(7, 0);
         public TimeOnly StartHour
         {
             get => _startHour;
@@ -53,29 +54,35 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartHour));
             }
         }
-        public int _hourCount { get; set; } = 12;
+        public int _hourCount { get; set; } = 14;
         public int HourCount
         {
             get => _hourCount;
             set
             {
-                _hourCount = value;
+                if (value > 0)
+                    _hourCount = value;
+                else
+                    throw new ArgumentOutOfRangeException("HourCount", "HourCount must be a positive value.");
+
                 OnPropertyChanged(nameof(HourCount));
             }
         }
 
+
         private ObservableCollection<AppointmentViewModel> _appointments =
             new ObservableCollection<AppointmentViewModel>
                 {
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 07, 19, 0, 0), Duration = new TimeSpan(01, 00, 00), Subject = "Meeting with MF" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 08, 13, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 09, 14, 0, 0), Duration = new TimeSpan(02, 30, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 10, 15, 0, 0), Duration = new TimeSpan(02, 00, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 11, 8, 0, 0), Duration = new TimeSpan(01, 00, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 12, 9, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 13, 9, 0, 0), Duration = new TimeSpan(03, 00, 00), Subject = "21:30" }),
-                    new AppointmentViewModel(new AppointmentModel { StartDateTime = new DateTime(2023, 5, 14, 10, 0, 0), Duration = new TimeSpan(02, 50, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 07, 19, 0, 0), Duration = new TimeSpan(01, 00, 00), Subject = "Meeting with MF" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 08, 13, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 09, 14, 0, 0), Duration = new TimeSpan(02, 30, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 10, 15, 0, 0), Duration = new TimeSpan(02, 00, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 11, 08, 0, 0), Duration = new TimeSpan(01, 00, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 12, 09, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 13, 09, 0, 0), Duration = new TimeSpan(03, 00, 00), Subject = "Ya Don't say" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 14, 10, 0, 0), Duration = new TimeSpan(02, 50, 00), Subject = "Do thing" }),
                 };
+
 
         public ObservableCollection<AppointmentViewModel> Appointments
         {
@@ -86,23 +93,18 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Appointments));
             }
         }
+        public ICommand AppointmentEditCommand { get; }
 
-        private DayAppointmentsCollection? _dayAppointments;
-
-        public DayAppointmentsCollection? DayAppointments
-        {
-            get => _dayAppointments;
-            set
-            {
-                _dayAppointments = value;
-                OnPropertyChanged(nameof(DayAppointments));
-            }
-        } 
         public CalendarViewModel()
         {
-            _dayAppointments = 
-            new DayAppointmentsCollection(Appointments, new DateOnly(2023, 5, 7), new DateOnly(2023, 5, 15));
+            AppointmentEditCommand = new ViewModelCommand(ExecuteAppointmentEdit);
         }
+
+        private void ExecuteAppointmentEdit(object obj)
+        {
+            MessageBox.Show("WOOOW Tu as REUSIII, TUA CLICKEeee, BRAAAAVOOOO");
+        }
+
 
 
     }

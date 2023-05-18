@@ -10,5 +10,7 @@
     <c:MathConverter x:Key="MathConverter"/>
     <c:DataGridWidthToRowWidthConverter x:Key="DataGridWidthToRowWidth"/>
     <c:ExcludeFirstItemConverter x:Key="ExcludeFirstItem"/>
+    <c:StartTimeToTopConverter x:Key="StartTimeToTopConverter"/>
     <c:DateToDayOfWeekStringConverter x:Key="DateToDayOfWeekString"/>
+    <c:PopupWidthToMarginConverter x:Key="PopupWidthToMargin"/>
 </ResourceDictionary>

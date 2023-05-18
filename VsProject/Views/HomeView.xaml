@@ -5,15 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VsProject.Views"
              xmlns:viewModels="clr-namespace:VsProject.ViewModels"
+             xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
+             d:DesignHeight="720" d:DesignWidth="1366"
              Background="White">
     <UserControl.DataContext>
         <viewModels:CalendarViewModel/>
     </UserControl.DataContext>
 
-    <local:CalendarView Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+    <controls:AppointmentScheduler AppointmentCommand="{Binding AppointmentEditCommand}" Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EndDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        StartHour="{Binding StartHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HourCount="{Binding HourCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></local:CalendarView>
+                        StartHour="{Binding StartHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HourCount="{Binding HourCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:AppointmentScheduler>
 
 </UserControl>

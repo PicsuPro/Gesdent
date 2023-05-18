@@ -104,7 +104,24 @@ namespace VsProject.Resources.Converters
         {
             if (value is DateOnly date)
             {
-                return date.DayOfWeek.ToString();
+                return culture.TextInfo.ToTitleCase(date.ToString("dddd"));
+            }
+
+            return value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+    }
+     public class PopupWidthToMarginConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is double width)
+            {
+                return new Thickness(-width, 0, 0, 0);   
             }
 
             return value;

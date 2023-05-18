@@ -30,5 +30,28 @@ namespace VsProject.Services
             // No parent of the correct type was found
             return null;
         }
+
+        public static T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null)
+                return null;
+
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+
+            for (int i = 0; i < childCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is T typedChild)
+                    return typedChild;
+
+                var foundChild = FindVisualChild<T>(child);
+
+                if (foundChild != null)
+                    return foundChild;
+            }
+
+            return null;
+        }
     }
 }
