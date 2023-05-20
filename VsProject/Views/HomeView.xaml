@@ -10,11 +10,15 @@
              d:DesignHeight="720" d:DesignWidth="1366"
              Background="White">
     <UserControl.DataContext>
-        <viewModels:CalendarViewModel/>
+        <viewModels:CalendarViewModel />
     </UserControl.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <controls:AppointmentScheduler AppointmentCommand="{Binding AppointmentEditCommand}" Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        StartDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EndDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        StartHour="{Binding StartHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HourCount="{Binding HourCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:AppointmentScheduler>
-
+        <controls:DateTimePickerComboBoxes>
+        </controls:DateTimePickerComboBoxes>
+    </Grid>
 </UserControl>

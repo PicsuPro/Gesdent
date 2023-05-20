@@ -9,15 +9,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="710" d:DesignWidth="1227"
              AllowDrop="True">
-    
+
     <UserControl.Resources>
-        
+
         <CornerRadius x:Key="GridLinesCornerRadius">0</CornerRadius>
         <sys:Double x:Key="RowHeaderHeight">40</sys:Double>
         <Thickness  x:Key="ColumnsMargin" Top="{StaticResource RowHeaderHeight}"/>
         <sys:Double x:Key="ColumnHeaderWidth">40</sys:Double>
         <sys:Double x:Key="RowMinWidth">40</sys:Double>
-        
+
         <!--#region DATAGRID TEMPLATE-->
         <ControlTemplate x:Key="CalendarDataGridTemplate" TargetType="{x:Type DataGrid}">
             <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
@@ -33,12 +33,14 @@
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="{Binding Source={StaticResource RowHeaderHeight}}"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="20"/>
                                 </Grid.RowDefinitions>
-                                
+
                                 <ItemsControl 
-                                              ItemsSource="{Binding HourList,RelativeSource={RelativeSource AncestorType=local:AppointmentScheduler}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                              Grid.Row="1" Grid.ColumnSpan="2">
+                                              ItemsSource="{Binding HourList,RelativeSource={RelativeSource AncestorType=local:AppointmentScheduler}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged
+                                    ,Converter={StaticResource ExcludeFirstItem}}" 
+                                              Grid.Row="1" Grid.Column="1" 
+                                    Margin="-4,0,0,0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <UniformGrid Columns="1"/>
@@ -46,19 +48,19 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <Rectangle 
-                                                Stroke="LightGray"
-                                                StrokeThickness="0.25"
+                                            <Border 
+                                                BorderBrush="LightGray"
+                                                BorderThickness="0,0.25,0.25,0"
                                                 >
-                                            </Rectangle>
+                                            </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
 
                                 </ItemsControl>
-                                <DataGridColumnHeadersPresenter Grid.Row="0" Grid.RowSpan="2"
-                                                           Name="PART_ColumnHeadersPresenter"
+                                <DataGridColumnHeadersPresenter Grid.Row="0" Grid.RowSpan="3"
+                                                                Name="PART_ColumnHeadersPresenter"
                                                                 Background="White"
-                                                           Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}}">
+                                                                Visibility="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=HeadersVisibility, Converter={x:Static DataGrid.HeadersVisibilityConverter}, ConverterParameter={x:Static DataGridHeadersVisibility.Column}}">
                                     <DataGridColumnHeadersPresenter.Template>
                                         <ControlTemplate TargetType="{x:Type DataGridColumnHeadersPresenter}">
                                             <Grid >
@@ -74,7 +76,7 @@
                                                             <ColumnDefinition Width="auto"/>
                                                             <ColumnDefinition Width="auto"/>
                                                         </Grid.ColumnDefinitions>
-                                                        <Polygon Points="0,0 7,7,0, 14" Fill="{TemplateBinding Background}" Margin="-3,1.5,0,0" Grid.Column="1" VerticalAlignment="Center" SnapsToDevicePixels="True"
+                                                        <Polygon Points="0,0 7,7,0, 14" Fill="{TemplateBinding Background}" Margin="-3,2,0,0" Grid.Column="1" VerticalAlignment="Center" SnapsToDevicePixels="True"
                                                                  Stroke="LightGray" StrokeThickness="1" HorizontalAlignment="Right"/>
                                                         <Border BorderBrush="LightGray" BorderThickness="1,1,0,1"
                                                                 Background="{TemplateBinding Background}" CornerRadius="0,10,10,0" VerticalAlignment="Stretch" >
@@ -98,6 +100,11 @@
                                         </TransformGroup>
                                     </DataGridColumnHeadersPresenter.LayoutTransform>
                                 </DataGridColumnHeadersPresenter>
+                                <Border Grid.Row="1" Grid.Column="1" 
+                                        Margin="-4,0,0,0"
+                                                BorderBrush="LightGray"
+                                                BorderThickness="0, 0, 0, 0.25"
+                                                />
                                 <ScrollContentPresenter  Grid.RowSpan="2" Grid.Column="1" x:Name="PART_ScrollContentPresenter" CanHorizontallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" CanVerticallyScroll="False" Content="{TemplateBinding Content}" CanContentScroll="{TemplateBinding CanContentScroll}" Margin="{TemplateBinding Padding}"/>
                                 <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar" Cursor="Arrow" Grid.Column="2" Grid.RowSpan="2" Maximum="{TemplateBinding ScrollableHeight}" Minimum="0"  Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"/>
                                 <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Cursor="Arrow" Grid.ColumnSpan="2" Grid.Row="2" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"/>
@@ -134,7 +141,6 @@
             <Setter Property="BorderBrush" Value="LightGray"/>
             <Setter Property="BorderThickness" Value="0.25,0.25,0,0.25"/>
             <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
             <Setter Property="Padding" Value="0"/>
             <Setter Property="Template">
                 <Setter.Value>
@@ -182,7 +188,7 @@
                                             </Style.Setters>
                                         </Style>
                                     </ItemsControl.ItemContainerStyle>
-                                   
+
                                     <ItemsControl.ItemTemplate >
                                         <DataTemplate >
                                             <Grid  MouseLeftButtonDown="Appointment_MouseLeftButtonDown"
@@ -242,8 +248,30 @@
         <Style TargetType="{x:Type DataGridColumnHeader}" x:Key="CalendarDataGridColumnHeader"
                 BasedOn="{StaticResource {x:Type DataGridColumnHeader}}">
             <Setter Property="Width" Value="{StaticResource ColumnHeaderWidth}"/>
-            <Setter Property="Margin" Value="0"/>
-            <Setter Property="Padding" Value="0"/>
+            <!--<Setter Property="Margin" Value="{Binding ActualHeight,RelativeSource={RelativeSource Self},Converter={StaticResource HeightToMarginHalf}}"/>-->
+            <Setter Property="Margin" Value="0,0,0,0"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                        <Grid>
+                            <Border Height="20"
+                                    VerticalAlignment="Bottom"
+                                    Margin="0,10,0,-10"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding ="{TemplateBinding Padding}">
+                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                            </Border>
+
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
             <Setter Property="LayoutTransform">
                 <Setter.Value>
                     <TransformGroup>
@@ -257,7 +285,7 @@
 
 
     </UserControl.Resources>
-        <DataGrid x:Name="CustomDataGrid"
+    <DataGrid x:Name="CustomDataGrid"
             RowStyle="{StaticResource CalendarDataGridRowStyle}"  
             Template="{StaticResource CalendarDataGridTemplate}" 
             ColumnHeaderStyle="{StaticResource CalendarDataGridColumnHeader}" 

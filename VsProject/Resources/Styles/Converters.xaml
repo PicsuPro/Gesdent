@@ -12,5 +12,5 @@
     <c:ExcludeFirstItemConverter x:Key="ExcludeFirstItem"/>
     <c:StartTimeToTopConverter x:Key="StartTimeToTopConverter"/>
     <c:DateToDayOfWeekStringConverter x:Key="DateToDayOfWeekString"/>
-    <c:PopupWidthToMarginConverter x:Key="PopupWidthToMargin"/>
+    <c:HeightToBottomMarginHalfConverter x:Key="HeightToBottomMarginHalf"/>
 </ResourceDictionary>

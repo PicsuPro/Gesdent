@@ -24,7 +24,7 @@ namespace VsProject.ViewModels
 {
     public class CalendarViewModel : ViewModelBase
     {
-        public DateOnly _startDate { get; set; } = new DateOnly(2023, 05, 07);
+        private DateOnly _startDate { get; set; } = new DateOnly(2023, 05, 07);
         public DateOnly StartDate
         {
             get => _startDate;
@@ -34,7 +34,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartDate));
             }
         }
-        public DateOnly _endDate { get; set; } = new DateOnly(2023, 05, 13);
+        private DateOnly _endDate { get; set; } = new DateOnly(2023, 05, 13);
         public DateOnly EndDate
         {
             get => _endDate;
@@ -44,7 +44,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(EndDate));
             }
         }
-        public TimeOnly _startHour { get; set; } = new TimeOnly(7, 0);
+        private TimeOnly _startHour { get; set; } = new TimeOnly(6, 0);
         public TimeOnly StartHour
         {
             get => _startHour;
@@ -54,7 +54,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartHour));
             }
         }
-        public int _hourCount { get; set; } = 14;
+        private int _hourCount { get; set; } = 14;
         public int HourCount
         {
             get => _hourCount;
@@ -73,7 +73,7 @@ namespace VsProject.ViewModels
         private ObservableCollection<AppointmentViewModel> _appointments =
             new ObservableCollection<AppointmentViewModel>
                 {
-                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 07, 19, 0, 0), Duration = new TimeSpan(01, 00, 00), Subject = "Meeting with MF" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 07, 08, 0, 0), Duration = new TimeSpan(00, 05, 00), Subject = "Meeting with MF" }),
                     new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 08, 13, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
                     new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 09, 14, 0, 0), Duration = new TimeSpan(02, 30, 00), Subject = "Do thing" }),
                     new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 10, 15, 0, 0), Duration = new TimeSpan(02, 00, 00), Subject = "Do thing" }),
@@ -102,8 +102,10 @@ namespace VsProject.ViewModels
 
         private void ExecuteAppointmentEdit(object obj)
         {
-            MessageBox.Show("WOOOW Tu as REUSIII, TUA CLICKEeee, BRAAAAVOOOO");
+            MessageBox.Show("WOOOW Tu as REUSIII, TUA CLICKEeee, BRAAAAVOOOO :\n" + ((AppointmentViewModel)obj).Subject);
+
         }
+
 
 
 

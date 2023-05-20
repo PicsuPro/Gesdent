@@ -178,18 +178,20 @@ namespace VsProject.Resources.Controls
 
         private void UpdateHoursAndColumns()
         {
-            HourList = Enumerable.Range(0, HourCount)
+            HourList = Enumerable.Range(0, HourCount +1)
             .Select(i => StartHour.AddHours(i).ToString(DateTimeFormatInfo.CurrentInfo.ShortTimePattern).Replace(":00", ""))
             .ToList();
             if (CustomDataGrid != null)
             {
                 CustomDataGrid.Columns.Clear();
-                CustomDataGrid.Columns.Add(new DataGridTemplateColumn { Width = (double)FindResource("RowHeaderHeight") }); ;
+                var rowHeaderHeight = (double)FindResource("RowHeaderHeight");
+                CustomDataGrid.Columns.Add(new DataGridTemplateColumn { Header = HourList[0], MinWidth= rowHeaderHeight, Width= rowHeaderHeight });
 
-                foreach (var header in HourList)
+                foreach (var header in HourList.Skip(1))
                 {
                     CustomDataGrid.Columns.Add(new DataGridTemplateColumn { Header = header });
                 }
+
             }
         }
 

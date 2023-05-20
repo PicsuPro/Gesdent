@@ -115,13 +115,13 @@ namespace VsProject.Resources.Converters
             throw new NotSupportedException();
         }
     }
-     public class PopupWidthToMarginConverter : IValueConverter
+     public class HeightToBottomMarginHalfConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is double width)
+            if (value is double height)
             {
-                return new Thickness(-width, 0, 0, 0);   
+                return new Thickness(0, height / 2, 0, -height / 2);
             }
 
             return value;
@@ -132,8 +132,5 @@ namespace VsProject.Resources.Converters
             throw new NotSupportedException();
         }
     }
-
-
-
 
 }

@@ -8,13 +8,16 @@
     <Compile Update="Resources\Controls\ControlBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Resources\Controls\DatePickerComboBoxes.xaml.cs">
+    <Compile Update="Resources\Controls\DateTimePickerComboBoxes.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Resources\Controls\AppointmentScheduler.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AppointmentEditView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
@@ -43,7 +46,7 @@
     <Page Update="Resources\Controls\ControlBar.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Resources\Controls\DatePickerComboBoxes.xaml">
+    <Page Update="Resources\Controls\DateTimePickerComboBoxes.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Controls\NavListBoxItem.xaml">
@@ -62,6 +65,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Controls\AppointmentScheduler.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppointmentEditView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">

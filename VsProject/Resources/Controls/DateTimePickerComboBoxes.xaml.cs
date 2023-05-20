@@ -16,22 +16,22 @@ using System.Windows.Shapes;
 
 namespace VsProject.Resources.Controls
 {
-    public enum DatePickerTimes
+    public enum DateTimePickerTimes
     {
         All,
         Past,
         Future
     }
-    public partial class DatePickerComboBoxes : UserControl
-    {
 
+    public partial class DateTimePickerComboBoxes : UserControl
+    {
         public static readonly DependencyProperty SelectedDateProperty =
-    DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DatePickerComboBoxes),
+    DependencyProperty.Register("SelectedDate", typeof(DateTime?), typeof(DateTimePickerComboBoxes),
         new PropertyMetadata( DateTime.Now,OnSelectedDateChanged) );
 
         public static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var datePickerComboBoxes = (DatePickerComboBoxes)d;
+            var datePickerComboBoxes = (DateTimePickerComboBoxes)d;
             datePickerComboBoxes.isUserAction = false;
             datePickerComboBoxes.UpdateComboBoxes();
             datePickerComboBoxes.isUserAction = true;
@@ -49,19 +49,51 @@ namespace VsProject.Resources.Controls
                 UpdateComboBoxes();
             }
         }
+        
+        public int SelectedHour
+        {
+            get
+            {
+                if (SelectedDate != null)
+                    return SelectedDate.Value.Hour;
+                else 
+                    return default;
+            }
+            set
+            {
+                if (SelectedDate != null)
+                    SelectedDate = new DateTime(SelectedDate.Value.Year , SelectedDate.Value.Month, SelectedDate.Value.Day,  value, SelectedDate.Value.Minute, SelectedDate.Value.Second);
+            }
+        }
+        
+        public int SelectedMinute
+        {
+            get
+            {
+                if (SelectedDate != null)
+                    return SelectedDate.Value.Minute;
+                else 
+                    return default;
+            }
+            set
+            {
+                if (SelectedDate != null)
+                    SelectedDate = new DateTime(SelectedDate.Value.Year , SelectedDate.Value.Month, SelectedDate.Value.Day, SelectedDate.Value.Hour, value, SelectedDate.Value.Second);
+            }
+        }
 
         public static readonly DependencyProperty TimesProperty = DependencyProperty.Register(
-       "Times", typeof(DatePickerTimes), typeof(DatePickerComboBoxes), new PropertyMetadata(DatePickerTimes.All, OnTimesChanged));
+       "Times", typeof(DateTimePickerTimes), typeof(DateTimePickerComboBoxes), new PropertyMetadata(DateTimePickerTimes.All, OnTimesChanged));
 
         public static void OnTimesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var datePickerComboBoxes = (DatePickerComboBoxes)d;
+            var datePickerComboBoxes = (DateTimePickerComboBoxes)d;
             datePickerComboBoxes.SetYears();
 
         }
-        public DatePickerTimes Times
+        public DateTimePickerTimes Times
         {
-            get => (DatePickerTimes)GetValue(TimesProperty);
+            get => (DateTimePickerTimes)GetValue(TimesProperty);
             set => SetValue(TimesProperty, value);
         }
 
@@ -74,7 +106,7 @@ namespace VsProject.Resources.Controls
         private int monthIndexCompensator = 1;
 
         private bool isUserAction = false;
-        public DatePickerComboBoxes()
+        public DateTimePickerComboBoxes()
         {
            
             InitializeComponent();
@@ -101,11 +133,11 @@ namespace VsProject.Resources.Controls
 
         private void SetYears()
         {
-            if (Times == DatePickerTimes.All)
+            if (Times == DateTimePickerTimes.All)
             {
                 YearComboBox.ItemsSource = Enumerable.Range(1900, DateTime.Now.Year - 1900 + 11);
             }
-            else if (Times == DatePickerTimes.Past)
+            else if (Times == DateTimePickerTimes.Past)
             {
                 YearComboBox.ItemsSource = Enumerable.Range(1900, DateTime.Now.Year - 1900 + 1);
             }
@@ -138,7 +170,6 @@ namespace VsProject.Resources.Controls
             int day = (int)DayComboBox.SelectedItem;
             int month = MonthComboBox.SelectedIndex + monthIndexCompensator;
             int year = (int)YearComboBox.SelectedItem;
-           
 
             SelectedDate = ValidDate(year, month, day);
 
@@ -146,14 +177,14 @@ namespace VsProject.Resources.Controls
 
         private void DayComboBox_DropDownOpened(object sender, EventArgs e)
         {
-            int daysInMonth = daysInMonth = DateTime.DaysInMonth((int)YearComboBox.SelectedItem, MonthComboBox.SelectedIndex + monthIndexCompensator); 
+            int daysInMonth = DateTime.DaysInMonth((int)YearComboBox.SelectedItem, MonthComboBox.SelectedIndex + monthIndexCompensator); 
                 
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year 
                 && MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator
-                && Times != DatePickerTimes.All)
+                && Times != DateTimePickerTimes.All)
             {
                 int currentDay = DateTime.Now.Day;
-                if (Times == DatePickerTimes.Past)
+                if (Times == DateTimePickerTimes.Past)
                 {
                     DayComboBox.ItemsSource = Enumerable.Range(1, currentDay);
                 }
@@ -176,10 +207,10 @@ namespace VsProject.Resources.Controls
             }
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year
                 && MonthComboBox.SelectedIndex == DateTime.Now.Month - monthIndexCompensator
-                && Times != DatePickerTimes.All)
+                && Times != DateTimePickerTimes.All)
             {
                 int currentDay = DateTime.Now.Day;
-                if (Times == DatePickerTimes.Past)
+                if (Times == DateTimePickerTimes.Past)
                 {
                     if ((int)DayComboBox.SelectedItem > currentDay)
                     {
@@ -200,14 +231,14 @@ namespace VsProject.Resources.Controls
         private void MonthComboBox_DropDownOpened(object sender, EventArgs e)
         {
 
-            if(Times == DatePickerTimes.All)
+            if(Times == DateTimePickerTimes.All)
             {
                 return;
             }
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year)
             {
                 int currentMonthIndex = DateTime.Now.Month - monthIndexCompensator;
-                if (Times == DatePickerTimes.Past )
+                if (Times == DateTimePickerTimes.Past )
                 {
                      MonthComboBox.ItemsSource = months.Take(currentMonthIndex + monthIndexCompensator);
                 }else
@@ -231,11 +262,11 @@ namespace VsProject.Resources.Controls
             }
 
 
-            if (Times != DatePickerTimes.All && (int?)YearComboBox.SelectedItem == DateTime.Now.Year)
+            if (Times != DateTimePickerTimes.All && (int?)YearComboBox.SelectedItem == DateTime.Now.Year)
             {
                 int currentMonthIndex = DateTime.Now.Month - monthIndexCompensator;
                 int currentDay = DateTime.Now.Day;
-                if (Times == DatePickerTimes.Past)
+                if (Times == DateTimePickerTimes.Past)
                 {
                     if (MonthComboBox.SelectedIndex > currentMonthIndex)
                     {
@@ -274,6 +305,42 @@ namespace VsProject.Resources.Controls
             }
             MonthComboBox_SelectionChanged(this,null);
         }
+        private void IncreaseHours_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(txtHours.Text, out int hours))
+            {
+                hours = (hours + 1) % 24;
+                txtHours.Text = hours.ToString("D2");
+            }
+        }
+
+        private void DecreaseHours_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(txtHours.Text, out int hours))
+            {
+                hours = (hours - 1 + 24) % 24;
+                txtHours.Text = hours.ToString("D2");
+            }
+        }
+
+        private void IncreaseMinutes_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(txtMinutes.Text, out int minutes))
+            {
+                minutes = (minutes + 1) % 60;
+                txtMinutes.Text = minutes.ToString("D2");
+            }
+        }
+
+        private void DecreaseMinutes_Click(object sender, RoutedEventArgs e)
+        {
+            if (int.TryParse(txtMinutes.Text, out int minutes))
+            {
+                minutes = (minutes - 1 + 60) % 60;
+                txtMinutes.Text = minutes.ToString("D2");
+            }
+        }
+
     }
 }
 
