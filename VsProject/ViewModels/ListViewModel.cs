@@ -66,7 +66,7 @@ namespace VsProject.ViewModels
             if (patient == null)
                 return false;
 
-            var fullName = $"{patient.LastName} {patient.FirstName} {patient.Surname} {patient.Id} {patient.BirthDate}".ToLower();
+            var fullName = $"{patient.LastName} {patient.FirstName} {patient.Surname} {patient.Id} {patient.BirthDate} {patient.Phone} {patient.PhoneAlt} {patient.PhoneAlt}".ToLower();
 
             var searchText = _searchPatient.ToLower();
             var searchParts = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
