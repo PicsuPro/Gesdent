@@ -66,9 +66,34 @@ namespace VsProject.ViewModels
             if (patient == null)
                 return false;
 
-            var fullName = $"{patient.LastName} {patient.FirstName} {patient.Surname}".ToLower();
-            return fullName.Contains(_searchPatient.ToLower());
+            var fullName = $"{patient.LastName} {patient.FirstName} {patient.Surname} {patient.Id} {patient.BirthDate}".ToLower();
+
+            var searchText = _searchPatient.ToLower();
+            var searchParts = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (var part in searchParts)
+            {
+                if (!fullName.Contains(part))
+                {
+                    // Check if the part matches the birth date
+                    DateTime birthDate;
+                    if (DateTime.TryParse(part, out birthDate))
+                    {
+                        if (patient.BirthDate?.Date != birthDate.Date)
+                            return false;
+                    }
+                    else
+                    {
+                        return false; // If any part doesn't match, return false
+                    }
+                }
+            }
+
+            return true;
         }
+
+
+
 
     }
 }
