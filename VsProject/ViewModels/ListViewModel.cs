@@ -71,25 +71,15 @@ namespace VsProject.ViewModels
             var searchText = _searchPatient.ToLower();
             var searchParts = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+            return true;
+
             foreach (var part in searchParts)
             {
                 if (!fullName.Contains(part))
-                {
-                    // Check if the part matches the birth date
-                    DateTime birthDate;
-                    if (DateTime.TryParse(part, out birthDate))
-                    {
-                        if (patient.BirthDate?.Date != birthDate.Date)
-                            return false;
-                    }
-                    else
-                    {
-                        return false; // If any part doesn't match, return false
-                    }
+                { 
+                        return false; 
                 }
             }
-
-            return true;
         }
 
 
