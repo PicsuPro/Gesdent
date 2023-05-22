@@ -71,7 +71,6 @@ namespace VsProject.ViewModels
             var searchText = _searchPatient.ToLower();
             var searchParts = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-            return true;
 
             foreach (var part in searchParts)
             {
@@ -80,6 +79,7 @@ namespace VsProject.ViewModels
                         return false; 
                 }
             }
+            return true;
         }
 
 
