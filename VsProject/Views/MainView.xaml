@@ -9,6 +9,11 @@
         mc:Ignorable="d"
         Title="MainView" Height="720" Width="1300"
         WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>
+
     <Window.Resources>
         <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -34,9 +39,6 @@
             </Grid>
         </ControlTemplate>
     </Window.Resources>
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>

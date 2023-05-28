@@ -24,6 +24,16 @@ namespace VsProject.ViewModels
 {
     public class CalendarViewModel : ViewModelBase
     {
+        private DateTime _selectedDate = new DateTime(2023, 05, 22, 11, 34, 0);
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set
+            {
+                _selectedDate = value;
+                OnPropertyChanged(nameof(SelectedDate));
+            }
+        }
         private DateOnly _startDate { get; set; } = new DateOnly(2023, 05, 07);
         public DateOnly StartDate
         {

@@ -4,7 +4,9 @@
              xmlns:local="clr-namespace:VsProject.Resources.Controls"
                     >
     <!--TextBox-->
+
     <Style x:Key="FormTextBox" TargetType="TextBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontFamily" Value="Calibri"/>
         <Setter Property="Foreground" Value="{DynamicResource primaryFore1}"/>
@@ -27,6 +29,92 @@
         <Setter Property="Background" Value="Transparent"/>
     </Style>
 
+
+    <!--ArrowsTextBox-->
+    <ControlTemplate TargetType="{x:Type Button}" x:Key="ArrowUpButtonTemplate">
+        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+            <Viewbox Stretch="Uniform"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                <Path  
+                        Data="{DynamicResource arrowUpIcon}"
+                        HorizontalAlignment="Center" Fill="{TemplateBinding Foreground}"
+                        VerticalAlignment="Center" />
+            </Viewbox>
+        </Border>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="Gray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+
+    </ControlTemplate>
+    <ControlTemplate TargetType="Button" x:Key="ArrowDownButtonTemplate">
+        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" >
+            <Viewbox Stretch="Uniform"  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                <Path  
+                        Data="{DynamicResource arrowDownIcon}"
+                        HorizontalAlignment="Center" Fill="{TemplateBinding Foreground}"
+                        VerticalAlignment="Center" />
+            </Viewbox>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="Gray"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style x:Key="ArrowUpButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Background" Value="#0000"/>
+        <Setter Property="Foreground" Value="#444"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template" Value="{StaticResource ArrowUpButtonTemplate}"/>
+    </Style>
+
+    <Style x:Key="ArrowDownButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource ArrowUpButtonStyle}">
+        <Setter Property="Template" Value="{StaticResource ArrowDownButtonTemplate}"/>
+    </Style>
+    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+
+    <Style TargetType="{x:Type local:ArrowsTextBox}" BasedOn="{StaticResource FormTextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ArrowsTextBox}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <ScrollViewer Grid.RowSpan="2" x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+
+                            <Button Width="7.5" x:Name="PART_IncreaseButton" Grid.Column="1" Grid.Row="0" Margin="1,1,2,0" Padding="0" BorderThickness="0" Background="#0000" Style="{StaticResource ArrowUpButtonStyle}" VerticalAlignment="Top"/>
+                            <Button Width="7.5" x:Name="PART_DecreaseButton" Grid.Column="1" Grid.Row="1" Margin="1,-2.5,2,0" Padding="0" BorderThickness="0" Background="#0000" Style="{StaticResource ArrowDownButtonStyle}" VerticalAlignment="Top"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="True">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
     <!--Button-->
 
     <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
@@ -46,7 +134,7 @@
             <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                 Margin="{TemplateBinding Padding}">
                 <Viewbox>
-                    <Path x:Name="icon" Fill="{TemplateBinding Foreground}" Data="{StaticResource menuIcon}" Margin="-2,-2,2,2" />
+                    <Path x:Name="icon" Fill="{TemplateBinding Foreground}" Data="{DynamicResource menuIcon}" Margin="-2,-2,2,2" />
                 </Viewbox>
             </Border>
 
@@ -814,7 +902,7 @@
                         VerticalAlignment="Stretch"/>
             <Viewbox Stretch="Uniform" Grid.Column="1" Margin="5.5,2.75,5.5,5.5">
                 <Path Name="Arrow" 
-                    Data="M201.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 338.7 54.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+                    Data="{DynamicResource arrowDownIcon}"
                     HorizontalAlignment="Center" Fill="#444444"
                     VerticalAlignment="Center" />
             </Viewbox>

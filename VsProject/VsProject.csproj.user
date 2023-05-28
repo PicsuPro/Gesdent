@@ -20,6 +20,9 @@
     <Compile Update="Views\AppointmentEditView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\CalendarView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\HomeView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -68,6 +71,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppointmentEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalendarView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\HomeView.xaml">

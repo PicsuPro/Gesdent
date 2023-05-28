@@ -10,15 +10,18 @@
              d:DesignHeight="720" d:DesignWidth="1366"
              Background="White">
     <UserControl.DataContext>
-        <viewModels:CalendarViewModel />
+        <viewModels:CalendarViewModel/>
     </UserControl.DataContext>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <controls:DateTimePickerComboBoxes>
-        </controls:DateTimePickerComboBoxes>
-    </Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding SelectedDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+            <controls:DateTimePickerComboBoxes x:Name="First" Grid.Row="1" SelectedDate="{Binding SelectedDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            </controls:DateTimePickerComboBoxes >
+            <controls:DateTimePickerComboBoxes x:Name="Second" Grid.Row="2" SelectedDate="{Binding SelectedDate, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+            </controls:DateTimePickerComboBoxes >
+        </Grid>
 </UserControl>

@@ -8,9 +8,9 @@ using System.Windows;
 
 namespace VsProject.Services
 {
-    public class Extensions
+    public static class Extensions
     {
-        public static T FindVisualParent<T>(DependencyObject child) where T : DependencyObject
+        public static T? FindVisualParent<T>(DependencyObject child) where T : DependencyObject
         {
             // Get the parent of the child
             DependencyObject parent = VisualTreeHelper.GetParent(child);
@@ -53,5 +53,17 @@ namespace VsProject.Services
 
             return null;
         }
+        public static int mod(this int value, int divisor)
+        {
+            int result = value % divisor;
+            return result < 0 ? result + divisor : result;
+        }
+
+        public static long mod(this long value, long divisor)
+        {
+            long result = value % divisor;
+            return result < 0 ? result + divisor : result;
+        }
+
     }
 }

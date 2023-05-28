@@ -5,29 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" >
-    <StackPanel Orientation="Horizontal">
+    <UserControl.Resources>
 
-        <StackPanel Orientation="Horizontal" >
-            <ComboBox x:Name="DayComboBox" Width="50" SelectionChanged="DayComboBox_SelectionChanged" DropDownOpened="DayComboBox_DropDownOpened" />
-            <ComboBox x:Name="MonthComboBox" Width="90" Margin="10,0,0,0" SelectionChanged="MonthComboBox_SelectionChanged" DropDownOpened="MonthComboBox_DropDownOpened"/>
-            <ComboBox x:Name="YearComboBox" Width="70" Margin="10,0,0,0" SelectionChanged="YearComboBox_SelectionChanged"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal"  Height="24"  Margin="10,0,0,0">
-            <!-- Hours -->
-            <TextBox x:Name="txtHours" Width="50" Text="{Binding SelectedHour, Mode=TwoWay,RelativeSource={RelativeSource AncestorType=local:DateTimePickerComboBoxes}}" />
-            <StackPanel Orientation="Vertical" >
-                <Button Content="▲" Height="12" FontSize="8" VerticalContentAlignment="Center" Click="IncreaseHours_Click" />
-                <Button Content="▼" Height="12" FontSize="8" VerticalContentAlignment="Center" Click="DecreaseHours_Click" />
-            </StackPanel>
-            <TextBlock Text=":" Margin="5,0" />
-
-            <!-- Minutes -->
-            <TextBox x:Name="txtMinutes" Width="50" Text="{Binding SelectedMinute, Mode=TwoWay,RelativeSource={RelativeSource AncestorType=local:DateTimePickerComboBoxes}}" />
-            <StackPanel Orientation="Vertical" >
-                <Button Content="▲" Height="12" FontSize="8" VerticalContentAlignment="Center" Click="IncreaseMinutes_Click" />
-                <Button Content="▼" Height="12" FontSize="8" VerticalContentAlignment="Center" Click="DecreaseMinutes_Click" /> 
-            </StackPanel>
     
+    </UserControl.Resources>
+        <StackPanel Orientation="Horizontal">
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Stretch" >
+                <ComboBox x:Name="DayComboBox" Width="50" SelectionChanged="DayComboBox_SelectionChanged" DropDownOpened="DayComboBox_DropDownOpened" />
+                <ComboBox x:Name="MonthComboBox" Width="90" Margin="10,0,0,0" SelectionChanged="MonthComboBox_SelectionChanged" DropDownOpened="MonthComboBox_DropDownOpened"/>
+                <ComboBox x:Name="YearComboBox" Width="70" Margin="10,0,0,0" SelectionChanged="YearComboBox_SelectionChanged"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
+                <!-- Hours -->
+            <local:ArrowsTextBox Width="30" x:Name="txtHours" Focusable="True"
+                                      TextChanged="OnHourTextChanged" Padding="0,1"/>
+
+                <TextBlock Text=":" Margin="5,0" />
+
+                <!-- Minutes -->
+                <local:ArrowsTextBox Width="30" x:Name="txtMinutes" Focusable="True"
+                                     TextChanged="OnMinuteTextChanged" Padding="0,1"/>
+
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
 </UserControl>
