@@ -95,7 +95,7 @@
                     SelectionMode="Single"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="0">
+                    SelectedIndex="2">
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
                 Navlink="PatientListView.xaml"
@@ -105,7 +105,12 @@
                 Navlink="CalendarView.xaml"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
-            
+
+            <controls:NavListBoxItem Icon="{StaticResource OrdonnanceIcon}"
+                Navlink="OrdonnanceView.xaml"
+                Margin="0,5"
+                KeyboardNavigation.IsTabStop="False"/>
+
             <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"
