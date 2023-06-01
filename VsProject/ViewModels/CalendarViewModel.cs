@@ -34,7 +34,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(SelectedDate));
             }
         }
-        private DateOnly _startDate { get; set; } = new DateOnly(2023, 05, 07);
+        private DateOnly _startDate { get; set; } = new DateOnly(2023, 05, 05);
         public DateOnly StartDate
         {
             get => _startDate;
