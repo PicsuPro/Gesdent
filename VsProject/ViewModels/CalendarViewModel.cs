@@ -7,99 +7,123 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.Collections;
+using System.Collections.Specialized;
+using System.Threading;
+using System.Xml.Linq;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using VsProject.Services;
+using System.Windows;
+using System.Runtime.InteropServices.JavaScript;
+using VsProject.Models;
+using System.Windows.Input;
 
 namespace VsProject.ViewModels
 {
     public class CalendarViewModel : ViewModelBase
     {
-
-        public Dictionary<int, ObservableCollection<Appointment>> WeekAppointments { get; set; } = new Dictionary<int, ObservableCollection<Appointment>>
+        private DateTime _selectedDate = new DateTime(2023, 05, 22, 11, 34, 0);
+        public DateTime SelectedDate
         {
-            { 0, new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 7, 19, 0, 0), EndTime = new DateTime(2023, 5, 7, 21, 0, 0), Subject = "Meeting with MF" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Do thing" },
-                }
-            },
-            { 1, new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 9, 9, 0, 0), EndTime = new DateTime(2023, 5, 9, 10, 0, 0), Subject = "Meeting with John" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 9, 8, 0, 0), EndTime = new DateTime(2023, 5, 9, 12, 0, 0), Subject = "Lunch with Sarah" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 9, 13, 0, 0), EndTime = new DateTime(2023, 5, 9, 14, 0, 0), Subject = "Phone call with Alex" },
-                }
-            },
-            { 2, new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 10, 9, 0, 0), EndTime = new DateTime(2023, 5, 10, 10, 0, 0), Subject = "Meeting with John" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 10, 10, 0, 0), EndTime = new DateTime(2023, 5, 10, 12, 0, 0), Subject = "Lunch with Sarah" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 10, 13, 0, 0), EndTime = new DateTime(2023, 5, 10, 14, 0, 0), Subject = "Phone call with Alex" },
-                }
-            },
-            { 3,new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 9, 0, 0), EndTime = new DateTime(2023, 5, 8, 10, 0, 0), Subject = "Meeting with John" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Phone call with BITCH" },
-                }
-            },
-            { 4,new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 7, 0, 0), EndTime = new DateTime(2023, 5, 8, 8, 0, 0), Subject = "Meeting with MF" },
-                }
-            },
-            {5, new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 9, 0, 0), EndTime = new DateTime(2023, 5, 8, 10, 0, 0), Subject = "Meeting with John" },
-                }
-            },
-            {6, new ObservableCollection<Appointment>
-                {
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 7, 0, 0), EndTime = new DateTime(2023, 5, 8, 8, 0, 0), Subject = "Meeting with Last" },
-                    new Appointment { StartTime = new DateTime(2023, 5, 8, 13, 0, 0), EndTime = new DateTime(2023, 5, 8, 15, 30, 0), Subject = "Do thing" },
-                } 
-            }
-        };
-       
-    }
-
-    public class ApointmentList<Appointment> : IEnumerable<Appointment>
-    {
-        public IEnumerator<Appointment> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class Appointment : ViewModelBase
-        {
-            public DateTime StartTime { get; set; }
-            public TimeOnly StartTimeOnly 
-            { 
-                get => TimeOnly.FromDateTime(StartTime); set 
-                {
-                    StartTime = new DateTime(StartTime.Year, StartTime.Month, StartTime.Day, value.Hour, value.Minute, value.Second);
-                    OnPropertyChanged(nameof(StartTime));
-                    OnPropertyChanged(nameof(StartTimeOnly));
-                }
-            }
-            public DateTime EndTime { get; set; }
-            public TimeOnly EndTimeOnly
+            get => _selectedDate;
+            set
             {
-                get => TimeOnly.FromDateTime(EndTime); set
-                {
-                    EndTime = new DateTime(EndTime.Year, EndTime.Month, EndTime.Day, value.Hour, value.Minute, value.Second);
-                    OnPropertyChanged(nameof(EndTime));
-                    OnPropertyChanged(nameof(EndTimeOnly));
-                }
+                _selectedDate = value;
+                OnPropertyChanged(nameof(SelectedDate));
             }
-            public TimeSpan Duration => EndTime - StartTime;
-            public string? Subject { get; set; }
+        }
+        private DateOnly _startDate { get; set; } = new DateOnly(2023, 05, 05);
+        public DateOnly StartDate
+        {
+            get => _startDate;
+            set
+            {
+                _startDate = value;
+                OnPropertyChanged(nameof(StartDate));
+            }
+        }
+        private DateOnly _endDate { get; set; } = new DateOnly(2023, 05, 13);
+        public DateOnly EndDate
+        {
+            get => _endDate;
+            set
+            {
+                _endDate = value;
+                OnPropertyChanged(nameof(EndDate));
+            }
+        }
+        private TimeOnly _startHour { get; set; } = new TimeOnly(6, 0);
+        public TimeOnly StartHour
+        {
+            get => _startHour;
+            set
+            {
+                _startHour = value;
+                OnPropertyChanged(nameof(StartHour));
+            }
+        }
+        private int _hourCount { get; set; } = 14;
+        public int HourCount
+        {
+            get => _hourCount;
+            set
+            {
+                if (value > 0)
+                    _hourCount = value;
+                else
+                    throw new ArgumentOutOfRangeException("HourCount", "HourCount must be a positive value.");
+
+                OnPropertyChanged(nameof(HourCount));
+            }
         }
 
-       
+
+        private ObservableCollection<AppointmentViewModel> _appointments =
+            new ObservableCollection<AppointmentViewModel>
+                {
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 07, 08, 0, 0), Duration = new TimeSpan(00, 05, 00), Subject = "Meeting with MF" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 08, 13, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 09, 14, 0, 0), Duration = new TimeSpan(02, 30, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 10, 15, 0, 0), Duration = new TimeSpan(02, 00, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 11, 08, 0, 0), Duration = new TimeSpan(01, 00, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 12, 09, 0, 0), Duration = new TimeSpan(01, 30, 00), Subject = "Do thing" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 13, 09, 0, 0), Duration = new TimeSpan(03, 00, 00), Subject = "Ya Don't say" }),
+                    new AppointmentViewModel(new AppointmentModel{ StartDateTime = new DateTime(2023, 5, 14, 10, 0, 0), Duration = new TimeSpan(02, 50, 00), Subject = "Do thing" }),
+                };
+
+
+        public ObservableCollection<AppointmentViewModel> Appointments
+        {
+            get => _appointments;
+            set
+            {
+                _appointments = value;
+                OnPropertyChanged(nameof(Appointments));
+            }
+        }
+        public ICommand AppointmentEditCommand { get; }
+
+        public CalendarViewModel()
+        {
+            AppointmentEditCommand = new ViewModelCommand(ExecuteAppointmentEdit);
+        }
+
+        private void ExecuteAppointmentEdit(object obj)
+        {
+            MessageBox.Show("WOOOW Tu as REUSIII, TUA CLICKEeee, BRAAAAVOOOO :\n" + ((AppointmentViewModel)obj).Subject);
+
+        }
+
+
+
+
+    }
+
+
+
+
 
 }
+    

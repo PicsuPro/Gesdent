@@ -10,6 +10,11 @@
         WindowState="Maximized"
         Title="MainView" Height="720" Width="1300"
         WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>
+
     <Window.Resources>
         <Style x:Key="HamburgerMenuStyle" TargetType="ToggleButton">
             <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
@@ -35,9 +40,6 @@
             </Grid>
         </ControlTemplate>
     </Window.Resources>
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
@@ -111,6 +113,10 @@
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
 
+            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
+                Navlink="HomeView.xaml"
+                Margin="0,5"
+                KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
                                         Navlink="PatientEditView.xaml"
                                         Margin="0,5"

@@ -26,11 +26,11 @@ namespace VsProject
             //{
                 UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
                 mainView.Show();
-            //}
-            //else
-            //{
-            //    Shutdown();
-            //}
+            }
+            else
+            {
+                Shutdown();
+            }
         }
     }
 }

@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace VsProject.Views
 {
     /// <summary>
-    /// Interaction logic for CalendarView.xaml
+    /// Interaction logic for AppointmentEditView.xaml
     /// </summary>
-    public partial class CalendarView : UserControl
+    public partial class AppointmentEditView : Window
     {
-        public CalendarView()
+        public AppointmentEditView()
         {
             InitializeComponent();
         }

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Update="Resources\Controls\BindablePasswordBox.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\Controls\ControlBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\Controls\DateTimePickerComboBoxes.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\Controls\AppointmentScheduler.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AppointmentEditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\CalendarView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\HomeView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\Controls\DentalChart.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\SettingsView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\LoginView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\MainView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\StaffEditView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Controls\BindablePasswordBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\ControlBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\DateTimePickerComboBoxes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\NavListBoxItem.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\Colors.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\Controls.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\Icons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Styles\Converters.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\AppointmentScheduler.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppointmentEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CalendarView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\HomeView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\DentalChart.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\SettingsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\PatientEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StaffEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>
