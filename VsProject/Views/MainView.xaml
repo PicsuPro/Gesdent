@@ -100,7 +100,7 @@
             SelectedIndex="0">
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
-                Navlink="HomeView.xaml"
+                Navlink="CalendarView.xaml"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"

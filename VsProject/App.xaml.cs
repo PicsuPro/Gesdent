@@ -22,15 +22,15 @@ namespace VsProject
             VMVMappings.Initialize();
             CultureInfo.CurrentCulture = new CultureInfo("fr-FR");
             var mainView = new MainView();
-            //if ((bool)DialogService.Show(new LoginViewModel()))
-            //{
-            UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
+            if ((bool)DialogService.Show(new LoginViewModel()))
+            {
+                //UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
                 mainView.Show();
-            //}
-            //else
-            //{
-            //    Shutdown();
-            //}
+            }
+            else
+            {
+                Shutdown();
+            }
         }
     }
 }
