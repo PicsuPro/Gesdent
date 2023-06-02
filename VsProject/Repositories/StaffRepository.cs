@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using System.Linq;
-using System.Net;
 using VsProject.Models;
 
 
@@ -27,7 +23,7 @@ namespace VsProject.Repositories
         public StaffRepository()
         {
         }
-        
+
         public void Add(StaffModel staffModel)
         {
             using (var connection = GetConnection())
@@ -106,7 +102,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM "+ TABLENAME ;
+                command.CommandText = "SELECT * FROM " + TABLENAME;
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -134,7 +130,7 @@ namespace VsProject.Repositories
 
         public StaffModel? GetByUserId(Guid? userId)
         {
-            if(!IdExists(userId))
+            if (!IdExists(userId))
             {
                 return null;
             }

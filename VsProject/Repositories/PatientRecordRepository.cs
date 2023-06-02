@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
 using VsProject.Models;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VsProject.Repositories
 {
@@ -67,14 +62,14 @@ namespace VsProject.Repositories
                 command.Parameters.AddWithValue("@patientId", patientId);
 
                 using (var reader = command.ExecuteReader())
-                while (reader.Read())
-                {
-                    PatientRecordModel patientRecord = new PatientRecordModel
+                    while (reader.Read())
                     {
-                        PatientId = reader[PATIENTID].DBValue<int>(),
-                    };
-                    patientRecordHistory.Add(patientRecord);
-                }
+                        PatientRecordModel patientRecord = new PatientRecordModel
+                        {
+                            PatientId = reader[PATIENTID].DBValue<int>(),
+                        };
+                        patientRecordHistory.Add(patientRecord);
+                    }
                 return patientRecordHistory;
 
             }

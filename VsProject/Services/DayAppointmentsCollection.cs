@@ -3,11 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using VsProject.ViewModels;
 
 namespace VsProject.Services
@@ -97,100 +92,100 @@ namespace VsProject.Services
             HandleAppointmentsRemoved(oldAppointments);
             HandleAppointmentsAdded(newAppointments);
         }
-    
-    //protected override void OnAppoiCollectionChanged(NotifyCollectionChangedEventArgs e)
-    //{
-    //        // Synchronize changes to the _appointmentList collection
-    //    switch (e.Action)
-    //    {
-    //        case NotifyCollectionChangedAction.Add:
-    //            foreach (Appointment appointment in e.NewItems)
-    //            {
-    //                _appointmentList.Add(appointment);
-    //            }
-    //            break;
-    //        case NotifyCollectionChangedAction.Remove:
-    //            foreach (Appointment appointment in e.OldItems)
-    //            {
-    //                _appointmentList.Remove(appointment);
-    //            }
-    //            break;
-    //        case NotifyCollectionChangedAction.Replace:
-    //            foreach (Appointment appointment in e.OldItems)
-    //            {
-    //                _appointmentList.Remove(appointment);
-    //            }
-    //            foreach (Appointment appointment in e.NewItems)
-    //            {
-    //                _appointmentList.Add(appointment);
-    //            }
-    //            break;
-    //        case NotifyCollectionChangedAction.Reset:
-    //            _appointmentList.Clear();
-    //            foreach (var dayAppointments in this)
-    //            {
-    //                foreach (Appointment appointment in dayAppointments)
-    //                {
-    //                    _appointmentList.Add(appointment);
-    //                }
-    //            }
-    //            break;
-    //    }
 
-    //    base.OnCollectionChanged(e);
-    //}
+        //protected override void OnAppoiCollectionChanged(NotifyCollectionChangedEventArgs e)
+        //{
+        //        // Synchronize changes to the _appointmentList collection
+        //    switch (e.Action)
+        //    {
+        //        case NotifyCollectionChangedAction.Add:
+        //            foreach (Appointment appointment in e.NewItems)
+        //            {
+        //                _appointmentList.Add(appointment);
+        //            }
+        //            break;
+        //        case NotifyCollectionChangedAction.Remove:
+        //            foreach (Appointment appointment in e.OldItems)
+        //            {
+        //                _appointmentList.Remove(appointment);
+        //            }
+        //            break;
+        //        case NotifyCollectionChangedAction.Replace:
+        //            foreach (Appointment appointment in e.OldItems)
+        //            {
+        //                _appointmentList.Remove(appointment);
+        //            }
+        //            foreach (Appointment appointment in e.NewItems)
+        //            {
+        //                _appointmentList.Add(appointment);
+        //            }
+        //            break;
+        //        case NotifyCollectionChangedAction.Reset:
+        //            _appointmentList.Clear();
+        //            foreach (var dayAppointments in this)
+        //            {
+        //                foreach (Appointment appointment in dayAppointments)
+        //                {
+        //                    _appointmentList.Add(appointment);
+        //                }
+        //            }
+        //            break;
+        //    }
 
-
-
-    //protected override void ClearItems()
-    //{
-    //    _appointmentList.Clear();
-    //    base.ClearItems();
-    //}
-
-    //protected override void RemoveItem(int index)
-    //{
-    //    var appointments = this[index];
-
-    //    foreach (var appointment in appointments.ToList())
-    //    {
-    //        _appointmentList.Remove(appointment);
-    //    }
-
-    //    base.RemoveItem(index);
-
-    //}
-
-    //protected override void InsertItem(int index, ObservableCollection<Appointment> item)
-    //{
-    //    //foreach (var appointment in item)
-    //    //{
-    //    //    _appointmentList.Add(appointment);
-    //    //}
-    //    base.InsertItem(index, item);
-    //}
-
-    //protected override void SetItem(int index, ObservableCollection<Appointment> item)
-    //{
-    //    var removedAppointments = this[index];
-
-    //    // Remove the appointments that were replaced
-    //    foreach (var appointment in removedAppointments)
-    //    {
-    //        _appointmentList.Remove(appointment);
-    //    }
-
-    //    // Add the new appointments
-    //    foreach (var appointment in item)
-    //    {
-    //        _appointmentList.Add(appointment);
-    //    }
-    //    base.SetItem(index, item);
-
-    //}
-
-    ////protected virtual void MoveItem(int oldIndex, int newIndex)
+        //    base.OnCollectionChanged(e);
+        //}
 
 
-}
+
+        //protected override void ClearItems()
+        //{
+        //    _appointmentList.Clear();
+        //    base.ClearItems();
+        //}
+
+        //protected override void RemoveItem(int index)
+        //{
+        //    var appointments = this[index];
+
+        //    foreach (var appointment in appointments.ToList())
+        //    {
+        //        _appointmentList.Remove(appointment);
+        //    }
+
+        //    base.RemoveItem(index);
+
+        //}
+
+        //protected override void InsertItem(int index, ObservableCollection<Appointment> item)
+        //{
+        //    //foreach (var appointment in item)
+        //    //{
+        //    //    _appointmentList.Add(appointment);
+        //    //}
+        //    base.InsertItem(index, item);
+        //}
+
+        //protected override void SetItem(int index, ObservableCollection<Appointment> item)
+        //{
+        //    var removedAppointments = this[index];
+
+        //    // Remove the appointments that were replaced
+        //    foreach (var appointment in removedAppointments)
+        //    {
+        //        _appointmentList.Remove(appointment);
+        //    }
+
+        //    // Add the new appointments
+        //    foreach (var appointment in item)
+        //    {
+        //        _appointmentList.Add(appointment);
+        //    }
+        //    base.SetItem(index, item);
+
+        //}
+
+        ////protected virtual void MoveItem(int oldIndex, int newIndex)
+
+
+    }
 }

@@ -6,10 +6,17 @@
              xmlns:local="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d"
              d:DesignHeight="24"
-             d:DesignWidth="200"
+             d:DesignWidth="20"
              HorizontalAlignment="Center"
              HorizontalContentAlignment="Center"
              FocusVisualStyle="{x:Null}">
+    <ListBoxItem.Resources>
+        <ControlTemplate x:Key="ButtonTemplate" TargetType="{x:Type ButtonBase}">
+            <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            </Border>
+        </ControlTemplate>
+    </ListBoxItem.Resources>
 
     <ListBoxItem.Style>
         <Style TargetType="{x:Type ListBoxItem}">
@@ -20,15 +27,23 @@
                         <Border x:Name="back"
                                 Background="Transparent"
                                 Padding="7"
-                                CornerRadius="8">
-                            <Path x:Name="icon"
-                                  SnapsToDevicePixels="True"
-                                  HorizontalAlignment="Stretch"
-                                  Data="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
-                                  Stretch="Uniform"
-                                  Fill="{TemplateBinding Foreground}"
-                                  Height="24"
-                                  Width="24" />
+                                CornerRadius="8" >
+                            <Button Template="{DynamicResource ButtonTemplate}" x:Name="forgot"
+                                Background="#0000"
+                                BorderThickness="0"
+                                Padding="0"
+                                Margin="0"
+                                Click="back_Click"
+                                    Style="{x:Null}">
+                                <Path x:Name="icon"
+                                    SnapsToDevicePixels="True"
+                                    HorizontalAlignment="Stretch"
+                                    Data="{Binding Icon, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Stretch="Uniform"
+                                    Fill="{TemplateBinding Foreground}"
+                                    Height="24"
+                                    Width="24" />
+                            </Button>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">

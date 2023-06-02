@@ -1,18 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security.Principal;
-using System.Security;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using VsProject.Models;
-using VsProject.Repositories;
-using System.Reflection.Metadata;
-using System.Windows;
-using System.Diagnostics;
 
 namespace VsProject.ViewModels
 {
@@ -82,7 +69,7 @@ namespace VsProject.ViewModels
 
         public bool IsEditingPassword
         {
-            get => _isEditPassword; set 
+            get => _isEditPassword; set
             {
 
                 _isEditPassword = IsNewUser || value;
@@ -91,8 +78,8 @@ namespace VsProject.ViewModels
             }
         }
 
-        public bool IsNewUser 
-        { 
+        public bool IsNewUser
+        {
             get => _isNewUser; set
             {
                 _isNewUser = value;
@@ -101,12 +88,12 @@ namespace VsProject.ViewModels
             }
         }
         public bool IsNotNewUser => !_isNewUser;
-        
+
 
 
         //-> Commands
         public ICommand SaveEditCommand { get; }
-        public UserEditViewModel() 
+        public UserEditViewModel()
         {
 
         }

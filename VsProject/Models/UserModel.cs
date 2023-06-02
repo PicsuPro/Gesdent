@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using VsProject.Repositories;
 
 namespace VsProject.Models
@@ -29,7 +24,7 @@ namespace VsProject.Models
         public static bool SetUser(NetworkCredential credential)
         {
             bool isValidUser = UserRepository.AuthenticateUser(credential);
-            if(isValidUser)
+            if (isValidUser)
             {
                 Current = UserRepository.GetByUsername(credential.UserName);
             }
@@ -37,7 +32,7 @@ namespace VsProject.Models
         }
         public static void SetUser(UserModel user)
         {
-                Current = UserRepository.GetById((Guid)user.Id);
+            Current = UserRepository.GetById((Guid)user.Id);
         }
     }
 

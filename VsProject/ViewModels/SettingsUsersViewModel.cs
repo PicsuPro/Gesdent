@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
-using VsProject.Repositories;
 using VsProject.Services;
-using VsProject.Views;
 
 namespace VsProject.ViewModels
 {
@@ -53,8 +43,8 @@ namespace VsProject.ViewModels
 
             if (DialogService.Show(new UserEditViewModel(newUser)) == true)
             {
-                    UserPrincipal.UserRepository.Add(newUser);
-                    Users.Add(UserPrincipal.UserRepository.GetByUsername(newUser.UserName));
+                UserPrincipal.UserRepository.Add(newUser);
+                Users.Add(UserPrincipal.UserRepository.GetByUsername(newUser.UserName));
             }
 
 

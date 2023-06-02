@@ -89,41 +89,28 @@
                 </Menu>
             </Popup>
         </ToggleButton>
-        <ListBox x:Name="sidebar" 
-                    BorderThickness="0"
-                    Background="White"
-                    Grid.Column="0"
-                    Grid.RowSpan="2"
-                    SelectionMode="Single"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center" Margin="5,0"
-                    SelectedIndex="2">
+        <Button Content="SS" Click="Button_Click" Grid.Row="1" VerticalAlignment="Top"></Button>
+        <ListBox 
+            x:Name="sidebar" 
+            BorderThickness="0"
+            Background="White"
+            Grid.Column="0"
+            Grid.RowSpan="2"
+            SelectionMode="Single"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center" Margin="5,0">
 
             <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
-                Navlink="PatientListView.xaml"
-                Margin="0,5"
-                KeyboardNavigation.IsTabStop="False"/>
-            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
-                Navlink="CalendarView.xaml"
-                Margin="0,5"
-                KeyboardNavigation.IsTabStop="False"/>
-
-            <controls:NavListBoxItem Icon="{StaticResource OrdonnanceIcon}"
-                Navlink="OrdonnanceView.xaml"
-                Margin="0,5"
-                KeyboardNavigation.IsTabStop="False"/>
-
-            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
-                Navlink="HomeView.xaml"
+                ViewModel="{x:Type viewModels:CalendarViewModel}"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
-                                        Navlink="PatientEditView.xaml"
+                                        ViewModel="{x:Type viewModels:PatientEditViewModel}"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
 
             <controls:NavListBoxItem Icon="{StaticResource doctorIcon}"
-                                        Navlink="StaffEditView.xaml"
+                                        ViewModel="{x:Type viewModels:StaffEditViewModel}"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
         </ListBox>
@@ -132,7 +119,8 @@
         <Frame Background="White"
                 Grid.Column="1"
                 Grid.RowSpan="2" x:Name="navFrame"   
-               Source="{Binding SelectedItem.Navlink, ElementName=sidebar}"
                NavigationUIVisibility="Hidden"/>
+        <!--Source="{Binding SelectedItem.Navlink, ElementName=sidebar}"-->
+
     </Grid>
 </Window>

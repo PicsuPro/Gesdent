@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Net;
-using System.Security.Cryptography;
-using VsProject.Models;
 using System.Data.SqlClient;
+using System.Net;
+using VsProject.Models;
 
 
 namespace VsProject.Repositories
 {
-    
+
 
     public class UserRepository : RepositoryBase, IUserRepository
     {
@@ -105,7 +102,8 @@ namespace VsProject.Repositories
                     byte[] hashBytes = System.Text.Encoding.UTF8.GetBytes(hash);
                     command.Parameters.AddWithValue("@hash", hashBytes);
                     command.Parameters.AddWithValue("@salt", saltBytes);
-                }else
+                }
+                else
                 {
                     command.CommandText = $"UPDATE {TABLENAME} SET {USERNAME}=@username, {EMAIL}=@email WHERE {ID}=@id";
                 }
@@ -133,7 +131,7 @@ namespace VsProject.Repositories
 
         public UserModel? GetByUsername(string? username)
         {
-            if(!UsernameExists(username)) 
+            if (!UsernameExists(username))
             {
                 return null;
             }

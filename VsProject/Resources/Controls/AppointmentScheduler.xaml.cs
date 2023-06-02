@@ -1,28 +1,13 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.PortableExecutable;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using VsProject.Models;
-using VsProject.Resources.Controls;
 using VsProject.Services;
 using VsProject.ViewModels;
 
@@ -53,15 +38,15 @@ namespace VsProject.Resources.Controls
             new PropertyMetadata(5, OnHourCountPropertyChanged));
         public static void OnHourCountPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            
+
             var calendarView = (AppointmentScheduler)d;
             calendarView.HourCount = (int)e.NewValue;
         }
         public int HourCount
         {
             get { return (int)GetValue(HourCountProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(HourCountProperty, value);
                 UpdateHoursAndColumns();
             }
@@ -103,14 +88,14 @@ namespace VsProject.Resources.Controls
         public DateOnly StartDate
         {
             get { return (DateOnly)GetValue(StartDateProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(StartDateProperty, value);
-                if(Appointments != null)
-                DayAppointments = new DayAppointmentsCollection(Appointments, value, EndDate);
+                if (Appointments != null)
+                    DayAppointments = new DayAppointmentsCollection(Appointments, value, EndDate);
             }
         }
-        
+
         public static readonly DependencyProperty EndDateProperty =
         DependencyProperty.Register(
             "EndDate",
@@ -125,15 +110,15 @@ namespace VsProject.Resources.Controls
         public DateOnly EndDate
         {
             get { return (DateOnly)GetValue(EndDateProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(EndDateProperty, value);
                 if (Appointments != null)
-                    DayAppointments = new DayAppointmentsCollection(Appointments,StartDate , value);
+                    DayAppointments = new DayAppointmentsCollection(Appointments, StartDate, value);
 
             }
         }
-        
+
         public static readonly DependencyProperty AppointmentsProperty =
         DependencyProperty.Register(
             "Appointments",
@@ -148,24 +133,24 @@ namespace VsProject.Resources.Controls
         public ObservableCollection<AppointmentViewModel> Appointments
         {
             get { return (ObservableCollection<AppointmentViewModel>)GetValue(AppointmentsProperty); }
-            set 
-            { 
+            set
+            {
                 SetValue(AppointmentsProperty, value);
                 DayAppointments = new DayAppointmentsCollection(value, StartDate, EndDate);
-                
+
             }
         }
 
 
         private DayAppointmentsCollection? _dayAppointments;
-        public DayAppointmentsCollection? DayAppointments 
-        { 
+        public DayAppointmentsCollection? DayAppointments
+        {
             get => _dayAppointments;
-            set 
+            set
             {
                 _dayAppointments = value;
-                
-            } 
+
+            }
         }
 
         public List<string>? HourList { get; set; }
@@ -178,14 +163,14 @@ namespace VsProject.Resources.Controls
 
         private void UpdateHoursAndColumns()
         {
-            HourList = Enumerable.Range(0, HourCount +1)
+            HourList = Enumerable.Range(0, HourCount + 1)
             .Select(i => StartHour.AddHours(i).ToString(DateTimeFormatInfo.CurrentInfo.ShortTimePattern).Replace(":00", ""))
             .ToList();
             if (CustomDataGrid != null)
             {
                 CustomDataGrid.Columns.Clear();
                 var rowHeaderHeight = (double)FindResource("RowHeaderHeight");
-                CustomDataGrid.Columns.Add(new DataGridTemplateColumn { Header = HourList[0], MinWidth= rowHeaderHeight, Width= rowHeaderHeight });
+                CustomDataGrid.Columns.Add(new DataGridTemplateColumn { Header = HourList[0], MinWidth = rowHeaderHeight, Width = rowHeaderHeight });
 
                 foreach (var header in HourList.Skip(1))
                 {
@@ -215,7 +200,7 @@ namespace VsProject.Resources.Controls
                 appointment = (AppointmentViewModel?)draggedItem?.DataContext;
                 DragDrop.DoDragDrop(draggedItem, appointment, DragDropEffects.Move);
 
-                
+
 
             }
             if (popupGrid != null)
@@ -237,13 +222,13 @@ namespace VsProject.Resources.Controls
 
         private void Canvas_DragOver(object sender, DragEventArgs e)
         {
-            if(appointment != null && draggedItem != null && draggingCanvas != null && popupGrid != null && popupTextBlock != null) 
+            if (appointment != null && draggedItem != null && draggingCanvas != null && popupGrid != null && popupTextBlock != null)
             {
                 hasBeenDragged = true;
                 (TimeOnly startTime, TimeSpan duration) = GetStartTimeAndDurationFromPosition(e.GetPosition(draggingCanvas), draggingCanvas.ActualHeight, draggedItem.ActualHeight, dragStartPoint);
                 appointment.StartDateTime = new DateTime(appointment.StartDateTime.Year, appointment.StartDateTime.Month, appointment.StartDateTime.Day, startTime.Hour, startTime.Minute, startTime.Second);
                 appointment.Duration = duration;
-                Canvas.SetTop(popupGrid, Canvas.GetTop(draggedItem) - popupGrid.ActualHeight/2);
+                Canvas.SetTop(popupGrid, Canvas.GetTop(draggedItem) - popupGrid.ActualHeight / 2);
                 popupTextBlock.Text = appointment.StartTime.ToString();
 
             }
@@ -253,7 +238,7 @@ namespace VsProject.Resources.Controls
         {
             if (appointment != null && draggedItem != null && draggingCanvas != null)
             {
-                if (sender is Canvas canvas  && canvas != draggingCanvas)
+                if (sender is Canvas canvas && canvas != draggingCanvas)
                 {
                     DayAppointmentsCollection dayAppointments = (DayAppointmentsCollection)CustomDataGrid.ItemsSource;
                     dayAppointments.AppointmentList?.Remove(appointment);
@@ -270,15 +255,15 @@ namespace VsProject.Resources.Controls
 
         private (TimeOnly, TimeSpan) GetStartTimeAndDurationFromPosition(Point position, double canvasHeight, double itemHeight, Point startPoint)
         {
-                double top = Math.Clamp(position.Y - startPoint.Y, 0, canvasHeight - itemHeight);
-                var columnHeight = canvasHeight / HourCount;
-                var hours = (top / columnHeight) + StartHour.Hour;
-                var minutes = (hours * 60) % 60;
-                var startTime = new TimeOnly((int)hours, (int)minutes, 0);
+            double top = Math.Clamp(position.Y - startPoint.Y, 0, canvasHeight - itemHeight);
+            var columnHeight = canvasHeight / HourCount;
+            var hours = (top / columnHeight) + StartHour.Hour;
+            var minutes = (hours * 60) % 60;
+            var startTime = new TimeOnly((int)hours, (int)minutes, 0);
 
-                var totalMinutes = itemHeight / columnHeight * 60.0;
-                var duration = TimeSpan.FromMinutes(totalMinutes);
-                return (startTime, duration);
+            var totalMinutes = itemHeight / columnHeight * 60.0;
+            var duration = TimeSpan.FromMinutes(totalMinutes);
+            return (startTime, duration);
         }
 
         private void PopupGrid_Loaded(object sender, RoutedEventArgs e)
