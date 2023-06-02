@@ -17,10 +17,6 @@
     <View>v:MainView</View>
   </Mapping>
   <Mapping>
-    <ViewModel>vm:PatientEditViewModel</ViewModel>
-    <View>v:PatientEditView</View>
-  </Mapping>
-  <Mapping>
     <ViewModel>vm:SettingsUsersViewModel</ViewModel>
     <View>v:SettingsUsersView</View>
   </Mapping>
@@ -35,5 +31,10 @@
   <Mapping>
     <ViewModel>vm:UserEditViewModel</ViewModel>
     <View>v:UserEditView</View>
+  </Mapping>
+  <Mapping>
+    <ViewModel>vm:PatientEditViewModel</ViewModel>
+    <View>v:PatientEditView</View>
+    <Parent>vm:PatientListViewModel</Parent>
   </Mapping>
 </Mappings>
