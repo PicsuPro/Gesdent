@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using VsProject.ViewModels;
 
@@ -10,10 +6,6 @@ namespace VsProject.Services
 {
     public static class DialogService
     {
-        static DialogService()
-        {
-        }
-        public static void Void() { }
         public static bool? Show<TViewModel>(TViewModel viewModel)
             where TViewModel : ViewModelBase
         {

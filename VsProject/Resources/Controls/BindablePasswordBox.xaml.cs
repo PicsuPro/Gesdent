@@ -1,19 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Security;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace VsProject.Resources.Controls
 {
@@ -41,7 +27,7 @@ namespace VsProject.Resources.Controls
             var window = Window.GetWindow(this);
             if (window != null)
             {
-                window.Closing += (sender, e) => {DataContext = null;};
+                window.Closing += (sender, e) => { DataContext = null; };
             }
         }
 

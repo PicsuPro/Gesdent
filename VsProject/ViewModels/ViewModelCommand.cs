@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace VsProject.ViewModels
@@ -37,7 +33,7 @@ namespace VsProject.ViewModels
         //Methods
         public bool CanExecute(object? parameter)
         {
-            return _canExecuteAction==null || _canExecuteAction(parameter);
+            return _canExecuteAction == null || _canExecuteAction(parameter);
         }
 
         public void Execute(object? parameter)

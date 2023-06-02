@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using VsProject.Services;
 
 namespace VsProject.Resources.Controls
 {
@@ -27,9 +24,9 @@ namespace VsProject.Resources.Controls
         {
             var datePickerComboBoxes = (DateTimePickerComboBoxes)d;
             if (e.OldValue != e.NewValue)
-            { 
+            {
                 datePickerComboBoxes.SelectedDate = (DateTime)e.NewValue;
-            } 
+            }
         }
 
         public DateTime SelectedDate
@@ -66,25 +63,25 @@ namespace VsProject.Resources.Controls
 
         private int _selectedHour;
 
-        public int SelectedHour 
+        public int SelectedHour
         {
             get => _selectedHour;
-            set 
+            set
             {
                 _selectedHour = value;
                 SetSelectedDate(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, value, SelectedDate.Minute, SelectedDate.Second);
             }
         }
-        
+
         private int _selectedMinute;
 
-        public int SelectedMinute 
+        public int SelectedMinute
         {
             get => _selectedMinute;
-            set 
+            set
             {
                 _selectedMinute = value;
-                SetSelectedDate(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedDate.Hour , value, SelectedDate.Second);
+                SetSelectedDate(SelectedDate.Year, SelectedDate.Month, SelectedDate.Day, SelectedDate.Hour, value, SelectedDate.Second);
             }
         }
 
@@ -100,6 +97,8 @@ namespace VsProject.Resources.Controls
         {
 
             InitializeComponent();
+            txtHours.textBox.TextChanged += OnHourTextChanged;
+            txtMinutes.textBox.TextChanged += OnMinuteTextChanged;
 
             DayComboBox.ItemsSource = Enumerable.Range(1, 31);
             MonthComboBox.ItemsSource = months;
@@ -114,7 +113,7 @@ namespace VsProject.Resources.Controls
                 SelectedDate = new DateTime(year, month, Math.Min(day, maxDaysInMonth), hour, minute, second);
                 return true;
             }
-            catch(ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
                 return false;
             }
@@ -147,9 +146,9 @@ namespace VsProject.Resources.Controls
             MonthComboBox.SelectedIndex = SelectedDate.Month - _monthIndexCompensator;
             YearComboBox.SelectedItem = SelectedDate.Year;
 
-            txtHours.Text = SelectedDate.Hour.ToString();
-            txtMinutes.Text = SelectedDate.Minute.ToString();
-            
+            txtHours.textBox.Text = SelectedDate.Hour.ToString();
+            txtMinutes.textBox.Text = SelectedDate.Minute.ToString();
+
         }
 
         private void UpdateSelectedDate()
@@ -159,10 +158,14 @@ namespace VsProject.Resources.Controls
                 return;
             }
 
-            if (DayComboBox.SelectedItem == null || MonthComboBox.SelectedItem == null || YearComboBox.SelectedItem == null || !int.TryParse(txtHours.Text, out int hour) || !int.TryParse(txtMinutes.Text, out int minute))
+            if (DayComboBox.SelectedItem == null || MonthComboBox.SelectedItem == null || YearComboBox.SelectedItem == null || !int.TryParse(txtHours.textBox.Text, out int hour) || !int.TryParse(txtMinutes.textBox.Text, out int minute))
             {
                 return;
             }
+            if (hour < 0) { hour = 23; }
+            if (hour > 23) { hour = 0; }
+            if (minute < 0) { minute = 59; }
+            if (minute > 59) { minute = 0; }
             int day = (int)DayComboBox.SelectedItem;
             int month = MonthComboBox.SelectedIndex + _monthIndexCompensator;
             int year = (int)YearComboBox.SelectedItem;
@@ -313,26 +316,15 @@ namespace VsProject.Resources.Controls
             {
                 return;
             }
-            if (int.TryParse(txtHours.Text, out int hour))
-            {
-                hour = hour.mod(24);
-                UpdateSelectedDate();
-
-            }
-
+            UpdateSelectedDate();
         }
-    private void OnMinuteTextChanged(object sender, TextChangedEventArgs e)
+        private void OnMinuteTextChanged(object sender, TextChangedEventArgs e)
         {
             if (!_isUserAction)
             {
                 return;
             }
-            if (int.TryParse(txtMinutes.Text, out int minute))
-            {
-                minute = minute.mod(60);
-                UpdateSelectedDate();
-            }
-           
+            UpdateSelectedDate();
         }
     }
 }

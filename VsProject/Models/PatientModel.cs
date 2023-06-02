@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using VsProject.Repositories;
-
-namespace VsProject.Models
+﻿namespace VsProject.Models
 {
     public class PatientModel : PersonModel
     {
@@ -17,7 +9,7 @@ namespace VsProject.Models
         public string? OrientedBy { get; set; }
         public string? PreferredDay { get; set; }
         public string? ParentName { get; set; }
-        
-        
+
+
     }
 }

@@ -18,14 +18,18 @@
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10,0,0,0" VerticalAlignment="Center">
                 <!-- Hours -->
-            <local:ArrowsTextBox Width="30" x:Name="txtHours" Focusable="True"
-                                      TextChanged="OnHourTextChanged" Padding="0,1"/>
+            <local:NumericArrowsTextBox  x:Name="txtHours" Focusable="True"
+                                 FontSize="13"
+                                 Height="26"
+                                         Width="32"/>
 
                 <TextBlock Text=":" Margin="5,0" />
 
                 <!-- Minutes -->
-                <local:ArrowsTextBox Width="30" x:Name="txtMinutes" Focusable="True"
-                                     TextChanged="OnMinuteTextChanged" Padding="0,1"/>
+            <local:NumericArrowsTextBox x:Name="txtMinutes" Focusable="True"
+                                 FontSize="13"
+                                 Height="26"
+                                        Width="32"/>
 
             </StackPanel>
         </StackPanel>

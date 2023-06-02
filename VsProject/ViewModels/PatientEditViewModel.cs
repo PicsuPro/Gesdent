@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace VsProject.ViewModels
 {
     public class PatientEditViewModel : ViewModelBase
     {
-    
+
 
         private PatientModel _patient;
         private string _lastName = "";
@@ -83,7 +80,7 @@ namespace VsProject.ViewModels
         }
         public bool? IsMale
         {
-            get => _isMale; 
+            get => _isMale;
             set
             {
                 if (_isMale != value)
@@ -96,7 +93,7 @@ namespace VsProject.ViewModels
         }
         public bool? IsFemale
         {
-            get => _isFemale; 
+            get => _isFemale;
             set
             {
                 if (_isFemale != value)
@@ -167,7 +164,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Adress));
             }
         }
-       public string Motive
+        public string Motive
         {
             get => _motive;
             set
@@ -177,7 +174,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Motive));
             }
         }
-       public string OrientedBy
+        public string OrientedBy
         {
             get => _orientedBy;
             set
@@ -187,7 +184,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(OrientedBy));
             }
         }
-   
+
         public string PreferredDay
         {
             get => _preferredDay;
@@ -236,14 +233,14 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(ErrorMessage));
             }
         }
-        public bool IsNewPatient 
+        public bool IsNewPatient
         {
             get => _isNewPatient;
             set
             {
                 _isNewPatient = value;
                 OnPropertyChanged(nameof(IsNewPatient));
-            } 
+            }
         }
 
         public bool IsEditing
@@ -256,7 +253,7 @@ namespace VsProject.ViewModels
         }
 
         public ICommand SaveEditCommand { get; }
-        
+
 
         public PatientEditViewModel()
         {
@@ -266,7 +263,7 @@ namespace VsProject.ViewModels
             Teeth = new ObservableCollection<ToothModel>(
                                                         Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i })
                                                         );
-            IsNewPatient =  true;
+            IsNewPatient = true;
         }
         public PatientEditViewModel(PatientModel patient, PatientRecordModel patientRecord, IEnumerable<ToothModel> teeth)
         {

@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace VsProject.Resources.Controls
 {
@@ -38,7 +26,7 @@ namespace VsProject.Resources.Controls
             Loaded += (sender, e) =>
             {
                 _window = Window.GetWindow(this);
-                Loaded -= (s, ev) => { }; 
+                Loaded -= (s, ev) => { };
             };
         }
 
@@ -50,7 +38,7 @@ namespace VsProject.Resources.Controls
 
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            if (_window.Owner != null) 
+            if (_window.Owner != null)
 
                 _window.DialogResult = false;
             else

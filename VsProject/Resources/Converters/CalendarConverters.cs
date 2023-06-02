@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
-using VsProject.Models;
-using VsProject.Resources.Controls;
-using VsProject.Views;
 
 namespace VsProject.Resources.Converters
 {
- 
 
-    public class StartTimeToTopConverter :  IMultiValueConverter
+
+    public class StartTimeToTopConverter : IMultiValueConverter
     {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -59,7 +52,7 @@ namespace VsProject.Resources.Converters
             throw new NotImplementedException();
         }
     }
-    
+
     public class DataGridWidthToRowWidthConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -77,7 +70,7 @@ namespace VsProject.Resources.Converters
         {
             throw new NotImplementedException();
         }
-      
+
     }
 
     public class ExcludeFirstItemConverter : IValueConverter
@@ -115,7 +108,7 @@ namespace VsProject.Resources.Converters
             throw new NotSupportedException();
         }
     }
-     public class HeightToBottomMarginHalfConverter : IValueConverter
+    public class HeightToBottomMarginHalfConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

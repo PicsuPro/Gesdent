@@ -1,24 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System;
-using VsProject.ViewModels;
-using VsProject.Views;
-using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Linq;
-using System.Globalization;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Threading;
-using System.Xml.Linq;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using VsProject.Services;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Runtime.InteropServices.JavaScript;
-using VsProject.Models;
 using System.Windows.Input;
+using VsProject.Models;
 
 namespace VsProject.ViewModels
 {
@@ -126,4 +110,4 @@ namespace VsProject.ViewModels
 
 
 }
-    
+

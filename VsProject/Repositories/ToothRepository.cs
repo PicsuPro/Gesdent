@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using VsProject.Models;
 
 namespace VsProject.Repositories
@@ -22,9 +18,9 @@ namespace VsProject.Repositories
 
 
 
-        public void AddAll(IEnumerable<ToothModel> teethList,int? patientRecordId)
+        public void AddAll(IEnumerable<ToothModel> teethList, int? patientRecordId)
         {
-            if(IdExists(patientRecordId))
+            if (IdExists(patientRecordId))
             {
                 throw new ArgumentNullException("Teeth already exists");
             }
@@ -45,7 +41,7 @@ namespace VsProject.Repositories
                     foreach (var tooth in teethList)
                     {
                         command.CommandText = $"INSERT INTO {TABLENAME} ( {PATIENTRECORDID}, {NUMBER}, {APICALREACTION},{DECAY}) " +
-                                            "VALUES ( @patientRecordId, @number, @apicalReaction, @decay)"; 
+                                            "VALUES ( @patientRecordId, @number, @apicalReaction, @decay)";
 
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@patientRecordId", patientRecordId);
@@ -68,11 +64,11 @@ namespace VsProject.Repositories
             }
         }
 
-        
 
-        public void EditAll(IEnumerable<ToothModel> teethList,int? patientRecordId)
+
+        public void EditAll(IEnumerable<ToothModel> teethList, int? patientRecordId)
         {
-            
+
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -173,7 +169,7 @@ namespace VsProject.Repositories
             }
         }
 
-        public IEnumerable<IEnumerable<ToothModel>> GetAllFromHistory( int patientRecordId)
+        public IEnumerable<IEnumerable<ToothModel>> GetAllFromHistory(int patientRecordId)
         {
             var teethHistory = new List<IEnumerable<ToothModel>>();
 

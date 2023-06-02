@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using VsProject.Models;
 
@@ -14,9 +10,9 @@ namespace VsProject.ViewModels
         private string? _lastName = "";
         private string? _firstName = "";
         private bool? _isMale;
-        
+
         private bool? _isFemale;
-        
+
         private string? _phone = "";
         private string? _phoneAlt = "";
         private string? _email = "";
@@ -174,11 +170,12 @@ namespace VsProject.ViewModels
 
         private void ExecuteSaveEdit(object obj)
         {
-            if(IsNewStaff)
+            if (IsNewStaff)
             {
                 Staff.UserId = UserPrincipal.Current?.Id;
                 UserPrincipal.StaffRepository.Add(Staff);
-            }else
+            }
+            else
             {
                 UserPrincipal.StaffRepository.Edit(Staff);
             }
