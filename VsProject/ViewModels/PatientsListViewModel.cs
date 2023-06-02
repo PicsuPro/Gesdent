@@ -5,10 +5,11 @@ using System.Linq;
 using System.Windows.Data;
 using System.Windows.Input;
 using VsProject.Models;
+using VsProject.Services;
 
 namespace VsProject.ViewModels
 {
-    class ListViewModel : ViewModelBase
+    class PatientsListViewModel : ViewModelBase
     {
         private ObservableCollection<PatientModel> _patients;
         private ICollectionView _patientCollectionView;
@@ -35,9 +36,10 @@ namespace VsProject.ViewModels
             }
         }
 
+        public ICommand EditPatientCommand { get; }
         public ICommand RemovePatientCommand { get; }
 
-        public ListViewModel()
+        public PatientsListViewModel()
         {
 
             Patients = new ObservableCollection<PatientModel>(UserPrincipal.PatientRepository.GetAll());
@@ -45,6 +47,7 @@ namespace VsProject.ViewModels
             _patientCollectionView.Filter = FilterBySearchText;
 
             RemovePatientCommand = new ViewModelCommand(RemovePatient);
+            EditPatientCommand = new ViewModelCommand(EditPatient);
         }
 
         private void RemovePatient(object parameter)
@@ -54,6 +57,15 @@ namespace VsProject.ViewModels
             {
                 Patients.Remove(patient);
                 UserPrincipal.PatientRepository.Remove(patient);
+            }
+        }
+        private void EditPatient(object parameter)
+        {
+            if(parameter is PatientModel patient)
+            {
+                var viewModel = new PatientEditViewModel(patient);
+                NavService.Navigate(viewModel);
+
             }
         }
 

@@ -17,6 +17,10 @@
     <View>v:MainView</View>
   </Mapping>
   <Mapping>
+    <ViewModel>vm:OrdonnanceViewModel</ViewModel>
+    <View>v:OrdonnanceView</View>
+  </Mapping>
+  <Mapping>
     <ViewModel>vm:SettingsUsersViewModel</ViewModel>
     <View>v:SettingsUsersView</View>
   </Mapping>
@@ -35,6 +39,11 @@
   <Mapping>
     <ViewModel>vm:PatientEditViewModel</ViewModel>
     <View>v:PatientEditView</View>
-    <Parent>vm:PatientListViewModel</Parent>
+    <Parent>v:PatientsView</Parent>
+  </Mapping>
+  <Mapping>
+    <ViewModel>vm:PatientsListViewModel</ViewModel>
+    <View>v:PatientsListView</View>
+    <Parent>v:PatientsView</Parent>
   </Mapping>
 </Mappings>

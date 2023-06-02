@@ -17,20 +17,19 @@ namespace VsProject.Views
             InitializeComponent();
             NavService.Navigated += OnNavigated;
         }
-        private void OnNavigated(object view)
+        private void OnNavigated(FrameworkElement view)
         {
-            if (view is FrameworkElement frameworkElement)
-            {
-                navFrame.Content = frameworkElement;
 
-                Type viewModelType = frameworkElement.DataContext.GetType();
-                var selectedItem = sidebar.Items.OfType<NavListBoxItem>().FirstOrDefault(item => item.ViewModel == viewModelType);
+                navFrame.Content = view;
+
+                Type viewType = view.GetType();
+                var selectedItem = sidebar.Items.OfType<NavListBoxItem>().FirstOrDefault(item => item.ParentType == viewType);
 
                 if (selectedItem != null)
                 {
                     sidebar.SelectedItem = selectedItem;
                 }
-            }
+            
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -40,7 +41,7 @@ namespace VsProject.Services
 
                     if (!string.IsNullOrEmpty(parentName))
                     {
-                        parentName = parentName.Replace("vm:", $"{vmNamespace.NamespaceName}.");
+                        parentName = parentName.Replace("v:", $"{vNamespace.NamespaceName}.");
                         parentType = Type.GetType(parentName);
                     }
 
@@ -66,11 +67,11 @@ namespace VsProject.Services
             }
         }
 
-        public static Type GetParentType(Type viewModelType)
+        public static Type? GetParentType(Type viewModelType)
         {
-            if (_mappings.TryGetValue(viewModelType, out (Type, Type?) mapping))
+            if (_mappings.TryGetValue(viewModelType, out (Type, Type? parentType) mapping))
             {
-                return mapping.Item2;
+                return mapping.parentType;
             }
             else
             {
@@ -80,7 +81,7 @@ namespace VsProject.Services
 
         public static (Type, Type?) GetViewAndParentTypes(Type viewModelType)
         {
-            if (_mappings.TryGetValue(viewModelType, out (Type, Type?) mapping))
+            if (_mappings.TryGetValue(viewModelType, out (Type, Type? ) mapping))
             {
                 return mapping;
             }
@@ -131,7 +132,7 @@ namespace VsProject.Services
                         if (File.Exists(parentFile))
                         {
                             string parentViewModelName = parentName.Replace("Model", "ViewModel");
-                            writer.WriteElementString("Parent", $"vm:{parentViewModelName}");
+                            writer.WriteElementString("Parent", $"v:{parentViewModelName}");
                         }
 
                         writer.WriteEndElement();

@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -17,14 +16,14 @@ using System.Windows.Shapes;
 namespace VsProject.Views
 {
     /// <summary>
-    /// Interaction logic for PatientListView.xaml
+    /// Interaction logic for PatientsListView.xaml
     /// </summary>
-    public partial class PatientListView : UserControl
+    public partial class PatientsListView : UserControl
     {
-        public PatientListView()
+        public PatientsListView()
         {
             InitializeComponent();
         }
-        
+
     }
 }

@@ -14,6 +14,9 @@
     <Compile Update="Resources\Controls\NavListBoxItem.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Resources\Controls\NavTabItem.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Resources\Controls\AppointmentScheduler.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -53,6 +56,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Controls\DateTimePickerComboBoxes.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Controls\NavTabItem.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Resources\Controls\NavListBoxItem.xaml">

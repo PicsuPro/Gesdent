@@ -11,6 +11,6 @@ namespace VsProject.Models
         public string? Phone { get; set; }
         public string? PhoneAlt { get; set; }
         public string? Email { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
     }
 }

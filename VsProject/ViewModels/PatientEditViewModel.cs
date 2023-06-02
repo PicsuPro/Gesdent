@@ -23,7 +23,7 @@ namespace VsProject.ViewModels
         private string _phone = "";
         private string _phoneAlt = "";
         private string _email = "";
-        private DateTime? _birthDate;
+        private DateTime _birthDate;
         private string _errorMessage = "";
         private bool _isNewPatient = false;
         private bool _isEditing = false;
@@ -135,7 +135,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Email));
             }
         }
-        public DateTime? BirthDate
+        public DateTime BirthDate
         {
             get => _birthDate;
             set
@@ -266,12 +266,16 @@ namespace VsProject.ViewModels
                                                         );
             IsNewPatient = true;
         }
-        public PatientEditViewModel(PatientModel patient, PatientRecordModel patientRecord, IEnumerable<ToothModel> teeth)
+        public PatientEditViewModel(PatientModel patient, PatientRecordModel? patientRecord = null, IEnumerable<ToothModel>? teeth = null)
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Patient = patient;
-            PatientRecord = patientRecord;
-            PatientRecord.PatientId = Patient.Id;
+            if (patientRecord != null)
+            {
+                PatientRecord = patientRecord;
+                PatientRecord.PatientId = Patient.Id;
+            }
+            if(teeth != null ) 
             Teeth = new ObservableCollection<ToothModel>(teeth);
             LastName = Patient.LastName;
             FirstName = Patient.FirstName;
@@ -307,6 +311,7 @@ namespace VsProject.ViewModels
             {
                 UserPrincipal.PatientRepository.Edit(Patient);
                 //UserPrincipal.PatientRecordRepository.Edit();
+                if(Teeth != null) 
                 UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
             }
             IsEditing = false;

@@ -26,7 +26,7 @@ namespace VsProject.Services
             return null;
         }
 
-        public static T? FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        public static T? FindVisualChild<T>(this DependencyObject parent) where T : DependencyObject
         {
             if (parent == null)
                 return null;
@@ -48,6 +48,25 @@ namespace VsProject.Services
 
             return null;
         }
+        public static T? FindLogicalChild<T>(this DependencyObject parent) where T : DependencyObject
+        {
+            if (parent == null)
+                return null;
+
+            foreach (var child in LogicalTreeHelper.GetChildren(parent))
+            {
+                if (child is T typedChild)
+                    return typedChild;
+
+                var foundChild = FindLogicalChild<T>(child as DependencyObject);
+
+                if (foundChild != null)
+                    return foundChild;
+            }
+
+            return null;
+        }
+
         public static int mod(this int value, int divisor)
         {
             int result = value % divisor;

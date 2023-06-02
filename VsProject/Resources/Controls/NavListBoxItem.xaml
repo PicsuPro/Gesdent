@@ -24,17 +24,18 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="back"
-                                Background="Transparent"
-                                Padding="7"
-                                CornerRadius="8" >
-                            <Button Template="{DynamicResource ButtonTemplate}" x:Name="forgot"
+                        <Button Template="{DynamicResource ButtonTemplate}" x:Name="forgot"
                                 Background="#0000"
                                 BorderThickness="0"
                                 Padding="0"
                                 Margin="0"
                                 Click="back_Click"
                                     Style="{x:Null}">
+                            <Border x:Name="back"
+                                Background="Transparent"
+                                Padding="7"
+                                CornerRadius="8" >
+                           
                                 <Path x:Name="icon"
                                     SnapsToDevicePixels="True"
                                     HorizontalAlignment="Stretch"
@@ -43,8 +44,9 @@
                                     Fill="{TemplateBinding Foreground}"
                                     Height="24"
                                     Width="24" />
-                            </Button>
-                        </Border>
+                            </Border>
+                        </Button>
+
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter Property="Foreground" Value="{StaticResource primary1}" />

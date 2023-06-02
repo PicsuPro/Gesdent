@@ -21,6 +21,9 @@ namespace VsProject.Resources.Controls
             set { SetValue(ViewModelProperty, value); }
         }
 
+        public Type? ParentType => NavService.GetParentTypeFromViewModelType(ViewModel); 
+        
+
 
 
         public static readonly DependencyProperty IconProperty =

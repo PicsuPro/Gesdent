@@ -24,14 +24,13 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="50"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Width="250"
-                        HorizontalAlignment="Left"
                         Orientation="Vertical"
                         Grid.Column="1"
                         Grid.Row="1">
@@ -136,7 +135,6 @@
             </StackPanel>
 
             <StackPanel Width="250"
-                        HorizontalAlignment="Left"
                         Orientation="Vertical"
                         Grid.Column="2"
                         Grid.Row="1"
@@ -220,12 +218,12 @@
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
             </StackPanel>
-            <controls:DentalChart 
+            <!--<controls:DentalChart 
                 TeethSource="{Binding Teeth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Margin="25,0,0,0"
                 Grid.Column="3"
                 Grid.Row="1"
-                IsEnabled="{Binding DataContext.IsEditing,RelativeSource={RelativeSource AncestorType=UserControl}}"/>
+                IsEnabled="{Binding DataContext.IsEditing,RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->
             
             <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            Foreground="IndianRed"
@@ -269,9 +267,9 @@
             </Button>
 
 
-            <ToggleButton Grid.ColumnSpan="5"
+            <ToggleButton Grid.Column="4"
                           Grid.Row="1"
-                          HorizontalAlignment="Right"
+                          HorizontalAlignment="Left"
                           VerticalAlignment="Top"
                           Height="40"
                           Cursor="Hand"

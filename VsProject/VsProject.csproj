@@ -43,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Controls\NavTabItem.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\PatientEditView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
