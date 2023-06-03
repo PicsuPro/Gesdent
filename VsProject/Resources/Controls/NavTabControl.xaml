@@ -1,4 +1,4 @@
-﻿<TabItem x:Class="VsProject.Resources.Controls.NavTabItem"
+﻿<TabControl x:Class="VsProject.Resources.Controls.NavTabControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,5 +9,6 @@
              d:DesignWidth="20"
              HorizontalAlignment="Center"
              HorizontalContentAlignment="Center"
-             FocusVisualStyle="{x:Null}">
-</TabItem>
+             FocusVisualStyle="{x:Null}"
+            >
+</TabControl>

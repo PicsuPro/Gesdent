@@ -27,14 +27,12 @@
                 BorderThickness="0"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch">
-            <TabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+            <controls:NavTabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
                 <controls:NavTabItem Header="List" ViewModel="{x:Type viewModels:PatientsListViewModel}" Style="{DynamicResource TabItemStyle}">
-                    <local:PatientsListView/>
                 </controls:NavTabItem>
                 <controls:NavTabItem Header="Add Patient" ViewModel="{x:Type viewModels:PatientEditViewModel}" Style="{DynamicResource TabItemStyle}">
-                    <local:PatientEditView/>
                 </controls:NavTabItem>
-            </TabControl>
+            </controls:NavTabControl>
         </Border>
     </Grid>
 </UserControl>

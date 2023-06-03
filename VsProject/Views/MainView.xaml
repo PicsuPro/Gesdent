@@ -105,7 +105,7 @@
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>
             <controls:NavListBoxItem Icon="{StaticResource patientIcon}"
-                                        ViewModel="{x:Type viewModels:PatientsListViewModel}"
+                                        ViewModel="{x:Type viewModels:PatientEditViewModel}"
                                         Margin="0,5"
                                         KeyboardNavigation.IsTabStop="False"/>
 

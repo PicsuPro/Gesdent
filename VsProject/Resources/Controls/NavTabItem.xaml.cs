@@ -19,14 +19,11 @@ namespace VsProject.Resources.Controls
         {
             get { return (Type)GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
-        }        
-
-
+        }
 
         public NavTabItem()
         {
             InitializeComponent();
         }
-
     }
 }

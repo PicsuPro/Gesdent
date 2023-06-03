@@ -11,7 +11,6 @@ namespace VsProject.ViewModels
     public class PatientEditViewModel : ViewModelBase
     {
 
-
         private PatientModel _patient;
         private string _lastName = "";
         private string _firstName = "";
@@ -311,9 +310,10 @@ namespace VsProject.ViewModels
             {
                 UserPrincipal.PatientRepository.Edit(Patient);
                 //UserPrincipal.PatientRecordRepository.Edit();
-                if(Teeth != null) 
-                UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
+                if (Teeth != null)
+                    UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
             }
+
             IsEditing = false;
         }
 

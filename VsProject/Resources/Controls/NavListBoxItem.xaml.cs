@@ -21,8 +21,8 @@ namespace VsProject.Resources.Controls
             set { SetValue(ViewModelProperty, value); }
         }
 
-        public Type? ParentType => NavService.GetParentTypeFromViewModelType(ViewModel); 
-        
+        public Type? ParentType => NavService.GetParentTypeFromViewModelType(ViewModel);
+
 
 
 
@@ -40,6 +40,7 @@ namespace VsProject.Resources.Controls
         public NavListBoxItem()
         {
             InitializeComponent();
+
         }
         private void back_Click(object sender, RoutedEventArgs e)
         {

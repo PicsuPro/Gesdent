@@ -8,6 +8,7 @@ namespace VsProject.ViewModels
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, INotifyDataErrorInfo
     {
+        public bool KeepLoaded { get; protected set; } = true;
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {

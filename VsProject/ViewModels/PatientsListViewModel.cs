@@ -42,6 +42,7 @@ namespace VsProject.ViewModels
         public PatientsListViewModel()
         {
 
+            KeepLoaded = false;
             Patients = new ObservableCollection<PatientModel>(UserPrincipal.PatientRepository.GetAll());
             _patientCollectionView = CollectionViewSource.GetDefaultView(Patients);
             _patientCollectionView.Filter = FilterBySearchText;

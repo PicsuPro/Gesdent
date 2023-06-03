@@ -11,7 +11,8 @@ namespace VsProject.Services
 {
     public static class NavService
     {
-        public static event Action<FrameworkElement>? Navigated;
+        public static event Action<FrameworkElement>? NavigatedToParent;
+        public static event Action<FrameworkElement>? NavigatedToChild;
         private static Dictionary<Type, ViewModelBase> loadedViewModels = new();
 
         public static void Navigate(Type viewModelType)
@@ -20,6 +21,7 @@ namespace VsProject.Services
             if (!loadedViewModels.TryGetValue(viewModelType, out var viewModel))
             {
                 viewModel = (ViewModelBase)Activator.CreateInstance(viewModelType);
+                if (viewModel.KeepLoaded)
                 loadedViewModels[viewModelType] = viewModel;
             }
             var view = (FrameworkElement)Activator.CreateInstance(viewType);
@@ -28,20 +30,12 @@ namespace VsProject.Services
             if (parentType != null)
             {
                 var parent = (FrameworkElement)Activator.CreateInstance(parentType);
-
-                int childCount = VisualTreeHelper.GetChildrenCount(parent);
-                var tabControl = parent.FindLogicalChild<TabControl>();
-                var tabItem = tabControl.Items.OfType<NavTabItem>().FirstOrDefault(item => item.ViewModel == viewModelType);
-                if(tabItem != null)
-                {
-                    tabItem.Content = view;
-                    tabControl.SelectedItem = tabItem;
-                }
-                Navigated?.Invoke(parent);
+                NavigatedToParent?.Invoke(parent);
+                NavigatedToChild?.Invoke(view);
             }
             else
             {
-                Navigated?.Invoke(view);
+                NavigatedToParent?.Invoke(view);
             }
         }
         public static void Navigate<TViewModel>(TViewModel viewModel)
@@ -50,25 +44,16 @@ namespace VsProject.Services
             (Type viewType, Type? parentType) = VMVMappings.GetViewAndParentTypes(viewModel.GetType());
             var view = (FrameworkElement)Activator.CreateInstance(viewType);
             view.DataContext = viewModel;
-            Navigated?.Invoke(view);
 
             if (parentType != null)
             {
                 var parent = (FrameworkElement)Activator.CreateInstance(parentType);
-
-                int childCount = VisualTreeHelper.GetChildrenCount(parent);
-                var tabControl = parent.FindLogicalChild<TabControl>();
-                var tabItem = tabControl.Items.OfType<NavTabItem>().FirstOrDefault(item => item.ViewModel == viewModel.GetType());
-                if (tabItem != null)
-                {
-                    tabItem.Content = view;
-                    tabControl.SelectedItem = tabItem;
-                }
-                Navigated?.Invoke(parent);
+                NavigatedToParent?.Invoke(parent);
+                NavigatedToChild?.Invoke(view);
             }
             else
             {
-                Navigated?.Invoke(view);
+                NavigatedToParent?.Invoke(view);
             }
         }
 

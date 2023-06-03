@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System;
+using System.Windows;
 using System.Windows.Media;
 
 namespace VsProject.Services
@@ -66,6 +68,20 @@ namespace VsProject.Services
 
             return null;
         }
+
+        public static T? GetStaticVar<T>(this Type type, string variableName)
+        {
+            FieldInfo fieldInfo = type.GetField(variableName, BindingFlags.Public | BindingFlags.Static);
+            if (fieldInfo != null)
+            {
+                return (T)fieldInfo.GetValue(null);
+            }
+            else
+            {
+                throw new ArgumentException($"Static variable '{variableName}' not found in type '{type.FullName}'.");
+            }
+        }
+
 
         public static int mod(this int value, int divisor)
         {
