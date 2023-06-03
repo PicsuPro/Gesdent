@@ -260,21 +260,42 @@ namespace VsProject.ViewModels
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Patient = new PatientModel();
             PatientRecord = new PatientRecordModel();
-            Teeth = new ObservableCollection<ToothModel>(
-                                                        Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i })
-                                                        );
+            Teeth = new ObservableCollection<ToothModel>(Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i }));
             IsNewPatient = true;
         }
-        public PatientEditViewModel(PatientModel patient, PatientRecordModel? patientRecord = null, IEnumerable<ToothModel>? teeth = null)
+        public PatientEditViewModel(PatientModel patient)
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             Patient = patient;
-            if (patientRecord != null)
-            {
-                PatientRecord = patientRecord;
-                PatientRecord.PatientId = Patient.Id;
-            }
-            if(teeth != null ) 
+            PatientRecord = new PatientRecordModel();
+            PatientRecord.PatientId = Patient.Id;
+            Teeth = new ObservableCollection<ToothModel>(Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i }));
+            LastName = Patient.LastName;
+            FirstName = Patient.FirstName;
+            Surname = Patient.Surname;
+            IsMale = !Patient.Sex;
+            IsFemale = Patient.Sex;
+            Phone = Patient.Phone;
+            PhoneAlt = Patient.PhoneAlt;
+            Email = Patient.Email;
+            BirthDate = Patient.BirthDate;
+            Profession = Patient.Profession;
+            Adress = Patient.Adress;
+            Motive = Patient.Motive;
+            OrientedBy = Patient.OrientedBy;
+            Adress = Patient.Adress;
+            PreferredDay = Patient.PreferredDay;
+            ParentName = Patient.ParentName;
+
+            IsNewPatient = Patient.Id == null;
+        }
+
+   public PatientEditViewModel(PatientModel patient, PatientRecordModel patientRecord , IEnumerable<ToothModel> teeth)
+        {
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
+            Patient = patient;
+            PatientRecord = patientRecord;
+            PatientRecord.PatientId = Patient.Id;
             Teeth = new ObservableCollection<ToothModel>(teeth);
             LastName = Patient.LastName;
             FirstName = Patient.FirstName;

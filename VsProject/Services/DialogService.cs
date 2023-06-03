@@ -23,7 +23,7 @@ namespace VsProject.Services
                 viewModel.Ending -= (sender, args) => { };
             };
 
-            bool? result = view.ShowDialog();
+            var result = view.ShowDialog();
             view.Close();
 
             return result;
