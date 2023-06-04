@@ -5,18 +5,20 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:VsProject.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="White">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#F0F2F5">
     <UserControl.DataContext>
         <viewModel:PatientsListViewModel/>
     </UserControl.DataContext>
-    <Grid>
+    <Grid Width="800">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    >
             <Viewbox Width="20"
                   Height="20">
                 <Path HorizontalAlignment="Center"
@@ -31,10 +33,11 @@
                      Margin="10 0"
                      FontSize="20"
                      Style="{StaticResource FormTextBox}"
-                     VerticalAlignment="Center"/>
+                     VerticalAlignment="Center"
+                     Background="White"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1" Background="White" 
+        <DataGrid Grid.Row="1"  
                   Name="list"
                   ItemsSource="{Binding Patients}" 
                   IsReadOnly="True" 

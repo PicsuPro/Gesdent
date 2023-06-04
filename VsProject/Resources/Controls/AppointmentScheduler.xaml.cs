@@ -149,11 +149,39 @@ namespace VsProject.Resources.Controls
             set
             {
                 _dayAppointments = value;
-
             }
         }
 
         public List<string>? HourList { get; set; }
+        public Brush AppointmentColor
+        {
+            get => new SolidColorBrush(GetNextCoolColor());
+        }
+
+        private double colorIndex = 0;
+        private Color GetNextCoolColor()
+        {
+            Color color = coolColors[(int)colorIndex];
+            colorIndex = (colorIndex + 0.5) % coolColors.Length; // Increment index and loop back if necessary
+            return color;
+        }
+
+        private Color[] coolColors = new Color[]
+        {
+            Colors.LimeGreen,
+            Colors.DodgerBlue,
+            Colors.Gold,
+            Colors.DarkOrange,
+            Colors.DarkMagenta,
+            Colors.Turquoise,
+            Colors.Red,
+            Colors.Navy,
+            Colors.DarkViolet,
+            Colors.Cyan,
+            Colors.Gray,
+            Colors.CornflowerBlue
+        };
+
 
         public AppointmentScheduler()
         {
@@ -230,10 +258,36 @@ namespace VsProject.Resources.Controls
                 appointment.Duration = duration;
                 Canvas.SetTop(popupGrid, Canvas.GetTop(draggedItem) - popupGrid.ActualHeight / 2);
                 popupTextBlock.Text = appointment.StartTime.ToString();
+                // Calculate the new horizontal position
+                double newX = Math.Clamp(e.GetPosition(draggingCanvas).X - dragStartPoint.X, 0, draggingCanvas.ActualWidth - draggedItem.ActualWidth);
 
+                // Check for collisions and adjust the horizontal position if needed
+                foreach (FrameworkElement item in draggingCanvas.Children)
+                {
+                    if (item != draggedItem && CheckCollision(draggedItem, item))
+                    {
+                        double itemRight = Canvas.GetLeft(item) + item.ActualWidth;
+                        if (newX < itemRight)
+                        {
+                            newX = itemRight;
+                        }
+                    }
+                }
+
+                // Set the new horizontal position
+                Canvas.SetLeft(draggedItem, newX);
             }
         }
 
+        private bool CheckCollision(FrameworkElement item1, FrameworkElement item2)
+        {
+            double top1 = Canvas.GetTop(item1);
+            double bottom1 = top1 + item1.ActualHeight;
+            double top2 = Canvas.GetTop(item2);
+            double bottom2 = top2 + item2.ActualHeight;
+
+            return bottom1 > top2 && top1 < bottom2;
+        }
         private void Canvas_Drop(object sender, DragEventArgs e)
         {
             if (appointment != null && draggedItem != null && draggingCanvas != null)

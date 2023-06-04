@@ -11,4 +11,21 @@
              HorizontalContentAlignment="Center"
              FocusVisualStyle="{x:Null}"
             >
+     <TabControl.Template>
+        <ControlTemplate TargetType="TabControl">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TabPanel Grid.Row="0" Panel.ZIndex="1" Background="Transparent"
+                          IsItemsHost="True" Margin="0,0,4,-1"/>
+
+                <Border Grid.Row="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                    <ContentPresenter ContentSource="SelectedContent"/>
+                </Border>
+            </Grid>
+        </ControlTemplate>
+    </TabControl.Template>
 </TabControl>

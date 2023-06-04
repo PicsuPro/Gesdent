@@ -13,4 +13,6 @@
     <c:StartTimeToTopConverter x:Key="StartTimeToTopConverter"/>
     <c:DateToDayOfWeekStringConverter x:Key="DateToDayOfWeekString"/>
     <c:HeightToBottomMarginHalfConverter x:Key="HeightToBottomMarginHalf"/>
+    <c:AppointmentWidthConverter x:Key="AppointmentWidth"/>
+    <c:AppointmentLeftConverter x:Key="AppointmentLeft"/>
 </ResourceDictionary>

@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 
 namespace VsProject.Resources.Converters
@@ -125,5 +127,95 @@ namespace VsProject.Resources.Converters
             throw new NotSupportedException();
         }
     }
+
+    public class AppointmentWidthConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length < 4 || !(values[0] is double actualWidth) || !(values[1] is double actualHeight) || !(values[2] is UIElementCollection children) || !(values[3] is FrameworkElement element))
+            {
+                return Binding.DoNothing;
+            }
+
+            double availableWidth = actualWidth;
+            int stackedElements = 0;
+
+            foreach (FrameworkElement child in children)
+            {
+                if (child != element && CheckCollision(actualHeight, Canvas.GetTop(child) + child.ActualHeight, actualHeight, Canvas.GetTop(element) + actualHeight))
+                {
+                    stackedElements++;
+                    double right = Canvas.GetLeft(child) + child.ActualWidth;
+                    if (right > availableWidth)
+                    {
+                        availableWidth = right;
+                    }
+                }
+            }
+
+            double width = availableWidth / (stackedElements + 1);
+
+            return width;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        private bool CheckCollision(double top1, double bottom1, double top2, double bottom2)
+        {
+            return bottom1 > top2 && top1 < bottom2;
+        }
+    }
+
+    public class AppointmentLeftConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length < 4 || !(values[0] is double actualWidth) || !(values[1] is double actualHeight) || !(values[2] is double top) || !(values[3] is UIElement element) || !(values[4] is UIElementCollection children))
+            {
+                return Binding.DoNothing;
+            }
+
+            double availableWidth = actualWidth;
+            int stackedElements = 0;
+
+            foreach (UIElement child in children)
+            {
+                if (child != element && CheckCollision(top, actualHeight, child))
+                {
+                    stackedElements++;
+                    double right = Canvas.GetLeft(child) + child.RenderSize.Width;
+                    if (right > availableWidth)
+                    {
+                        availableWidth = right;
+                    }
+                }
+            }
+
+            double elementWidth = availableWidth / (stackedElements + 1);
+
+            return elementWidth;
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        private bool CheckCollision(double top1, double bottom1, UIElement item2)
+        {
+            double top2 = Canvas.GetTop(item2);
+            double bottom2 = top2 + item2.RenderSize.Height;
+
+            return bottom1 > top2 && top1 < bottom2;
+        }
+    }
+
+
+
+
+
 
 }

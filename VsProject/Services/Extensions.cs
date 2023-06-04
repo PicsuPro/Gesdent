@@ -11,7 +11,6 @@ namespace VsProject.Services
         {
             // Get the parent of the child
             DependencyObject parent = VisualTreeHelper.GetParent(child);
-
             while (parent != null)
             {
                 // If the parent is the correct type, return it
@@ -19,11 +18,9 @@ namespace VsProject.Services
                 {
                     return parent as T;
                 }
-
                 // Get the next parent
                 parent = VisualTreeHelper.GetParent(parent);
             }
-
             // No parent of the correct type was found
             return null;
         }
