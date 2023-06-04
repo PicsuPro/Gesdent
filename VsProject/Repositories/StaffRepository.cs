@@ -55,7 +55,7 @@ namespace VsProject.Repositories
                         command.Parameters.AddWithValue("@phone", staffModel.Phone);
                         command.Parameters.AddWithValue("@phoneAlt", staffModel.PhoneAlt.DBNullOrWS());
                         command.Parameters.AddWithValue("@email", staffModel.Email);
-                        command.Parameters.AddWithValue("@birthDate", staffModel.BirthDate);
+                        command.Parameters.AddWithValue("@birthDate", staffModel.BirthDate.DBToDateTime());
 
                         command.ExecuteNonQuery();
                     }
@@ -87,7 +87,7 @@ namespace VsProject.Repositories
                 command.Parameters.AddWithValue("@phone", staffModel.Phone);
                 command.Parameters.AddWithValue("@phoneAlt", staffModel.PhoneAlt.DBNullOrWS());
                 command.Parameters.AddWithValue("@email", staffModel.Email);
-                command.Parameters.AddWithValue("@birthDate", staffModel.BirthDate);
+                command.Parameters.AddWithValue("@birthDate", staffModel.BirthDate.DBToDateTime());
 
                 command.ExecuteNonQuery();
             }
@@ -118,7 +118,7 @@ namespace VsProject.Repositories
                             Phone = reader[PHONE].DBValue<string>(),
                             PhoneAlt = reader[PHONEALT].DBValue<string>(),
                             Email = reader[EMAIL].DBValue<string>(),
-                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>()
+                            BirthDate = reader[BIRTHDATE].DBValue<DateOnly>()
                         };
                         staffs.Add(staff);
                     }
@@ -156,7 +156,7 @@ namespace VsProject.Repositories
                             Phone = reader[PHONE].DBValue<string>(),
                             PhoneAlt = reader[PHONEALT].DBValue<string>(),
                             Email = reader[EMAIL].DBValue<string>(),
-                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>()
+                            BirthDate = reader[BIRTHDATE].DBValue<DateOnly>()
                         };
                         return staff;
                     }

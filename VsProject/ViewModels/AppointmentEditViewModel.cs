@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Windows.Input;
 using VsProject.Models;
+using VsProject.Repositories;
 
 namespace VsProject.ViewModels
 {
     public class AppointmentEditViewModel : ViewModelBase
     {
         //Fields
-        private AppointmentViewModel _appointment = new AppointmentViewModel(new AppointmentModel() { Subject = "We NEed To Talk About thhis", StartDateTime = new DateTime(2023, 5, 20, 12, 0, 0), Duration = new TimeSpan(1, 0, 0) });
+        private AppointmentViewModel _appointment = new AppointmentViewModel(new AppointmentModel() { Subject = "We NEed To Talk About thhis" ,Date = new DateOnly(2023, 5, 20), StartTime = new TimeOnly( 12, 0, 0), EndTime = new TimeOnly(15, 0, 0) });
         private string _errorMessage = "";
         private bool _isNewUser = false;
         private bool _isEditPassword = true;

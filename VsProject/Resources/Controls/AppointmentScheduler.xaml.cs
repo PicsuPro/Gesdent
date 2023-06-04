@@ -218,7 +218,7 @@ namespace VsProject.Resources.Controls
 
         }
 
-
+      
 
         private void Canvas_DragOver(object sender, DragEventArgs e)
         {
@@ -226,7 +226,7 @@ namespace VsProject.Resources.Controls
             {
                 hasBeenDragged = true;
                 (TimeOnly startTime, TimeSpan duration) = GetStartTimeAndDurationFromPosition(e.GetPosition(draggingCanvas), draggingCanvas.ActualHeight, draggedItem.ActualHeight, dragStartPoint);
-                appointment.StartDateTime = new DateTime(appointment.StartDateTime.Year, appointment.StartDateTime.Month, appointment.StartDateTime.Day, startTime.Hour, startTime.Minute, startTime.Second);
+                appointment.StartTime = new TimeOnly(startTime.Hour, startTime.Minute, startTime.Second);
                 appointment.Duration = duration;
                 Canvas.SetTop(popupGrid, Canvas.GetTop(draggedItem) - popupGrid.ActualHeight / 2);
                 popupTextBlock.Text = appointment.StartTime.ToString();
@@ -240,15 +240,12 @@ namespace VsProject.Resources.Controls
             {
                 if (sender is Canvas canvas && canvas != draggingCanvas)
                 {
-                    DayAppointmentsCollection dayAppointments = (DayAppointmentsCollection)CustomDataGrid.ItemsSource;
-                    dayAppointments.AppointmentList?.Remove(appointment);
 
                     (TimeOnly startTime, TimeSpan duration) = GetStartTimeAndDurationFromPosition(e.GetPosition(draggingCanvas), draggingCanvas.ActualHeight, draggedItem.ActualHeight, dragStartPoint);
                     DateOnly newDay = ((KeyValuePair<DateOnly, ObservableCollection<AppointmentViewModel>>)canvas.DataContext).Key;
-
                     appointment.StartDateTime = new DateTime(newDay.Year, newDay.Month, newDay.Day, startTime.Hour, startTime.Minute, startTime.Second);
                     appointment.Duration = duration;
-                    dayAppointments.AppointmentList?.Add(appointment);
+
                 }
             }
         }

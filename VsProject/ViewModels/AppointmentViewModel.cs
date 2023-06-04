@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using VsProject.Models;
 
 namespace VsProject.ViewModels
@@ -6,6 +7,7 @@ namespace VsProject.ViewModels
     public class AppointmentViewModel : ViewModelBase
     {
         private readonly AppointmentModel _appointment;
+        public event Action<AppointmentViewModel, DateOnly>? DateChanged;
 
         public string? Subject
         {
@@ -16,37 +18,79 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Subject));
             }
         }
+        public DateOnly Date
+        {
+            get => _appointment.Date;
+            set
+            {
+                var old = _appointment.Date;
+                _appointment.Date = value;
+                DateChanged?.Invoke(this, old);
+                OnPropertyChanged(nameof(Date));
+                OnPropertyChanged(nameof(StartDateTime));
+            }
+        }
+        public TimeOnly StartTime
+        {
+            get => _appointment.StartTime;
+            set
+            {
+                var max = EndTime;
+                _appointment.StartTime = (value > max) ? max : value;
+                OnPropertyChanged(nameof(StartTime));
+                OnPropertyChanged(nameof(Duration));
+                OnPropertyChanged(nameof(StartDateTime));
+            }
+        }
+
+        public TimeOnly EndTime
+        {
+            get => _appointment.EndTime;
+            set
+            {
+                var min = StartTime;
+                _appointment.EndTime = (value < min) ? min : value;
+                OnPropertyChanged(nameof(EndTime));
+                OnPropertyChanged(nameof(Duration));
+            }
+        }
 
         public DateTime StartDateTime
         {
-            get => _appointment.StartDateTime;
+            get => new DateTime(Date.Year, Date.Month, Date.Day, StartTime.Hour, StartTime.Minute, StartTime.Second);
             set
             {
-                _appointment.StartDateTime = value;
+                Date = DateOnly.FromDateTime(value);
+                StartTime = TimeOnly.FromDateTime(value);
                 OnPropertyChanged(nameof(StartDateTime));
-                OnPropertyChanged(nameof(StartTime));
-                OnPropertyChanged(nameof(EndTime));
             }
         }
+
 
         public TimeSpan Duration
         {
-            get => _appointment.Duration;
+            get => EndTime - StartTime;
             set
             {
-                _appointment.Duration = value;
+                EndTime = StartTime.Add(value);
                 OnPropertyChanged(nameof(Duration));
-                OnPropertyChanged(nameof(EndTime));
             }
         }
 
-        public TimeOnly StartTime => TimeOnly.FromDateTime(_appointment.StartDateTime);
 
-        public TimeOnly EndTime => StartTime.Add(_appointment.Duration);
+
+
 
         public AppointmentViewModel(AppointmentModel appointment)
         {
             _appointment = appointment;
+        }
+
+
+
+        public AppointmentViewModel(AppointmentViewModel appointmentvm)
+        {
+            _appointment = new AppointmentModel() { Subject = appointmentvm.Subject, Date = appointmentvm.Date, StartTime = appointmentvm.StartTime, EndTime = appointmentvm.EndTime };
         }
 
     }

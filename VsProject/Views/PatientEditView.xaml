@@ -91,7 +91,7 @@
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <controls:DateTimePickerComboBoxes  
+                <controls:DatePickerComboBoxes  
                     SelectedDate="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="datePickerComboBoxes" 
                     Times="Past"

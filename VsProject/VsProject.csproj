@@ -43,6 +43,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Controls\DatePickerComboBoxes.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Resources\Controls\NavTabControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

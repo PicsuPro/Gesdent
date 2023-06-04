@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -9,6 +10,9 @@ namespace VsProject.Resources.Controls
     /// </summary>
     public partial class NumericArrowsTextBox : UserControl
     {
+
+        public int Min { get; set; } = 0;
+        public int? Max { get; set; }
 
         public NumericArrowsTextBox()
         {
@@ -21,8 +25,7 @@ namespace VsProject.Resources.Controls
         {
             if (int.TryParse(textBox.Text, out int value))
             {
-                value++;
-                textBox.Text = value.ToString();
+                textBox.Text = (Max.HasValue && value >= Max) ? Min.ToString() : (value+1).ToString() ;
                 textBox.Focus();
             }
         }
@@ -31,8 +34,7 @@ namespace VsProject.Resources.Controls
         {
             if (int.TryParse(textBox.Text, out int value))
             {
-                value--;
-                textBox.Text = value.ToString();
+                textBox.Text = (value > Min) ? (value - 1).ToString() : (Max.HasValue) ? Max.ToString() : Min.ToString();
                 textBox.Focus();
             }
         }

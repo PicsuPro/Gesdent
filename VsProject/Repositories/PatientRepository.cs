@@ -49,7 +49,7 @@ namespace VsProject.Repositories
                     command.Parameters.AddWithValue("@phone", patientModel.Phone);
                     command.Parameters.AddWithValue("@phoneAlt", patientModel.PhoneAlt.DBNullOrWS());
                     command.Parameters.AddWithValue("@email", patientModel.Email);
-                    command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate);
+                    command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate.DBToDateTime());
                     command.Parameters.AddWithValue("@profession", patientModel.Profession);
                     command.Parameters.AddWithValue("@adress", patientModel.Adress);
                     command.Parameters.AddWithValue("@motive", patientModel.Motive.DBNullOrWS());
@@ -86,7 +86,7 @@ namespace VsProject.Repositories
                 command.Parameters.AddWithValue("@phone", patientModel.Phone);
                 command.Parameters.AddWithValue("@phoneAlt", patientModel.PhoneAlt.DBNullOrWS());
                 command.Parameters.AddWithValue("@email", patientModel.Email);
-                command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate);
+                command.Parameters.AddWithValue("@birthDate", patientModel.BirthDate.DBToDateTime());
                 command.Parameters.AddWithValue("@profession", patientModel.Profession);
                 command.Parameters.AddWithValue("@adress", patientModel.Adress);
                 command.Parameters.AddWithValue("@motive", patientModel.Motive.DBNullOrWS());
@@ -123,7 +123,7 @@ namespace VsProject.Repositories
                             Phone = reader[PHONE].DBValue<string>(),
                             PhoneAlt = reader[PHONEALT].DBValue<string>(),
                             Email = reader[EMAIL].DBValue<string>(),
-                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>(),
+                            BirthDate = reader[BIRTHDATE].DBValue<DateOnly>(),
                             Profession = reader[PROFESSION].DBValue<string>(),
                             Adress = reader[ADDRESS].DBValue<string>(),
                             Motive = reader[MOTIVE].DBValue<string>(),
@@ -167,7 +167,7 @@ namespace VsProject.Repositories
                             Phone = reader[PHONE].DBValue<string>(),
                             PhoneAlt = reader[PHONEALT].DBValue<string>(),
                             Email = reader[EMAIL].DBValue<string>(),
-                            BirthDate = reader[BIRTHDATE].DBValue<DateTime>(),
+                            BirthDate = reader[BIRTHDATE].DBValue<DateOnly>(),
                             Profession = reader[PROFESSION].DBValue<string>(),
                             Adress = reader[ADDRESS].DBValue<string>(),
                             Motive = reader[MOTIVE].DBValue<string>(),

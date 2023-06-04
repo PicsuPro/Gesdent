@@ -13,7 +13,7 @@
         Background="Transparent"
         AllowsTransparency="True"
         ResizeMode="NoResize"
-     Title="AppointmentEditView" Height="450" Width="800">
+     Title="Rendez-Vous" Height="416" Width="432">
     <Window.DataContext>
         <viewModel:AppointmentEditViewModel/>
     </Window.DataContext>
@@ -64,6 +64,8 @@
                     <ScrollViewer.Resources>
                         <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">10</sys:Double>
                     </ScrollViewer.Resources>
+                    <StackPanel Orientation="Vertical"
+                            Margin="0,0,0,0">
                     <StackPanel Width="250"
                             Orientation="Vertical"
                             Margin="0,0,0,0">
@@ -76,7 +78,7 @@
                                 HorizontalAlignment="Center"
                                 Margin="0,10,0,40"/>
 
-                        <TextBlock Text="Subject"
+                        <TextBlock Text="Sujet:"
                                 Foreground="#1B1B1B"
                                 FontSize="13"
                                 FontFamily="Calibri"
@@ -96,149 +98,98 @@
                                 Padding="0,0,25,0">
                         </TextBox>
                       
-                        <TextBlock Text="Subject"
-                                Foreground="#1B1B1B"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                FontWeight="Medium"/>
 
-                        <TextBlock Text="Subject"
-                                Foreground="#1B1B1B"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                FontWeight="Medium"/>
-                        
-                        <TextBox x:Name="txtSubjec"
-                             Text="{Binding Appointment.Duration ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                Foreground="{StaticResource primaryFore1}"
-                                CaretBrush="LightGray"
-                                BorderBrush="DarkGray"
-                                BorderThickness="0,0,0,1"
-                                Height="28"
-                                VerticalContentAlignment="Center"
-                                Margin="0,4,0,0"
-                                Padding="0,0,25,0">
-                        </TextBox>
-                        <Grid >
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="30"/>
 
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Text="Mot de passe"
+                        <TextBlock Text="Date:"
                                 Foreground="#1B1B1B"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                FontWeight="Medium"
                                 Margin="0,20,0,0"
-                            Grid.Column="0"/>
-                            <ToggleButton Name="editPassword" 
-                                  Grid.Column="1"
+                                FontSize="13"
+                                FontFamily="Calibri"
+                                FontWeight="Medium"/>
+
+                            <controls:DatePickerComboBoxes 
+                                x:Name="dpDate"
+                                SelectedDate="{Binding Appointment.Date ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                Times="Future"
+                                Margin="0,7,0,0"
+                                FontSize="13"
+                                FontFamily="Calibri"
+                                VerticalContentAlignment="Center"/>
+
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+                                    
+                                    <TextBlock Text="Debut:"
+                                        Foreground="#1B1B1B"
+                                        FontSize="13"
+                                        FontFamily="Calibri"
+                                        TextAlignment="Center"
+                                        FontWeight="Medium"
+                                        Margin="0,20,0,0"/>
+                                    
+                                    <controls:TimePickerTextBoxes 
+                                         x:Name="tpStartTime"
+                                        SelectedTime="{Binding Appointment.StartTime ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="0,7,0,0"
+                                        FontSize="13"
+                                        FontFamily="Calibri"
+                                        VerticalContentAlignment="Center"/>
+                                    
+                                </StackPanel>
+                                
+                                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Grid.Column="1">
+                                    
+                                    <TextBlock Text="Fin:"
+                                        Foreground="#1B1B1B"
+                                        FontSize="13"
+                                        TextAlignment="Center"
+                                        FontFamily="Calibri"
+                                        FontWeight="Medium"
+                                        Margin="0,20,0,0"/>
+                                    
+                                    <controls:TimePickerTextBoxes 
+                                        x:Name="tpEndTime"
+                                        SelectedTime="{Binding Appointment.EndTime ,  Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                        Margin="0,7,0,0"
+                                        FontSize="13"
+                                        FontFamily="Calibri"
+                                        VerticalContentAlignment="Center"/>
+                                    
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                        <Grid HorizontalAlignment="Stretch" Margin="0,50,0,0" Width="260">
+                            <Button x:Name="btnCancel"
+                                    Content="Cancel"
+                                    IsCancel="True"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left"
                                     Cursor="Hand"
-                                    Focusable="False"
-                                    Margin="5,0,0,0"
-                                    IsChecked="{Binding IsEditingPassword, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                                    Visibility="{Binding IsNotNewUser,Converter={StaticResource BooleanToVisibility}}"
-                                  HorizontalAlignment="Left" Height="16" Width="16" VerticalAlignment="Bottom">
-                                <ToggleButton.Style>
-                                    <Style TargetType="{x:Type ToggleButton}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom">
-                                                        <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="16" Height="16" Visibility="Collapsed" />
-                                                        <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="16" Height="16" Visibility="Visible" />
-                                                    </StackPanel>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsChecked" Value="True">
-                                                            <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
-                                                            <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ToggleButton.Style>
-                            </ToggleButton>
-
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="120"
+                                    Style="{StaticResource PopupWindowMainButton}">
+                            </Button>
+                            <Button x:Name="btnSave"
+                                    Content="Enregistrer"
+                                    Command="{Binding SaveEditCommand}"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    Cursor="Hand"
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="120"
+                                    Style="{StaticResource PopupWindowMainButton}"
+                                    HorizontalAlignment="Right">
+                            </Button>
                         </Grid>
-
-                        <controls:BindablePasswordBox Password="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                          HorizontalAlignment="Stretch"  
-                                                          Grid.Column="1"
-                                                          x:Name="passwordBox"
-                                                                Height="28"
-                                                                Margin="0,4,0,0"
-                                                          IsEnabled="{Binding  IsChecked, ElementName=editPassword}">
-                            <controls:BindablePasswordBox.Style>
-                                <Style TargetType="controls:BindablePasswordBox">
-                                    <Setter Property="Opacity" Value="1"/>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Opacity" Value="0.5"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </controls:BindablePasswordBox.Style>
-                        </controls:BindablePasswordBox>
-
-
-                        <TextBlock Text="Email"
-                                Foreground="#1B1B1B"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                FontWeight="Medium"
-                                Margin="0,20,0,0"/>
-
-                        <TextBox x:Name="txtEmail"
-                             Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
-                                FontSize="13"
-                                FontFamily="Calibri"
-                                Foreground="{StaticResource primaryFore1}"
-                                CaretBrush="LightGray"
-                                BorderBrush="DarkGray"
-                                BorderThickness="0,0,0,1"
-                                Height="28"
-                                VerticalContentAlignment="Center"
-                                Margin="0,4,0,0"
-                                Padding="0,0,25,0">
-                            <TextBox.Background>
-                                <ImageBrush ImageSource="/Resources/Images/email.png"
-                                        Stretch="Uniform"
-                                        AlignmentX="Right"/>
-                            </TextBox.Background>
-                        </TextBox>
-
-                        <Button x:Name="btnSave"
-                            Content="Enregistrer"
-                            Command="{Binding SaveEditCommand}"
-                            FontWeight="DemiBold"
-                            FontSize="16"
-                            Grid.Column="2"
-                            Margin="0,40,0,0"
-                            Cursor="Hand"
-                            IsDefault="True"
-                            BorderThickness="0"
-                            Style="{StaticResource PopupWindowMainButton}">
-
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Border Background="{TemplateBinding Background}"
-                                        Height="40"
-                                        Width="150"
-                                        CornerRadius="20">
-                                        <ContentPresenter VerticalAlignment="Center"
-                                                        HorizontalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Button.Template>
-                        </Button>
-
-
                     </StackPanel>
                 </ScrollViewer>
 

@@ -32,6 +32,7 @@ namespace VsProject.Services
 
             foreach (var appointment in _appointmentList)
             {
+                appointment.DateChanged += OnAppointment_DateChanged;
                 DateOnly appointmentDate = DateOnly.FromDateTime(appointment.StartDateTime);
                 if (appointmentDate >= startDay && appointmentDate <= endDay)
                 {
@@ -42,6 +43,17 @@ namespace VsProject.Services
 
         }
 
+        private void OnAppointment_DateChanged(AppointmentViewModel appointment, DateOnly oldDate)
+        {
+            if (TryGetValue(oldDate, out _))
+            {
+                this[oldDate].Remove(appointment);
+            }
+            if (TryGetValue(appointment.Date, out _))
+            {
+                this[appointment.Date].Add(appointment);
+            }
+        }
 
         private void AppointmentsCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

@@ -22,7 +22,7 @@ namespace VsProject.ViewModels
         private string _phone = "";
         private string _phoneAlt = "";
         private string _email = "";
-        private DateTime _birthDate;
+        private DateOnly _birthDate;
         private string _errorMessage = "";
         private bool _isNewPatient = false;
         private bool _isEditing = false;
@@ -134,7 +134,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Email));
             }
         }
-        public DateTime BirthDate
+        public DateOnly BirthDate
         {
             get => _birthDate;
             set
