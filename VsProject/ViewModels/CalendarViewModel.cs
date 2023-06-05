@@ -59,7 +59,7 @@ namespace VsProject.ViewModels
         private ObservableCollection<AppointmentViewModel> _appointments =
             new ObservableCollection<AppointmentViewModel>
                 {
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 04), StartTime = new TimeOnly(08, 0, 0), EndTime = new TimeOnly(08, 05, 00), Subject = "Meeting with MF" }),
+                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 04), StartTime = new TimeOnly(08, 0, 0), EndTime = new TimeOnly(08, 30, 00), Subject = "Meeting with MF" }),
                     new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 05), StartTime = new TimeOnly(13, 0, 0), EndTime = new TimeOnly(14, 30, 00), Subject = "Do thing" }),
                     new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 06), StartTime = new TimeOnly(14, 0, 0), EndTime = new TimeOnly(16, 30, 00), Subject = "Do thing" }),
                     new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 07), StartTime = new TimeOnly(15, 0, 0), EndTime = new TimeOnly(16, 00, 00), Subject = "Do thing" }),
@@ -80,10 +80,12 @@ namespace VsProject.ViewModels
             }
         }
         public ICommand AppointmentEditCommand { get; }
+        public ICommand AppointmentRemoveCommand { get; }
 
         public CalendarViewModel()
         {
             AppointmentEditCommand = new ViewModelCommand(ExecuteAppointmentEdit);
+            AppointmentRemoveCommand = new ViewModelCommand(ExecuteAppointmentRemove);
         }
 
         private void ExecuteAppointmentEdit(object obj)
@@ -98,6 +100,14 @@ namespace VsProject.ViewModels
                     appointment.StartTime = old.StartTime;
                     appointment.EndTime = old.EndTime;
                 }
+            }
+
+        }
+           private void ExecuteAppointmentRemove(object obj)
+        {
+            if(obj is AppointmentViewModel appointment) 
+            {
+                Appointments.Remove(appointment);
             }
 
         }

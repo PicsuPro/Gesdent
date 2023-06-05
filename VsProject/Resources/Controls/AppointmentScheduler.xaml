@@ -165,6 +165,7 @@
                                     <ItemsControl.ItemContainerStyle>
                                         <Style TargetType="ContentPresenter">
                                             <Style.Setters>
+                                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
                                                 <Setter Property="Canvas.Top" >
                                                     <Setter.Value>
                                                         <MultiBinding Converter="{StaticResource StartTimeToTopConverter}">
@@ -188,15 +189,22 @@
                                                     <Setter.Value>
                                                         <MultiBinding Converter="{StaticResource AppointmentLeft}">
                                                             <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType=Canvas}" />
-                                                            <Binding Path="ActualHeight"  />
-                                                            <Binding Path="Canvas.Top" />
-                                                            <Binding Path="Parent.Children" RelativeSource="{RelativeSource Self}" />
+                                                            <Binding Path="StartTime"/>
+                                                            <Binding Path="EndTime"/>
+                                                            <Binding Path=""/>
+                                                            <Binding Path="ItemsSource" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
                                                         </MultiBinding>
                                                     </Setter.Value>
                                                 </Setter>
                                                 <Setter Property="Width" >
                                                     <Setter.Value>
-                                                        <Binding Path="." Converter="{StaticResource AppointmentWidth}" RelativeSource="{RelativeSource Self}" />
+                                                        <MultiBinding Converter="{StaticResource AppointmentWidth}">
+                                                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType=Canvas}" />
+                                                            <Binding Path="StartTime"/>
+                                                            <Binding Path="Duration"/>
+                                                            <Binding Path=""/>
+                                                            <Binding Path="ItemsSource" RelativeSource="{RelativeSource AncestorType=ItemsControl}" />
+                                                        </MultiBinding>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style.Setters>
@@ -207,8 +215,56 @@
                                         <DataTemplate >
                                             <Grid  MouseLeftButtonDown="Appointment_MouseLeftButtonDown"
                                                    Cursor="Hand">
-                                                <Border Background="#2276F5" Opacity="1" CornerRadius="5" BorderBrush="LightGray" BorderThickness="0.5">
-                                                    <TextBlock Text="{Binding Subject}" Padding="5,0" Margin="5" TextWrapping="Wrap" Foreground="White"/>
+                                                <Border Background="#EE0062F5" Opacity="1" CornerRadius="5" BorderBrush="LightGray" BorderThickness="0.5">
+                                                    <Grid>
+                                                    <TextBlock Text="{Binding Subject}" Padding="5,0" Margin="10" FontSize="15" FontFamily="Calibri" TextWrapping="Wrap" Foreground="Black" />
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+                                                            <StackPanel.Resources>
+                                                                <Style TargetType="Button">
+                                                                    <Setter Property="BorderThickness" Value="0"/>
+                                                                    <Setter Property="Background" Value="Transparent"/>
+                                                                    <Setter Property="Opacity" Value="0" />
+                                                                    <Setter Property="Cursor" Value="Hand"/>
+                                                                    <Setter Property="Focusable" Value="False" />
+                                                                    <Setter Property="Template">
+                                                                        <Setter.Value>
+                                                                            <ControlTemplate TargetType="Button">
+                                                                                <Border Background="{TemplateBinding Background}">
+                                                                                    <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                                                </Border>
+                                                                                <ControlTemplate.Triggers>
+                                                                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type Border}}, Path=IsMouseOver}" Value="True">
+                                                                                        <Setter Property="Opacity" Value="0.5"/>
+                                                                                    </DataTrigger>
+                                                                                </ControlTemplate.Triggers>
+                                                                            </ControlTemplate>
+                                                                        </Setter.Value>
+                                                                    </Setter>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                                            <Setter Property="Opacity" Value="1" />
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </StackPanel.Resources>
+                                                        <Button x:Name="editButton"
+                                                                Command="{Binding DataContext.AppointmentEditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                                                CommandParameter="{Binding}"
+                                                                Margin="0,0,6,0"
+                                                                Background="#0000"
+                                                                ToolTip="Modifier">
+                                                            <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
+                                                        </Button>
+                                                        <Button x:Name="removeButton"
+                                                                Command="{Binding DataContext.AppointmentRemoveCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                                                CommandParameter="{Binding}"
+                                                                Background="#0000"
+                                                                Visibility="Visible"
+                                                                ToolTip="Supprimer">
+                                                            <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
+                                                        </Button>
+                                                    </StackPanel>
+                                                </Grid>
                                                 </Border>
                                             </Grid>
                                         </DataTemplate>

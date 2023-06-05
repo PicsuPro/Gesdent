@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:VsProject.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#F0F2F5">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#F0F0F0">
     <UserControl.DataContext>
         <viewModel:PatientsListViewModel/>
     </UserControl.DataContext>
@@ -45,33 +45,7 @@
                   CanUserReorderColumns="False"
                   CanUserResizeColumns="False">
             <DataGrid.Columns >
-                <DataGridTemplateColumn Header="Action">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="left">
-                                <Button x:Name="editButton"
-                                        Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
-                                        CommandParameter="{Binding}"
-                                        Margin="0,0,6,0"
-                                        Background="White"
-                                        Style="{StaticResource DataGridButtonsStyle}"
-                                        BorderBrush="White"
-                                        ToolTip="Modifier">
-                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
-                                </Button>
-                                <Button x:Name="removeButton"
-                                        Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
-                                        CommandParameter="{Binding}"
-                                        Background="White"
-                                        Style="{StaticResource DataGridButtonsStyle}"
-                                        Visibility="Visible"
-                                        ToolTip="Supprimer">
-                                    <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+             
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
                 <DataGridTextColumn Header="Nom" Binding="{Binding LastName}"/>
                 <DataGridTextColumn Header="Prenom" Binding="{Binding FirstName }"/>
@@ -102,7 +76,31 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-
+                <DataGridTemplateColumn Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                                <Button x:Name="editButton"
+                                        Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Margin="0,0,6,0"
+                                        Background="White"
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        ToolTip="Modifier">
+                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
+                                </Button>
+                                <Button x:Name="removeButton"
+                                        Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        Visibility="Visible"
+                                        ToolTip="Supprimer">
+                                    <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns >
         </DataGrid>
         <StackPanel Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">

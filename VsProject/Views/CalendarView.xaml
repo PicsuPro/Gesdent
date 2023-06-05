@@ -7,8 +7,7 @@
              xmlns:viewModels="clr-namespace:VsProject.ViewModels"
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1366"
-             Background="White">
+             d:DesignHeight="720" d:DesignWidth="1366">
     <UserControl.DataContext>
         <viewModels:CalendarViewModel />
     </UserControl.DataContext>
@@ -18,11 +17,8 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            <Button Content="BABABA"/>
-        </StackPanel>
         <controls:AppointmentScheduler Grid.Row="1"
-        AppointmentCommand="{Binding AppointmentEditCommand}" Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        AppointmentEditCommand="{Binding AppointmentEditCommand}" AppointmentRemoveCommand="{Binding AppointmentEditCommand}" Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EndDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartHour="{Binding StartHour, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HourCount="{Binding HourCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:AppointmentScheduler>
     </Grid>

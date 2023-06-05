@@ -17,19 +17,35 @@ namespace VsProject.Resources.Controls
     public partial class AppointmentScheduler : UserControl
     {
 
-        public static readonly DependencyProperty AppointmentCommandProperty =
+        public static readonly DependencyProperty AppointmenEditCommandProperty =
               DependencyProperty.Register(
-                  "AppointmentCommand",
+                  "AppointmentEditCommand",
                   typeof(ICommand),
                   typeof(AppointmentScheduler),
                   new PropertyMetadata(null));
 
-        public ICommand AppointmentCommand
+        public ICommand AppointmentEditCommand
         {
-            get { return (ICommand)GetValue(AppointmentCommandProperty); }
-            set { SetValue(AppointmentCommandProperty, value); }
+            get { return (ICommand)GetValue(AppointmenEditCommandProperty); }
+            set { SetValue(AppointmenEditCommandProperty, value); }
 
         }
+
+
+        public static readonly DependencyProperty AppointmentRemoveCommandProperty =
+              DependencyProperty.Register(
+                  "AppointmentRemoveCommand",
+                  typeof(ICommand),
+                  typeof(AppointmentScheduler),
+                  new PropertyMetadata(null));
+
+        public ICommand AppointmentRemoveCommand
+        {
+            get { return (ICommand)GetValue(AppointmentRemoveCommandProperty); }
+            set { SetValue(AppointmentRemoveCommandProperty, value); }
+
+        }
+
         public static readonly DependencyProperty HourCountProperty =
         DependencyProperty.Register(
             "HourCount",
@@ -233,11 +249,6 @@ namespace VsProject.Resources.Controls
             }
             if (popupGrid != null)
                 popupGrid.Visibility = Visibility.Collapsed;
-
-            if (AppointmentCommand != null && AppointmentCommand.CanExecute(appointment) && !hasBeenDragged)
-            {
-                AppointmentCommand.Execute(appointment);
-            }
             draggedItem = null;
             draggingCanvas = null;
             appointment = null;
@@ -258,24 +269,6 @@ namespace VsProject.Resources.Controls
                 appointment.Duration = duration;
                 Canvas.SetTop(popupGrid, Canvas.GetTop(draggedItem) - popupGrid.ActualHeight / 2);
                 popupTextBlock.Text = appointment.StartTime.ToString();
-                // Calculate the new horizontal position
-                double newX = Math.Clamp(e.GetPosition(draggingCanvas).X - dragStartPoint.X, 0, draggingCanvas.ActualWidth - draggedItem.ActualWidth);
-
-                // Check for collisions and adjust the horizontal position if needed
-                foreach (FrameworkElement item in draggingCanvas.Children)
-                {
-                    if (item != draggedItem && CheckCollision(draggedItem, item))
-                    {
-                        double itemRight = Canvas.GetLeft(item) + item.ActualWidth;
-                        if (newX < itemRight)
-                        {
-                            newX = itemRight;
-                        }
-                    }
-                }
-
-                // Set the new horizontal position
-                Canvas.SetLeft(draggedItem, newX);
             }
         }
 

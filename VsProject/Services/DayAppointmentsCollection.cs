@@ -45,9 +45,13 @@ namespace VsProject.Services
 
         private void OnAppointment_DateChanged(AppointmentViewModel appointment, DateOnly oldDate)
         {
-            if (TryGetValue(oldDate, out _))
+            if (TryGetValue(oldDate, out var list))
             {
                 this[oldDate].Remove(appointment);
+                foreach(AppointmentViewModel item in list)
+                {
+                    item.OnPropertyChanged(nameof(item.StartTime));
+                }
             }
             if (TryGetValue(appointment.Date, out _))
             {

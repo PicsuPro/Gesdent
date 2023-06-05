@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using VsProject.ViewModels;
 
 namespace VsProject.Resources.Converters
 {
@@ -127,35 +129,103 @@ namespace VsProject.Resources.Converters
             throw new NotSupportedException();
         }
     }
+    public class AppointmentLeftConverter : IMultiValueConverter
+    {
+        public static HashSet<AppointmentViewModel> ProcessedAppointments { get; } = new HashSet<AppointmentViewModel>();
+
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values[0] is double availableWidth && values[1] is TimeOnly startTime && values[2] is TimeOnly endTime && values[3] is AppointmentViewModel appointment && values[4] is ObservableCollection<AppointmentViewModel> appointments)
+            {
+                ProcessedAppointments.Add(appointment);
+                List<int> collisionIndexes = new List<int>();
+                int index = appointments.IndexOf(appointment);
+
+                for (int i = 0; i < appointments.Count; i++)
+                {
+                    if (i != index && !ProcessedAppointments.Contains(appointments[i]))
+                    {
+                        ProcessedAppointments.Add(appointments[i]);
+                        appointments[i].OnPropertyChanged(nameof(AppointmentViewModel.EndTime));
+                    }
+                    if (i != index && CheckCollision(startTime, endTime, appointments[i]))
+                    {
+                        collisionIndexes.Add(i);
+                    }
+                }
+
+                ProcessedAppointments.Remove(appointment);
+                var appointmentWidth = availableWidth / (collisionIndexes.Count + 1);
+                double left = appointmentWidth * GetSortedPlace(index, collisionIndexes);
+                return left;
+            }
+            else
+            {
+                return Binding.DoNothing;
+            }
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        {
+            throw new NotSupportedException();
+        }
+
+        public static int GetSortedPlace(int number, List<int> list)
+        {
+            // Step 1: Create a copy of the list and add the number
+            List<int> tempList = new List<int>(list);
+            tempList.Add(number);
+
+            // Step 2: Sort the list in ascending order
+            tempList.Sort();
+
+            // Step 3: Find the index of the number in the sorted list
+            int placeInOrder = tempList.IndexOf(number);
+
+            // Step 4: Return the sorted place
+            return placeInOrder;
+        }
+
+        private bool CheckCollision(TimeOnly startTime, TimeOnly endTime, AppointmentViewModel appointment2)
+        {
+            return startTime < appointment2.EndTime && appointment2.StartTime < endTime;
+        }
+    }
 
     public class AppointmentWidthConverter : IMultiValueConverter
     {
+        public static HashSet<AppointmentViewModel> ProcessedAppointments { get; } = new HashSet<AppointmentViewModel>();
+
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values.Length < 4 || !(values[0] is double actualWidth) || !(values[1] is double actualHeight) || !(values[2] is UIElementCollection children) || !(values[3] is FrameworkElement element))
+            if (values[0] is double availableWidth && values[1] is TimeOnly startTime && values[2] is TimeSpan duration && values[3] is AppointmentViewModel appointment && values[4] is ObservableCollection<AppointmentViewModel> appointments)
+            {
+                ProcessedAppointments.Add(appointment);
+
+                int collisionNumber = 0;
+                int index = appointments.IndexOf(appointment);
+
+                for (int i = 0; i < appointments.Count; i++)
+                {
+                    if (i != index && !ProcessedAppointments.Contains(appointments[i]))
+                    {
+                        ProcessedAppointments.Add(appointments[i]);
+                        appointments[i].OnPropertyChanged(nameof(AppointmentViewModel.Duration));
+                    }
+                    if (i != index && CheckCollision(startTime, duration, appointments[i]))
+                    {
+                        collisionNumber++;
+                    }
+                }
+
+                ProcessedAppointments.Remove(appointment);
+                var appointmentWidth = availableWidth / (collisionNumber + 1);
+                return appointmentWidth;
+            }
+            else
             {
                 return Binding.DoNothing;
             }
-
-            double availableWidth = actualWidth;
-            int stackedElements = 0;
-
-            foreach (FrameworkElement child in children)
-            {
-                if (child != element && CheckCollision(actualHeight, Canvas.GetTop(child) + child.ActualHeight, actualHeight, Canvas.GetTop(element) + actualHeight))
-                {
-                    stackedElements++;
-                    double right = Canvas.GetLeft(child) + child.ActualWidth;
-                    if (right > availableWidth)
-                    {
-                        availableWidth = right;
-                    }
-                }
-            }
-
-            double width = availableWidth / (stackedElements + 1);
-
-            return width;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
@@ -163,59 +233,19 @@ namespace VsProject.Resources.Converters
             throw new NotSupportedException();
         }
 
-        private bool CheckCollision(double top1, double bottom1, double top2, double bottom2)
+        private bool CheckCollision(TimeOnly startTime, TimeSpan duration, AppointmentViewModel appointment2)
         {
-            return bottom1 > top2 && top1 < bottom2;
+            var endTime = startTime.Add(duration);
+            return startTime < appointment2.EndTime && appointment2.StartTime < endTime;
         }
     }
-
-    public class AppointmentLeftConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length < 4 || !(values[0] is double actualWidth) || !(values[1] is double actualHeight) || !(values[2] is double top) || !(values[3] is UIElement element) || !(values[4] is UIElementCollection children))
-            {
-                return Binding.DoNothing;
-            }
-
-            double availableWidth = actualWidth;
-            int stackedElements = 0;
-
-            foreach (UIElement child in children)
-            {
-                if (child != element && CheckCollision(top, actualHeight, child))
-                {
-                    stackedElements++;
-                    double right = Canvas.GetLeft(child) + child.RenderSize.Width;
-                    if (right > availableWidth)
-                    {
-                        availableWidth = right;
-                    }
-                }
-            }
-
-            double elementWidth = availableWidth / (stackedElements + 1);
-
-            return elementWidth;
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
-
-        private bool CheckCollision(double top1, double bottom1, UIElement item2)
-        {
-            double top2 = Canvas.GetTop(item2);
-            double bottom2 = top2 + item2.RenderSize.Height;
-
-            return bottom1 > top2 && top1 < bottom2;
-        }
-    }
-
-
-
-
 
 
 }
+
+
+
+
+
+
+
