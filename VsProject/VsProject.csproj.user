@@ -88,6 +88,9 @@
     <Page Update="Resources\Controls\AppointmentScheduler.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\YesNoDialog.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AppointmentEditView.xaml">
       <SubType>Designer</SubType>
     </Page>

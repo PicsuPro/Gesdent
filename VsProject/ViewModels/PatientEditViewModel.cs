@@ -242,7 +242,8 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(IsNewPatient));
             }
         }
-
+        public bool IsNotNewPatient => !IsNewPatient;
+        
         public bool IsEditing
         {
             get => _isEditing; set
@@ -262,6 +263,7 @@ namespace VsProject.ViewModels
             PatientRecord = new PatientRecordModel();
             Teeth = new ObservableCollection<ToothModel>(Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i }));
             IsNewPatient = true;
+            IsEditing = true;
         }
         public PatientEditViewModel(PatientModel patient)
         {

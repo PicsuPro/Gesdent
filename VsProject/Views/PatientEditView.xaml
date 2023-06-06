@@ -23,17 +23,19 @@
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="50"/>
-                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <StackPanel Width="250"
                         Orientation="Vertical"
                         Grid.Column="1"
-                        Grid.Row="1">
+                        Grid.Row="1"
+                        Margin="40,0">
 
                 <TextBlock Text="Titre *"
                             VerticalAlignment="Center"
@@ -43,10 +45,10 @@
                             FontWeight="Medium"
                              Margin="0,25,0,0"/>
                 <StackPanel Margin="1,9,0,-5" Orientation="Horizontal" >
-                    <RadioButton Content="M." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
+                    <RadioButton Content="M." VerticalContentAlignment="Center" FontWeight="Medium" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
                                  IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsEditing}"/>
-                    <RadioButton Content="Mme." VerticalContentAlignment="Center" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
+                    <RadioButton Content="Mme." VerticalContentAlignment="Center" FontWeight="Medium" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
                                  IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsEditing}"/>
                 </StackPanel>
@@ -92,11 +94,13 @@
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
                 <controls:DatePickerComboBoxes  
+                    FontWeight="Regular"
                     SelectedDate="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="datePickerComboBoxes" 
                     Times="Past"
                     Margin="0,9,0,0"
                     IsEnabled="{Binding IsEditing}"/>
+
 
                 <TextBlock Text="Numéro principal *"
                             Foreground="#1B1B1B"
@@ -108,6 +112,16 @@
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
+
+
+            </StackPanel>
+
+            <StackPanel Width="250"
+                        Orientation="Vertical"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Margin="40,0">
+
 
                 <TextBlock Text="Numéro secondaire"
                             Foreground="#1B1B1B"
@@ -132,13 +146,6 @@
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-            </StackPanel>
-
-            <StackPanel Width="250"
-                        Orientation="Vertical"
-                        Grid.Column="2"
-                        Grid.Row="1"
-                        Margin="25,0,0,0">
 
                 <TextBlock Text="Profession *"
                             Foreground="#1B1B1B"
@@ -164,7 +171,6 @@
                          Height="Auto"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
-
                 <TextBlock Text="Motif"
                             Foreground="#1B1B1B"
                             FontSize="13"
@@ -180,6 +186,17 @@
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
+
+            </StackPanel>
+
+
+            <StackPanel Width="250"
+                        Orientation="Vertical"
+                        Grid.Column="3"
+                        Grid.Row="1"
+                        Margin="40,0"
+                        HorizontalAlignment="Center">
+           
                 <TextBlock Text="Orienté par"
                             Foreground="#1B1B1B"
                             FontSize="13"
@@ -218,6 +235,7 @@
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
             </StackPanel>
+
             <!--<controls:DentalChart 
                 TeethSource="{Binding Teeth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 Margin="25,0,0,0"
@@ -234,7 +252,7 @@
                            HorizontalAlignment="Center"
                            TextWrapping="Wrap"
                            Grid.Column="1"
-                           Grid.ColumnSpan="3"
+                           Grid.ColumnSpan="4"
                            Grid.Row="2"  
                            Grid.RowSpan="2"/>
 
@@ -267,14 +285,15 @@
             </Button>
 
 
-            <ToggleButton Grid.Column="4"
+            <ToggleButton Grid.Column="5"
                           Grid.Row="1"
                           HorizontalAlignment="Left"
                           VerticalAlignment="Top"
                           Height="40"
                           Cursor="Hand"
                           Focusable="False"
-                           IsChecked="{Binding IsEditing, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                           IsChecked="{Binding IsEditing, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                          Visibility="{Binding IsNotNewPatient,Converter={StaticResource BooleanToVisibility}}">
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}">
                             <Setter Property="Template">

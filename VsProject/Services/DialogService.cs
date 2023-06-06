@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using VsProject.ViewModels;
+using VsProject.Views;
 
 namespace VsProject.Services
 {
@@ -26,6 +27,13 @@ namespace VsProject.Services
             var result = view.ShowDialog();
             view.Close();
 
+            return result;
+        }
+        public static bool? ShowYesNoDialog()
+        {
+            var view = new YesNoDialog();
+            var result = view.ShowDialog();
+            view.Close();
             return result;
         }
     }

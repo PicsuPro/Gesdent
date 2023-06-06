@@ -69,8 +69,11 @@ namespace VsProject.ViewModels
 
         private void ExecuteRemoveUserCommand(UserModel user)
         {
-            UserPrincipal.UserRepository.Remove(user);
-            Users.Remove(user);
+            if (DialogService.ShowYesNoDialog() == true)
+            {
+                UserPrincipal.UserRepository.Remove(user);
+                Users.Remove(user);
+            }
         }
 
         private static bool CanExecuteRemoveUserCommand(UserModel user)

@@ -53,11 +53,13 @@ namespace VsProject.ViewModels
 
         private void RemovePatient(object parameter)
         {
-            var patient = parameter as PatientModel;
-            if (patient != null)
+            if (parameter is PatientModel patient)
             {
-                Patients.Remove(patient);
-                UserPrincipal.PatientRepository.Remove(patient);
+                if (DialogService.ShowYesNoDialog() == true)
+                {
+                    Patients.Remove(patient);
+                    UserPrincipal.PatientRepository.Remove(patient);
+                }
             }
         }
         private void EditPatient(object parameter)

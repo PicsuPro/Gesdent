@@ -231,6 +231,7 @@ namespace VsProject.Resources.Controls
         private Canvas? draggingCanvas;
         AppointmentViewModel? appointment;
         bool hasBeenDragged;
+        //public static HashSet<AppointmentViewModel> ProcessedAppointments { get; } = new HashSet<AppointmentViewModel>();
 
         private void Appointment_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -272,27 +273,44 @@ namespace VsProject.Resources.Controls
             }
         }
 
-        private bool CheckCollision(FrameworkElement item1, FrameworkElement item2)
+        private bool CheckCollision(AppointmentViewModel appointment1, AppointmentViewModel appointment2)
         {
-            double top1 = Canvas.GetTop(item1);
-            double bottom1 = top1 + item1.ActualHeight;
-            double top2 = Canvas.GetTop(item2);
-            double bottom2 = top2 + item2.ActualHeight;
-
-            return bottom1 > top2 && top1 < bottom2;
+            return appointment1.StartTime < appointment2.EndTime && appointment2.StartTime < appointment1.EndTime;
         }
         private void Canvas_Drop(object sender, DragEventArgs e)
         {
             if (appointment != null && draggedItem != null && draggingCanvas != null)
             {
-                if (sender is Canvas canvas && canvas != draggingCanvas)
+                if (sender is Canvas canvas)
                 {
 
                     (TimeOnly startTime, TimeSpan duration) = GetStartTimeAndDurationFromPosition(e.GetPosition(draggingCanvas), draggingCanvas.ActualHeight, draggedItem.ActualHeight, dragStartPoint);
-                    DateOnly newDay = ((KeyValuePair<DateOnly, ObservableCollection<AppointmentViewModel>>)canvas.DataContext).Key;
-                    appointment.StartDateTime = new DateTime(newDay.Year, newDay.Month, newDay.Day, startTime.Hour, startTime.Minute, startTime.Second);
-                    appointment.Duration = duration;
+                    KeyValuePair<DateOnly, ObservableCollection<AppointmentViewModel>> appointmentsKeyValuePair = ((KeyValuePair<DateOnly, ObservableCollection<AppointmentViewModel>>)canvas.DataContext);
+                    DateOnly newDay = appointmentsKeyValuePair.Key;
+                    if (newDay != appointment.Date)
+                    {
+                        appointment.StartDateTime = new DateTime(newDay.Year, newDay.Month, newDay.Day, startTime.Hour, startTime.Minute, startTime.Second);
+                        appointment.Duration = duration;
+                    }
 
+                    var availableWidth = canvas.ActualWidth;
+                    ObservableCollection<AppointmentViewModel> appointments = appointmentsKeyValuePair.Value;
+
+                //    //ProcessedAppointments.Add(appointment);
+                //    int index = appointments.IndexOf(appointment);
+                //    List<int> collisionIndexes = new List<int>();
+                //    for (int i = 0; i < appointments.Count; i++)
+                //    {
+                //        if (CheckCollision(appointment, appointments[i]))
+                //        {
+                //            collisionIndexes.Add(i);
+                //        }
+                //    }
+                //    MessageBox.Show(collisionIndexes.Count.ToString());
+                //    var appointmentWidth = availableWidth / (collisionIndexes.Count);
+                //    double appointmentleft = appointmentWidth * GetSortedPlace(index, collisionIndexes);
+                //    draggedItem.Width = appointmentWidth;
+                //    Canvas.SetLeft(draggedItem, appointmentleft);
                 }
             }
         }
@@ -315,6 +333,21 @@ namespace VsProject.Resources.Controls
             popupGrid = (Grid)sender;
             popupTextBlock = Extensions.FindVisualChild<TextBlock>(popupGrid);
         }
+        public static int GetSortedPlace(int number, List<int> list)
+        {
+            // Step 1: Create a copy of the list
+            List<int> tempList = new List<int>(list);
+
+            // Step 2: Sort the list in ascending order
+            tempList.Sort();
+
+            // Step 3: Find the index of the number in the sorted list
+            int placeInOrder = tempList.IndexOf(number);
+
+            // Step 4: Return the sorted place
+            return placeInOrder;
+        }
+
     }
 
 }

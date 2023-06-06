@@ -215,7 +215,7 @@
                                         <DataTemplate >
                                             <Grid  MouseLeftButtonDown="Appointment_MouseLeftButtonDown"
                                                    Cursor="Hand">
-                                                <Border Background="#EE0062F5" Opacity="1" CornerRadius="5" BorderBrush="LightGray" BorderThickness="0.5">
+                                                <Border Background="#EE0062F5" Opacity="1" Margin="0" Padding="0" CornerRadius="5" BorderBrush="LightGray" BorderThickness="0.5">
                                                     <Grid>
                                                     <TextBlock Text="{Binding Subject}" Padding="5,0" Margin="10" FontSize="15" FontFamily="Calibri" TextWrapping="Wrap" Foreground="Black" />
                                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">

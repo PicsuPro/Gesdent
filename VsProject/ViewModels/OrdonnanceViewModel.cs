@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Windows.Input;
 using VsProject.Models;
+using VsProject.Services;
 
 namespace VsProject.ViewModels
 {
@@ -68,7 +69,10 @@ namespace VsProject.ViewModels
         {
             if (parameter is MedicationModel medication)
             {
-                Medications.Remove(medication);
+                if (DialogService.ShowYesNoDialog() == true)
+                {
+                    Medications.Remove(medication);
+                }
             }
         }
         private void SavePdfToFile(string pdfContent, string fileName)

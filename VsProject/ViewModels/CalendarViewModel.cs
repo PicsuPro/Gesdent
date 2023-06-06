@@ -10,7 +10,7 @@ namespace VsProject.ViewModels
     public class CalendarViewModel : ViewModelBase
     {
 
-        private DateOnly _startDate { get; set; } = new DateOnly(2023, 06, 04);
+        private DateOnly _startDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-(int)DateTime.Today.DayOfWeek));
         public DateOnly StartDate
         {
             get => _startDate;
@@ -20,7 +20,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartDate));
             }
         }
-        private DateOnly _endDate { get; set; } = new DateOnly(2023, 06, 11);
+        private DateOnly _endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-(int)DateTime.Today.DayOfWeek).AddDays(6));
         public DateOnly EndDate
         {
             get => _endDate;
@@ -30,7 +30,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(EndDate));
             }
         }
-        private TimeOnly _startHour { get; set; } = new TimeOnly(6, 0);
+        private TimeOnly _startHour { get; set; } = new TimeOnly(8, 0);
         public TimeOnly StartHour
         {
             get => _startHour;
@@ -40,7 +40,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartHour));
             }
         }
-        private int _hourCount { get; set; } = 14;
+        private int _hourCount { get; set; } = 17;
         public int HourCount
         {
             get => _hourCount;
@@ -107,7 +107,10 @@ namespace VsProject.ViewModels
         {
             if(obj is AppointmentViewModel appointment) 
             {
-                Appointments.Remove(appointment);
+                if (DialogService.ShowYesNoDialog() == true)
+                {
+                    Appointments.Remove(appointment);
+                }
             }
 
         }

@@ -1,0 +1,93 @@
+﻿<Window x:Class="VsProject.Views.YesNoDialog"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VsProject.Views"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:viewModel="clr-namespace:VsProject.ViewModels" 
+        xmlns:controls="clr-namespace:VsProject.Resources.Controls"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        Background="Transparent"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+     Title="Êtes-vous sûr?" Height="115" Width="275">
+
+
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="1"  
+        CornerRadius ="0"
+        ResizeBorderThickness="4"         
+        GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+
+
+
+    <Border CornerRadius="12"
+            BorderThickness="0"
+            Background="LightGray">
+        <Border CornerRadius="12"
+            BorderThickness="1"
+            Background="{StaticResource primaryBack1}">
+
+            <Grid FocusManager.FocusedElement="{Binding ElementName=txtSubject}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+
+                <controls:ControlBar  Height="20"/>
+
+
+
+                <StackPanel Orientation="Vertical"  Grid.Row="1"
+                            Margin="0,0,0,0">
+
+                    <TextBlock Text="Êtes-vous sûr?"
+                                Foreground="{StaticResource primaryFore1}"
+                                FontSize="20"           
+                                FontWeight="DemiBold"
+                                FontFamily="Calibri"
+                                HorizontalAlignment="Center"
+                                Margin="0,0,0,10"/>
+
+                        <Grid HorizontalAlignment="Stretch" Margin="0,10,0,0" Width="230">
+                            <Button x:Name="btnNo"
+                                    Content="Non"
+                                    IsCancel="True"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left"
+                                    Cursor="Hand"
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="110"
+                                    Style="{StaticResource DialogMainButton}">
+                            </Button>
+                            <Button x:Name="btnYes"
+                                    Content="Oui"
+                                    Click="Yes_Click"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    Cursor="Hand"
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="110"
+                                    Style="{StaticResource DialogMainButton}"
+                                    HorizontalAlignment="Right">
+                            </Button>
+                        </Grid>
+                    </StackPanel>
+
+            </Grid>
+        </Border>
+    </Border>
+</Window>
