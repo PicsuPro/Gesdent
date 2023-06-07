@@ -3,6 +3,7 @@ using System.Net;
 using System.Windows;
 using VsProject.Models;
 using VsProject.Services;
+using VsProject.ViewModels;
 using VsProject.Views;
 namespace VsProject
 {
@@ -14,15 +15,15 @@ namespace VsProject
             VMVMappings.Initialize();
             CultureInfo.CurrentCulture = new CultureInfo("fr-FR");
             var mainView = new MainView();
-            //if ((bool)DialogService.Show(new LoginViewModel()))
-            //{
-                UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
+            if ((bool)DialogService.Show(new LoginViewModel()))
+            {
+                //UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
                 mainView.Show();
-            //}
-            //else
-            //{
-            //    Shutdown();
-            //}
         }
+            else
+            {
+                Shutdown();
+    }
+}
     }
 }

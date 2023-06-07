@@ -54,13 +54,24 @@
                            Height="100" Width="200"
                            />
 
-                        <TextBlock Text="GrinWise"
-                               Foreground="{StaticResource primaryFore1}"
+                        <StackPanel Orientation="Horizontal"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="Grin"
                                FontSize="20"
+                                       Foreground="#0049B3"
                                FontWeight="Bold"
                                FontFamily="Calibri"
-                               HorizontalAlignment="Center"
-                               Margin="0,5,0,0"/>
+                                        Margin="1 0"
+                               HorizontalAlignment="Right"/>
+                            <TextBlock Text="Wise"
+                               Foreground="#0095EB"
+                               FontSize="20"
+                                       Margin="1 0"
+                               HorizontalAlignment="Left"
+                               FontWeight="Bold"
+                               FontFamily="Calibri"/>
+                        </StackPanel>
 
                         <TextBlock Text="Un sourire est une mission."
                                Foreground="DarkGray"
