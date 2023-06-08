@@ -34,7 +34,7 @@
             BorderThickness="1"
             Background="{StaticResource primaryBack1}">
 
-            <Grid FocusManager.FocusedElement="{Binding ElementName=txtSubject}">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>

@@ -7,8 +7,9 @@ namespace VsProject.ViewModels
 {
     public class AppointmentEditViewModel : ViewModelBase
     {
-        //Fields
-        private AppointmentViewModel _appointment = new AppointmentViewModel(new AppointmentModel() { Subject = "We NEed To Talk About thhis" ,Date = new DateOnly(2023, 5, 20), StartTime = new TimeOnly( 12, 0, 0), EndTime = new TimeOnly(15, 0, 0) });
+        private AppointmentViewModel _appointment = new AppointmentViewModel(new AppointmentModel() { Subject = "" ,Date = DateOnly.FromDateTime(DateTime.Now), StartTime = new TimeOnly( 12, 0, 0), EndTime = new TimeOnly(12, 30, 0) });
+        private int? _maxHour;
+        private int _minHour = 0;
         private string _errorMessage = "";
         private bool _isNewUser = false;
         private bool _isEditPassword = true;
@@ -20,6 +21,25 @@ namespace VsProject.ViewModels
             {
                 _appointment = value;
                 OnPropertyChanged(nameof(Appointment));
+            }
+        }
+
+        public int? MaxHour
+        {
+            get => _maxHour; 
+            set
+            {
+                _maxHour = value;
+                OnPropertyChanged(nameof(MaxHour));
+            }
+        }
+        public int MinHour
+        {
+            get => _minHour; 
+            set
+            {
+                _minHour = value;
+                OnPropertyChanged(nameof(MinHour));
             }
         }
 
@@ -68,6 +88,18 @@ namespace VsProject.ViewModels
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
             IsNewUser = appointment == null;
             IsEditingPassword = IsNewUser;
+        }
+
+
+      public AppointmentEditViewModel(AppointmentViewModel appointment, int maxhour, int minhour)
+        {
+            Appointment = appointment;
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
+            IsNewUser = appointment == null;
+            IsEditingPassword = IsNewUser;
+
+            MaxHour = maxhour;
+            MinHour = minhour;
         }
 
 

@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 using VsProject.Models;
+using VsProject.Services;
 
 namespace VsProject.ViewModels
 {
@@ -322,21 +323,23 @@ namespace VsProject.ViewModels
 
         private void ExecuteSaveEdit(object obj)
         {
-            if (IsNewPatient)
+            if (DialogService.ShowYesNoDialog() == true)
             {
-                Patient.Id = UserPrincipal.PatientRepository.Add(Patient);
-                PatientRecord.PatientId = Patient.Id;
-                UserPrincipal.PatientRecordRepository.Add(PatientRecord);
-                UserPrincipal.ToothRepository.AddAll(Teeth.ToList(), PatientRecord.PatientId);
+                if (IsNewPatient)
+                {
+                    Patient.Id = UserPrincipal.PatientRepository.Add(Patient);
+                    PatientRecord.PatientId = Patient.Id;
+                    UserPrincipal.PatientRecordRepository.Add(PatientRecord);
+                    UserPrincipal.ToothRepository.AddAll(Teeth.ToList(), PatientRecord.PatientId);
+                }
+                else
+                {
+                    UserPrincipal.PatientRepository.Edit(Patient);
+                    //UserPrincipal.PatientRecordRepository.Edit();
+                    if (Teeth != null)
+                        UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
+                }
             }
-            else
-            {
-                UserPrincipal.PatientRepository.Edit(Patient);
-                //UserPrincipal.PatientRecordRepository.Edit();
-                if (Teeth != null)
-                    UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
-            }
-
             IsEditing = false;
         }
 

@@ -30,17 +30,17 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(EndDate));
             }
         }
-        private TimeOnly _startHour { get; set; } = new TimeOnly(8, 0);
-        public TimeOnly StartHour
+        private TimeOnly _startTime { get; set; } = new TimeOnly(8, 0);
+        public TimeOnly StartTime
         {
-            get => _startHour;
+            get => _startTime;
             set
             {
-                _startHour = value;
-                OnPropertyChanged(nameof(StartHour));
+                _startTime = value;
+                OnPropertyChanged(nameof(StartTime));
             }
         }
-        private int _hourCount { get; set; } = 17;
+        private int _hourCount { get; set; } = 9;
         public int HourCount
         {
             get => _hourCount;
@@ -93,7 +93,7 @@ namespace VsProject.ViewModels
             if(obj is AppointmentViewModel appointment) 
             {
                 var old = new AppointmentViewModel(appointment);
-                if (DialogService.Show(new AppointmentEditViewModel(appointment)) == false)
+                if (DialogService.Show(new AppointmentEditViewModel(appointment, StartTime.Hour + HourCount, StartTime.Hour)) == false)
                 {
                     appointment.Subject = old.Subject;
                     appointment.Date = old.Date;

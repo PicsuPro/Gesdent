@@ -38,6 +38,53 @@ namespace VsProject.Resources.Controls
                 _isUserAction = true;
             }
         }
+        
+        public static readonly DependencyProperty MaxHourProperty =
+    DependencyProperty.Register("MaxHour", typeof(int?), typeof(TimePickerTextBoxes),
+        new PropertyMetadata(null, OnMaxHourChanged));
+
+        public static void OnMaxHourChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePickerComboBoxes = (TimePickerTextBoxes)d;
+            timePickerComboBoxes.txtHours.Max = (int?)e.NewValue;
+        }
+
+        public int? MaxHour
+        {
+            get
+            {
+                return (int?)GetValue(MaxHourProperty);
+            }
+            set
+            {
+
+                SetValue(MaxHourProperty, value);
+            }
+        }
+
+
+        public static readonly DependencyProperty MinHourProperty =
+    DependencyProperty.Register("MinHour", typeof(int), typeof(TimePickerTextBoxes),
+        new PropertyMetadata(0, OnMinHourChanged));
+
+        public static void OnMinHourChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var timePickerComboBoxes = (TimePickerTextBoxes)d;
+            timePickerComboBoxes.txtHours.Min = (int)e.NewValue;
+        }
+
+        public int MinHour
+        {
+            get
+            {
+                return (int)GetValue(MinHourProperty);
+            }
+            set
+            {
+
+                SetValue(MinHourProperty, value);
+            }
+        }
 
 
        // public static readonly DependencyProperty TimesProperty = DependencyProperty.Register(
@@ -90,6 +137,8 @@ namespace VsProject.Resources.Controls
         {
 
             InitializeComponent();
+            txtHours.Max = MaxHour?? 23;
+            txtMinutes.Max = 59;
             txtHours.textBox.TextChanged += OnHourTextChanged;
             txtMinutes.textBox.TextChanged += OnMinuteTextChanged;
             UpdateTextBoxes();
@@ -110,9 +159,7 @@ namespace VsProject.Resources.Controls
      
         private void UpdateTextBoxes()
         {
-            txtHours.Max = 23;
             txtHours.textBox.Text = SelectedTime.Hour.ToString();
-            txtMinutes.Max = 59;
             txtMinutes.textBox.Text = SelectedTime.Minute.ToString();
 
         }
