@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewModel="clr-namespace:VsProject.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="#F0F0F0">
+             d:DesignHeight="450" d:DesignWidth="800" Background="#F5F5F5">
     <UserControl.DataContext>
         <viewModel:PatientsListViewModel/>
     </UserControl.DataContext>

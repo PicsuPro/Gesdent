@@ -179,18 +179,22 @@ namespace VsProject.Resources.Controls
                 && Times != DatePickerTimes.All)
             {
                 int currentDay = DateTime.Now.Day;
-                if (Times == DatePickerTimes.Past)
-                {
-                    if ((int)DayComboBox.SelectedItem > currentDay)
+                var currentDayIndex = DayComboBox.Items.IndexOf(currentDay);
+                if (DayComboBox.SelectedItem != null)
+                { 
+                    if (Times == DatePickerTimes.Past)
                     {
-                        DayComboBox.SelectedIndex = DayComboBox.Items.IndexOf(currentDay);
+                        if ((int)DayComboBox.SelectedItem > currentDay)
+                        {
+                            DayComboBox.SelectedIndex = currentDayIndex;
+                        }
                     }
-                }
-                else if(Times == DatePickerTimes.Future)
-                {
-                    if ((int)DayComboBox.SelectedItem < currentDay)
+                    else if(Times == DatePickerTimes.Future)
                     {
-                        DayComboBox.SelectedIndex = DayComboBox.Items.IndexOf(currentDay);
+                        if ((int)DayComboBox.SelectedItem < currentDay)
+                        {
+                            DayComboBox.SelectedIndex = currentDayIndex;
+                        }
                     }
                 }
             }

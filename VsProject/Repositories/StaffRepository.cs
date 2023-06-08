@@ -80,7 +80,7 @@ namespace VsProject.Repositories
                 command.Connection = connection;
                 command.CommandText = $"UPDATE {TABLENAME} SET {SURNAME}=@surname,  {LASTNAME}=@lastName, {FIRSTNAME}=@firstName, {SEX}=@sex, {PHONE}=@phone, {PHONEALT}=@phoneAlt, {EMAIL}=@email, {BIRTHDATE}=@birthDate WHERE {USERID}=@userId";
                 command.Parameters.AddWithValue("@userId", staffModel.UserId);
-                command.Parameters.AddWithValue("@surname", staffModel.Surname);
+                command.Parameters.AddWithValue("@surname", staffModel.Surname.DBNullOrWS());
                 command.Parameters.AddWithValue("@lastName", staffModel.LastName);
                 command.Parameters.AddWithValue("@firstName", staffModel.FirstName);
                 command.Parameters.AddWithValue("@sex", staffModel.Sex);
