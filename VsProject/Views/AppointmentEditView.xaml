@@ -168,19 +168,6 @@
                             </Grid>
                         </StackPanel>
                         <Grid HorizontalAlignment="Stretch" Margin="0,50,0,0" Width="230">
-                            <Button x:Name="btnCancel"
-                                    Content="Annuler"
-                                    IsCancel="True"
-                                    FontWeight="DemiBold"
-                                    FontSize="16"
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Left"
-                                    Cursor="Hand"
-                                    IsDefault="True"
-                                    Height="35"
-                                    Width="110"
-                                    Style="{StaticResource DialogMainButton}">
-                            </Button>
                             <Button x:Name="btnSave"
                                     Content="Enregistrer"
                                     Command="{Binding SaveEditCommand}"
@@ -192,7 +179,20 @@
                                     Height="35"
                                     Width="110"
                                     Style="{StaticResource DialogMainButton}"
-                                    HorizontalAlignment="Right">
+                                    HorizontalAlignment="Left">
+                            </Button>
+                            <Button x:Name="btnCancel"
+                                    Content="Annuler"
+                                    IsCancel="True"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    Cursor="Hand"
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="110"
+                                    Style="{StaticResource DialogMainButton}">
                             </Button>
                         </Grid>
                     </StackPanel>
