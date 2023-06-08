@@ -48,29 +48,26 @@
                     <StackPanel Width="250"
                             Orientation="Vertical"
                             Margin="0,35,0,0">
-                       
-
                         <Image Source="/Resources/Images/logo.png"
-                           Height="100" Width="200"
-                           />
+                           Height="100" Width="200"/>
 
                         <StackPanel Orientation="Horizontal"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                             <TextBlock Text="Grin"
-                               FontSize="20"
+                                       FontSize="20"
                                        Foreground="#0049B3"
-                               FontWeight="Bold"
-                               FontFamily="Calibri"
-                                        Margin="1 0"
-                               HorizontalAlignment="Right"/>
+                                       FontWeight="Bold"
+                                       FontFamily="Calibri"
+                                       Margin=" 0"
+                                       HorizontalAlignment="Right"/>
                             <TextBlock Text="Wise"
-                               Foreground="#0095EB"
-                               FontSize="20"
-                                       Margin="1 0"
-                               HorizontalAlignment="Left"
-                               FontWeight="Bold"
-                               FontFamily="Calibri"/>
+                                       Foreground="#0095EB"
+                                       FontSize="20"
+                                       Margin=" 0"
+                                       HorizontalAlignment="Left"
+                                       FontWeight="Bold"
+                                       FontFamily="Calibri"/>
                         </StackPanel>
 
                         <TextBlock Text="Un sourire est une mission."
