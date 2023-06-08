@@ -965,6 +965,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Padding" Value="9,3,9,9" />
         <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="#0000" />
     </Style>
 
     <Style TargetType="DataGridCell">

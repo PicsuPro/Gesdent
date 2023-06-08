@@ -21,7 +21,8 @@
 
         <DataGrid IsReadOnly="True" 
                   AutoGenerateColumns="False" 
-                  ItemsSource="{Binding Users}">
+                  ItemsSource="{Binding Users}"
+                  Background="#0000">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Nom" Binding="{Binding UserName}" Width="auto" />
                 <DataGridTemplateColumn Header="Email" Width="*"  SortMemberPath="Email">
