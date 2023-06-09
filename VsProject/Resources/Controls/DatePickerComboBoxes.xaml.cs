@@ -143,6 +143,7 @@ namespace VsProject.Resources.Controls
 
         private void DayComboBox_DropDownOpened(object sender, EventArgs e)
         {
+            if(YearComboBox.SelectedItem == null || MonthComboBox.SelectedItem == null) { return; }
             int daysInMonth = DateTime.DaysInMonth((int)YearComboBox.SelectedItem, MonthComboBox.SelectedIndex + _monthIndexCompensator);
 
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year
