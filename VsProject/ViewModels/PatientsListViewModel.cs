@@ -38,6 +38,7 @@ namespace VsProject.ViewModels
 
         public ICommand EditPatientCommand { get; }
         public ICommand RemovePatientCommand { get; }
+        public ICommand AppointmentCommand { get; }
 
         public PatientsListViewModel()
         {
@@ -49,6 +50,7 @@ namespace VsProject.ViewModels
 
             RemovePatientCommand = new ViewModelCommand(RemovePatient);
             EditPatientCommand = new ViewModelCommand(EditPatient);
+            AppointmentCommand = new ViewModelCommand(AddAppointmentForPatient);
         }
 
         private void RemovePatient(object parameter)
@@ -69,6 +71,18 @@ namespace VsProject.ViewModels
                 var viewModel = new PatientEditViewModel(patient);
                 NavService.Navigate(viewModel);
 
+            }
+        }
+        private void AddAppointmentForPatient(object parameter)
+        {
+            if (parameter is PatientModel patient)
+            {
+                DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+                var appointment = new AppointmentModel() {PatientId = patient.Id , Date = now, StartTime = new TimeOnly(12,0), EndTime = new TimeOnly(13,0)};
+                if (DialogService.Show(new AppointmentEditViewModel(new AppointmentViewModel(appointment))) == true)
+                {
+                    UserPrincipal.AppointmentRepository.Add(appointment);
+                }
             }
         }
 

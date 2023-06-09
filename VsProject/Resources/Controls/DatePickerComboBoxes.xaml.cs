@@ -18,15 +18,12 @@ namespace VsProject.Resources.Controls
 
         public static readonly DependencyProperty SelectedDateProperty =
     DependencyProperty.Register("SelectedDate", typeof(DateOnly), typeof(DatePickerComboBoxes),
-        new PropertyMetadata(DateOnly.FromDateTime(DateTime.Now), OnSelectedDateChanged));
+        new PropertyMetadata(new DateOnly(9999,1,1), OnSelectedDateChanged));
 
         public static void OnSelectedDateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var datePickerComboBoxes = (DatePickerComboBoxes)d;
-            if (e.OldValue != e.NewValue)
-            {
-                datePickerComboBoxes.SelectedDate = (DateOnly)e.NewValue;
-            }
+            datePickerComboBoxes.SelectedDate = (DateOnly)e.NewValue;
         }
 
         public DateOnly SelectedDate

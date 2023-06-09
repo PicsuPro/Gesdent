@@ -83,8 +83,6 @@
                                 <Button x:Name="editButton"
                                         Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
-                                        Margin="0,0,6,0"
-                                        Background="White"
                                         Style="{StaticResource DataGridButtonsStyle}"
                                         ToolTip="Modifier">
                                     <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
@@ -92,10 +90,22 @@
                                 <Button x:Name="removeButton"
                                         Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
+                                        Margin="6,0,0,0"
                                         Style="{StaticResource DataGridButtonsStyle}"
                                         Visibility="Visible"
                                         ToolTip="Supprimer">
                                     <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
+                                </Button>
+                                <Button x:Name="addAppointmentButton"
+                                        Command="{Binding DataContext.AppointmentCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Margin="6,0,0,0"
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        Visibility="Visible"
+                                        ToolTip="Ajouter un Rendez-vous">
+                                    <Viewbox  Width="18" Height="18">
+                                        <Path Data="{StaticResource addAppointmentIcon}" Fill="Black" Opacity="0.8"/>
+                                    </Viewbox>
                                 </Button>
                             </StackPanel>
                         </DataTemplate>

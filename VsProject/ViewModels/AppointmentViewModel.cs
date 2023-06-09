@@ -8,7 +8,7 @@ namespace VsProject.ViewModels
     {
         private readonly AppointmentModel _appointment;
         public event Action<AppointmentViewModel, DateOnly>? DateChanged;
-
+        public AppointmentModel Appointment => _appointment; 
         public string? Subject
         {
             get => _appointment.Subject;

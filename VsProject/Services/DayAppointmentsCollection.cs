@@ -11,17 +11,23 @@ namespace VsProject.Services
     public class DayAppointmentsCollection : Dictionary<DateOnly, ObservableCollection<AppointmentViewModel>>
     {
         private ObservableCollection<AppointmentViewModel>? _appointmentList;
+        private readonly DateOnly _startDay;
+        private readonly DateOnly _endDay;
+
         public ObservableCollection<AppointmentViewModel>? AppointmentList => _appointmentList;
 
         public DayAppointmentsCollection(ObservableCollection<AppointmentViewModel>? appointmentList, DateOnly startDay, DateOnly endDay)
         {
             _appointmentList = appointmentList;
+            _startDay = startDay;
+            _endDay = endDay;
             Initialize(startDay, endDay);
         }
 
         private void Initialize(DateOnly startDay, DateOnly endDay)
         {
             Clear();
+
 
             DateOnly currentDay = startDay;
             while (currentDay <= endDay)
@@ -73,8 +79,7 @@ namespace VsProject.Services
                     HandleAppointmentsReplaced(e.NewItems, e.OldItems);
                     break;
                 case NotifyCollectionChangedAction.Reset:
-                    var today = DateOnly.FromDateTime(DateTime.Now);
-                    Initialize(today, today.AddDays(6)); // Use the default duration of 7 days
+                    Initialize(_startDay, _endDay); 
                     break;
             }
         }

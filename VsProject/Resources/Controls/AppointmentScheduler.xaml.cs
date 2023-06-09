@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using VsProject.Models;
 using VsProject.Services;
 using VsProject.ViewModels;
 
@@ -165,6 +166,7 @@ namespace VsProject.Resources.Controls
             set
             {
                 _dayAppointments = value;
+
             }
         }
 
@@ -296,21 +298,21 @@ namespace VsProject.Resources.Controls
                     var availableWidth = canvas.ActualWidth;
                     ObservableCollection<AppointmentViewModel> appointments = appointmentsKeyValuePair.Value;
 
-                //    //ProcessedAppointments.Add(appointment);
-                //    int index = appointments.IndexOf(appointment);
-                //    List<int> collisionIndexes = new List<int>();
-                //    for (int i = 0; i < appointments.Count; i++)
-                //    {
-                //        if (CheckCollision(appointment, appointments[i]))
-                //        {
-                //            collisionIndexes.Add(i);
-                //        }
-                //    }
-                //    MessageBox.Show(collisionIndexes.Count.ToString());
-                //    var appointmentWidth = availableWidth / (collisionIndexes.Count);
-                //    double appointmentleft = appointmentWidth * GetSortedPlace(index, collisionIndexes);
-                //    draggedItem.Width = appointmentWidth;
-                //    Canvas.SetLeft(draggedItem, appointmentleft);
+                    //    //ProcessedAppointments.Add(appointment);
+                    //    int index = appointments.IndexOf(appointment);
+                    //    List<int> collisionIndexes = new List<int>();
+                    //    for (int i = 0; i < appointments.Count; i++)
+                    //    {
+                    //        if (CheckCollision(appointment, appointments[i]))
+                    //        {
+                    //            collisionIndexes.Add(i);
+                    //        }
+                    //    }
+                    //    MessageBox.Show(collisionIndexes.Count.ToString());
+                    //    var appointmentWidth = availableWidth / (collisionIndexes.Count);
+                    //    double appointmentleft = appointmentWidth * GetSortedPlace(index, collisionIndexes);
+                    //    draggedItem.Width = appointmentWidth;
+                    //    Canvas.SetLeft(draggedItem, appointmentleft);
                 }
             }
         }

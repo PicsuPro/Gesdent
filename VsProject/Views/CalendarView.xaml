@@ -15,11 +15,43 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
         <controls:AppointmentScheduler Grid.Row="1"
         AppointmentEditCommand="{Binding AppointmentEditCommand}" AppointmentRemoveCommand="{Binding AppointmentEditCommand}" Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EndDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartHour="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HourCount="{Binding HourCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:AppointmentScheduler>
+
+
+        <Grid HorizontalAlignment="Stretch"  Grid.Row="2" Margin="0,10,0,10" Width="230">
+            <Button x:Name="btnSave"
+                                    Content="Appliquer"
+                                    Command="{Binding SaveEditCommand,UpdateSourceTrigger=PropertyChanged}"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    Cursor="Hand"
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="110"
+                                    Style="{StaticResource DialogMainButton}"
+                                    HorizontalAlignment="Left">
+            </Button>
+            <Button x:Name="btnCancel"
+                                    Content="Annuler"
+                                    Command="{Binding CancelEditCommand,UpdateSourceTrigger=PropertyChanged}"
+                                    FontWeight="DemiBold"
+                                    FontSize="16"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    Cursor="Hand"
+                                    IsDefault="True"
+                                    Height="35"
+                                    Width="110"
+                                    Style="{StaticResource DialogMainButton}">
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>

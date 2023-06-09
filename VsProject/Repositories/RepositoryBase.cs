@@ -25,8 +25,11 @@ namespace VsProject.Repositories
             if (obj == DBNull.Value)
                 return default;
 
-            if (typeof(T) == typeof(DateOnly) && obj is DateTime dt)
-                return (T)(object)DateOnly.FromDateTime(dt);
+            if (typeof(T) == typeof(DateOnly) && obj is DateTime dt1)
+                return (T)(object)DateOnly.FromDateTime(dt1);
+            
+            if (typeof(T) == typeof(TimeOnly) && obj is TimeSpan ts)
+                return (T)(object)TimeOnly.FromTimeSpan(ts);
 
             return (T)obj;
         }
@@ -35,9 +38,13 @@ namespace VsProject.Repositories
         {
             return string.IsNullOrWhiteSpace(s) ? DBNull.Value : s;
         }
-        public static DateTime? DBToDateTime(this DateOnly d)
+        public static DateTime DBToDateTime(this DateOnly d)
         {
             return d.ToDateTime(new TimeOnly());
+        }
+        public static TimeSpan DBToTimeSpan(this TimeOnly t)
+        {
+            return t.ToTimeSpan();
         }
     }
 

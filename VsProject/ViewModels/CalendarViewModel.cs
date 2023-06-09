@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using VsProject.Models;
 using VsProject.Services;
@@ -10,7 +15,21 @@ namespace VsProject.ViewModels
     public class CalendarViewModel : ViewModelBase
     {
 
-        private DateOnly _startDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-(int)DateTime.Today.DayOfWeek));
+        private bool _isChanged = false;
+        public bool IsChanged 
+        {
+            get => _isChanged;
+            set 
+            {
+                _isChanged = value;
+                CommandManager.InvalidateRequerySuggested();
+                OnPropertyChanged(nameof(IsChanged));
+            }
+        }
+
+
+        private ObservableCollection<AppointmentViewModel> _oldAppointments;
+        private DateOnly _startDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         public DateOnly StartDate
         {
             get => _startDate;
@@ -20,7 +39,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartDate));
             }
         }
-        private DateOnly _endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(-(int)DateTime.Today.DayOfWeek).AddDays(6));
+        private DateOnly _endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
         public DateOnly EndDate
         {
             get => _endDate;
@@ -56,18 +75,7 @@ namespace VsProject.ViewModels
         }
 
 
-        private ObservableCollection<AppointmentViewModel> _appointments =
-            new ObservableCollection<AppointmentViewModel>
-                {
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 04), StartTime = new TimeOnly(08, 0, 0), EndTime = new TimeOnly(08, 30, 00), Subject = "Meeting with MF" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 05), StartTime = new TimeOnly(13, 0, 0), EndTime = new TimeOnly(14, 30, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 06), StartTime = new TimeOnly(14, 0, 0), EndTime = new TimeOnly(16, 30, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 07), StartTime = new TimeOnly(15, 0, 0), EndTime = new TimeOnly(16, 00, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 08), StartTime = new TimeOnly(08, 0, 0), EndTime = new TimeOnly(09, 00, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 09), StartTime = new TimeOnly(09, 0, 0), EndTime = new TimeOnly(10, 30, 00), Subject = "Do thing" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 10), StartTime = new TimeOnly(09, 0, 0), EndTime = new TimeOnly(12, 00, 00), Subject = "Ya Don't say" }),
-                    new AppointmentViewModel(new AppointmentModel{ Date  = new DateOnly(2023, 06, 11), StartTime = new TimeOnly(10, 0, 0), EndTime = new TimeOnly(12, 50, 00), Subject = "Do thing" }),
-                };
+        private ObservableCollection<AppointmentViewModel> _appointments = new ObservableCollection<AppointmentViewModel>();
 
 
         public ObservableCollection<AppointmentViewModel> Appointments
@@ -79,44 +87,107 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Appointments));
             }
         }
+
+
         public ICommand AppointmentEditCommand { get; }
         public ICommand AppointmentRemoveCommand { get; }
+        public ICommand SaveEditCommand { get; }
+        public ICommand CancelEditCommand { get; }
 
         public CalendarViewModel()
         {
             AppointmentEditCommand = new ViewModelCommand(ExecuteAppointmentEdit);
             AppointmentRemoveCommand = new ViewModelCommand(ExecuteAppointmentRemove);
+            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
+            CancelEditCommand = new ViewModelCommand(ExecuteCancelEdit);
+            List<AppointmentModel> appointments = (List<AppointmentModel>)UserPrincipal.AppointmentRepository.GetAll();
+            foreach (AppointmentModel appointment in appointments)
+            {
+                var appointmentViewModel = new AppointmentViewModel(appointment);
+                Appointments.Add(appointmentViewModel);
+                appointmentViewModel.PropertyChanged += Appointment_PropertyChanged;
+
+            }
+            _oldAppointments = new ObservableCollection<AppointmentViewModel>(Appointments.Select(a => new AppointmentViewModel(a)));
+
+
         }
+
+        private void Appointment_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if(!IsChanged)
+            IsChanged = true;
+        }
+
 
         private void ExecuteAppointmentEdit(object obj)
         {
             if(obj is AppointmentViewModel appointment) 
             {
                 var old = new AppointmentViewModel(appointment);
-                if (DialogService.Show(new AppointmentEditViewModel(appointment, StartTime.Hour + HourCount, StartTime.Hour)) == false)
+                var result = DialogService.Show(new AppointmentEditViewModel(appointment, StartTime.Hour + HourCount, StartTime.Hour)) ;
+                if (result == false)
                 {
                     appointment.Subject = old.Subject;
                     appointment.Date = old.Date;
                     appointment.StartTime = old.StartTime;
                     appointment.EndTime = old.EndTime;
                 }
+                else if (result == true)
+                {
+                    UserPrincipal.AppointmentRepository.Edit(appointment.Appointment);
+                }
             }
 
         }
-           private void ExecuteAppointmentRemove(object obj)
+        private void ExecuteAppointmentRemove(object obj)
         {
             if(obj is AppointmentViewModel appointment) 
             {
                 if (DialogService.ShowYesNoDialog() == true)
                 {
                     Appointments.Remove(appointment);
+                    UserPrincipal.AppointmentRepository.Remove(appointment.Appointment);
                 }
             }
 
         }
+        private void ExecuteSaveEdit(object obj)
+        {
+            if (DialogService.ShowYesNoDialog() == true)
+            {
+                for (int i = 0; i < Appointments.Count; i++)
+                {
+                    if (_oldAppointments[i] != Appointments[i])
+                        UserPrincipal.AppointmentRepository.Edit(Appointments[i].Appointment);
+                }
+                IsChanged = false;
+                _oldAppointments = new ObservableCollection<AppointmentViewModel>(Appointments.Select(a => new AppointmentViewModel(a)));
+            }
+        }
+        private bool CanExecuteSaveEdit(object obj)
+        {
+            return IsChanged;
+        }
+            
+        private void ExecuteCancelEdit(object obj)
+        {
+            foreach (AppointmentViewModel appointment in Appointments)
+            {
+                appointment.PropertyChanged -= Appointment_PropertyChanged;
+            }
+            Appointments.Clear();
+            List<AppointmentModel> appointments = (List<AppointmentModel>)UserPrincipal.AppointmentRepository.GetAll();
+            foreach (AppointmentModel appointment in appointments)
+            {
+                var appointmentViewModel = new AppointmentViewModel(appointment);
+                Appointments.Add(appointmentViewModel);
+                appointmentViewModel.PropertyChanged += Appointment_PropertyChanged;
 
-
-
+            }
+            IsChanged=false;
+            NavService.Navigate(GetType());
+        }
 
     }
 

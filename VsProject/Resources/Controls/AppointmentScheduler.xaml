@@ -37,7 +37,7 @@
                                 </Grid.RowDefinitions>
 
                                 <ItemsControl 
-                                              ItemsSource="{Binding HourList,RelativeSource={RelativeSource AncestorType=local:AppointmentScheduler}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged
+                                              ItemsSource="{Binding HourList,RelativeSource={RelativeSource AncestorType=local:AppointmentScheduler}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged 
                                     ,Converter={StaticResource ExcludeFirstItem}}" 
                                               Grid.Row="1" Grid.Column="1" 
                                     Margin="-4,0,0,0">
@@ -156,7 +156,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <DataGridRowHeader  Grid.ColumnSpan="2" SelectiveScrollingGrid.SelectiveScrollingOrientation="Horizontal" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.Row}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
-                                <ItemsControl ItemsSource="{Binding Value}" Grid.Row="1"  Margin="0" Padding="0">
+                                <ItemsControl ItemsSource="{Binding Value,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1"  Margin="0" Padding="0">
                                     <ItemsControl.ItemsPanel>
                                         <ItemsPanelTemplate>
                                             <Canvas Background="#0000" DragOver="Canvas_DragOver" Drop="Canvas_Drop"/>
