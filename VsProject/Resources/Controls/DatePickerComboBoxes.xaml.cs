@@ -172,6 +172,7 @@ namespace VsProject.Resources.Controls
             {
                 return;
             }
+
             if ((int?)YearComboBox.SelectedItem == DateTime.Now.Year
                 && MonthComboBox.SelectedIndex == DateTime.Now.Month - _monthIndexCompensator
                 && Times != DatePickerTimes.All)
