@@ -11,6 +11,31 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1300"
              Background="White">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#0000"/>
+            <Setter Property="Opacity" Value="0.75"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Opacity" Value="1"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:PatientEditViewModel/>
     </UserControl.DataContext>
@@ -24,6 +49,7 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
@@ -101,7 +127,6 @@
                     Margin="0,9,0,0"
                     IsEnabled="{Binding IsEditing}"/>
 
-
                 <TextBlock Text="Numéro principal *"
                             Foreground="#1B1B1B"
                             FontSize="13"
@@ -112,7 +137,6 @@
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
-
 
             </StackPanel>
 
@@ -242,7 +266,6 @@
                 Grid.Column="3"
                 Grid.Row="1"
                 IsEnabled="{Binding DataContext.IsEditing,RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->
-            
             <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            Foreground="IndianRed"
                            FontSize="11.5"
@@ -261,7 +284,7 @@
                         Content="Enregistrer"
                         FontWeight="DemiBold"
                         FontSize="16"
-                        Margin="0,40,50,0"
+                        Margin="0,50,50,0"
                         Cursor="Hand"
                         IsDefault="True"
                         Style="{StaticResource PopupWindowMainButton}"
@@ -284,16 +307,16 @@
                 </Button.Template>
             </Button>
 
+            <StackPanel Grid.Column="5"
+                        Grid.Row="1"
+                        Orientation="Vertical">
 
-            <ToggleButton Grid.Column="5"
-                          Grid.Row="1"
-                          HorizontalAlignment="Left"
-                          VerticalAlignment="Top"
-                          Height="40"
+                <ToggleButton 
                           Cursor="Hand"
                           Focusable="False"
                            IsChecked="{Binding IsEditing, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          Visibility="{Binding IsNotNewPatient,Converter={StaticResource BooleanToVisibility}}">
+                          Visibility="{Binding IsNotNewPatient,Converter={StaticResource BooleanToVisibility}}"
+                    Margin="0,0,0,10">
                     <ToggleButton.Style>
                         <Style TargetType="{x:Type ToggleButton}">
                             <Setter Property="Template">
@@ -318,6 +341,29 @@
                         </Style>
                     </ToggleButton.Style>
                 </ToggleButton>
+
+                <Button x:Name="addAppointmentButton"
+                                        Command="{Binding DataContext.AppointmentCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Margin="0,0,0,10"
+                                        Style="{DynamicResource ButtonStyle}"
+                                        Visibility="Visible"
+                                        ToolTip="Rendez-vous">
+                    <Viewbox  Width="21" Height="21">
+                        <Path Data="{StaticResource addAppointmentIcon}" Fill="Black" Opacity="0.8"/>
+                    </Viewbox>
+                </Button>
+
+                <Button Style="{DynamicResource ButtonStyle}" x:Name="removeButton"
+                                        Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Margin="0,0,0,10"
+                                        Visibility="Visible"
+                                        ToolTip="Supprimer">
+                    <Image Source="/Resources/Images/remove.png" Width="22" Height="22" />
+                </Button>
+
+            </StackPanel>
         </Grid>
     </ScrollViewer>
 </UserControl>
