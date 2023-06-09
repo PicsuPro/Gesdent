@@ -22,7 +22,7 @@ namespace VsProject.Resources.Converters
             {
 
                 var columnHeight = canvasHeight / (hourCount);
-                double top = (startTime.Hour - startHour.Hour) * columnHeight + (startTime.Minute / 60.0) * columnHeight; // Convert the time difference to the corresponding distance in pixels
+                double top = (startTime.Hour - startHour.Hour) * columnHeight + (startTime.Minute / 60.0) * columnHeight; 
                 return top;
             }
             return Binding.DoNothing;
@@ -43,7 +43,7 @@ namespace VsProject.Resources.Converters
             if (values[0] is TimeSpan duration && values[1] is double canvasHeight && values[2] is int hourCount)
             {
                 var columnHeight = canvasHeight / (hourCount);
-                var height = (duration.TotalMinutes * columnHeight) / 60.0;
+                var height = duration.TotalHours * columnHeight;
                 return height;
 
             }

@@ -145,8 +145,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGridRow}">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource GridLinesCornerRadius}" SnapsToDevicePixels="True"
-                                >
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="{StaticResource GridLinesCornerRadius}" SnapsToDevicePixels="True">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
@@ -248,7 +247,7 @@
                                                                 </Style>
                                                             </StackPanel.Resources>
                                                         <Button x:Name="editButton"
-                                                                Command="{Binding DataContext.AppointmentEditCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                                                Command="{Binding AppointmentEditCommand, RelativeSource={RelativeSource  AncestorType=local:AppointmentScheduler}}" 
                                                                 CommandParameter="{Binding}"
                                                                 Margin="0,0,6,0"
                                                                 Background="#0000"
@@ -256,7 +255,7 @@
                                                             <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
                                                         </Button>
                                                         <Button x:Name="removeButton"
-                                                                Command="{Binding DataContext.AppointmentRemoveCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}" 
+                                                                Command="{Binding AppointmentRemoveCommand, RelativeSource={RelativeSource  AncestorType=local:AppointmentScheduler}}" 
                                                                 CommandParameter="{Binding}"
                                                                 Background="#0000"
                                                                 Visibility="Visible"
@@ -356,11 +355,11 @@
 
     </UserControl.Resources>
     <DataGrid x:Name="CustomDataGrid"
+            ItemsSource="{Binding DayAppointments,RelativeSource={RelativeSource AncestorType=local:AppointmentScheduler}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             RowStyle="{StaticResource CalendarDataGridRowStyle}"  
             Template="{StaticResource CalendarDataGridTemplate}" 
             ColumnHeaderStyle="{StaticResource CalendarDataGridColumnHeader}" 
             RowHeaderStyle="{StaticResource CalendarDataGridRowHeader}" 
-            ItemsSource="{Binding DayAppointments,RelativeSource={RelativeSource AncestorType=local:AppointmentScheduler}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             Background="White"
             FontFamily="Calibri" FontWeight="Medium" 
             Margin="0"

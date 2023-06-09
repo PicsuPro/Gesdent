@@ -186,7 +186,8 @@ namespace VsProject.ViewModels
 
             }
             IsChanged=false;
-            NavService.Navigate(GetType());
+            _oldAppointments = new ObservableCollection<AppointmentViewModel>(Appointments.Select(a => new AppointmentViewModel(a)));
+            NavService.Navigate(this);
         }
 
     }

@@ -246,9 +246,6 @@ namespace VsProject.Resources.Controls
                 draggingCanvas = (Canvas?)VisualTreeHelper.GetParent(draggedItem);
                 appointment = (AppointmentViewModel?)draggedItem?.DataContext;
                 DragDrop.DoDragDrop(draggedItem, appointment, DragDropEffects.Move);
-
-
-
             }
             if (popupGrid != null)
                 popupGrid.Visibility = Visibility.Collapsed;
@@ -275,10 +272,7 @@ namespace VsProject.Resources.Controls
             }
         }
 
-        private bool CheckCollision(AppointmentViewModel appointment1, AppointmentViewModel appointment2)
-        {
-            return appointment1.StartTime < appointment2.EndTime && appointment2.StartTime < appointment1.EndTime;
-        }
+     
         private void Canvas_Drop(object sender, DragEventArgs e)
         {
             if (appointment != null && draggedItem != null && draggingCanvas != null)
