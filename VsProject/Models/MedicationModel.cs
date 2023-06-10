@@ -8,8 +8,7 @@ namespace VsProject.Models
 {
     public class MedicationModel
     {
-        public string Name { get; set; }
-        public string Dosage { get; set; }
-        public string Frequency { get; set; }
+        public int? Id { get; set; }
+        public string? Name { get; set; }
     }
 }

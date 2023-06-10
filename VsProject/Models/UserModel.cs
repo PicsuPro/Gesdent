@@ -22,6 +22,7 @@ namespace VsProject.Models
         public static readonly IPatientRecordRepository PatientRecordRepository = new PatientRecordRepository();
         public static readonly IToothRepository ToothRepository = new ToothRepository();
         public static readonly IAppointmentRepository AppointmentRepository = new AppointmentRepository();
+        public static readonly IMedicationRepository MedicationRepository = new MedicationRepository();
         public static bool SetUser(NetworkCredential credential)
         {
             bool isValidUser = UserRepository.AuthenticateUser(credential);

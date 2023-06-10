@@ -46,4 +46,12 @@
     <View>v:PatientsListView</View>
     <Parent>v:PatientsView</Parent>
   </Mapping>
+  <Mapping>
+    <ViewModel>vm:MedicationEditViewModel</ViewModel>
+    <View>v:MedicationEditView</View>
+  </Mapping>
+  <Mapping>
+    <ViewModel>vm:MedicationViewModel</ViewModel>
+    <View>v:MedicationView</View>
+  </Mapping>
 </Mappings>

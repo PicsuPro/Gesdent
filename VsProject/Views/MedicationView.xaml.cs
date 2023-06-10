@@ -16,13 +16,14 @@ using System.Windows.Shapes;
 namespace VsProject.Views
 {
     /// <summary>
-    /// Interaction logic for OrdonnanceView.xaml
+    /// Interaction logic for PatientsListView.xaml
     /// </summary>
-    public partial class OrdonnanceView : Window
+    public partial class MedicationView : Window
     {
-        public OrdonnanceView()
+        public MedicationView()
         {
             InitializeComponent();
         }
+
     }
 }

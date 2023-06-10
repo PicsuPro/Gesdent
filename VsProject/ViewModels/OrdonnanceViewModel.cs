@@ -6,16 +6,53 @@ using System.Text;
 using System.Windows.Input;
 using VsProject.Models;
 using VsProject.Services;
+using PdfSharp.Pdf;
+using PdfSharp.Drawing;
+using Microsoft.Win32;
+using System.Windows;
+using System.Windows.Data;
 
 namespace VsProject.ViewModels
 {
     public class OrdonnanceViewModel : ViewModelBase
     {
-        private OrdonnanceModel _ordonnance;
-        private ObservableCollection<MedicationModel> _medications;
-        private int? _age;
+        public class OrdonnanceMedicationModel
+        {
+            public string Name { get; set; } = "";
+            public string Dosage { get; set; } = "";
+            public string Frequency { get; set; } = "";
+        }
+        private ObservableCollection<OrdonnanceMedicationModel> _medications = new ObservableCollection<OrdonnanceMedicationModel>();
+        private ObservableCollection<OrdonnanceMedicationModel> _medicationsAdded = new ObservableCollection<OrdonnanceMedicationModel>();
+        private string _patientName;
+        private int _age;
+        private string _notes;
 
-        public int? Age
+
+        private ICollectionView _medicationCollectionView;
+        private string _search;
+        public string Search
+        {
+            get => _search;
+            set
+            {
+                _search = value;
+                _medicationCollectionView.Refresh(); // Refresh the collection view when search text changes
+                OnPropertyChanged(nameof(Search));
+            }
+        }
+
+        public string PatientName
+        {
+            get => _patientName;
+            set
+            {
+                _patientName = value;
+                OnPropertyChanged(nameof(PatientName));
+            }
+        }
+
+        public int Age
         {
             get => _age;
             set
@@ -26,23 +63,34 @@ namespace VsProject.ViewModels
         }
 
 
-        public OrdonnanceModel Ordonnance
+        public string Notes
         {
-            get => _ordonnance;
+            get => _notes;
             set
             {
-                _ordonnance = value;
-                OnPropertyChanged(nameof(Ordonnance));
+                _notes = value;
+                OnPropertyChanged(nameof(Notes));
             }
         }
 
-        public ObservableCollection<MedicationModel> Medications
+
+
+        public ObservableCollection<OrdonnanceMedicationModel> Medications
         {
             get => _medications;
             set
             {
                 _medications = value;
                 OnPropertyChanged(nameof(Medications));
+            }
+        }
+        public ObservableCollection<OrdonnanceMedicationModel> MedicationsAdded
+        {
+            get => _medicationsAdded;
+            set
+            {
+                _medicationsAdded = value;
+                OnPropertyChanged(nameof(MedicationsAdded));
             }
         }
 
@@ -52,87 +100,178 @@ namespace VsProject.ViewModels
 
         public OrdonnanceViewModel()
         {
-            Ordonnance = new OrdonnanceModel();
-            Medications = new ObservableCollection<MedicationModel>();
+            
+            var meds = new ObservableCollection<MedicationModel>(UserPrincipal.MedicationRepository.GetAll());
+            foreach(var med in meds)
+            {
+                Medications.Add(new OrdonnanceMedicationModel() { Name= med.Name });
+            }
 
+            _medicationCollectionView = CollectionViewSource.GetDefaultView(Medications);
+            _medicationCollectionView.Filter = FilterBySearchText;
+            Notes = "";
             AddMedicationCommand = new ViewModelCommand(AddMedication);
             RemoveMedicationCommand = new ViewModelCommand(RemoveMedication);
             GeneratePdfCommand = new ViewModelCommand(GeneratePdf);
         }
+        
+        public OrdonnanceViewModel(PatientModel patient)
+        {
+            var meds = new ObservableCollection<MedicationModel>(UserPrincipal.MedicationRepository.GetAll());
+            foreach (var med in meds)
+            {
+                Medications.Add(new OrdonnanceMedicationModel() { Name = med.Name });
+            }
+            _medicationCollectionView = CollectionViewSource.GetDefaultView(Medications);
+            _medicationCollectionView.Filter = FilterBySearchText;
+            PatientName = patient.LastName + " " + patient.FirstName;
+            int age = DateTime.Today.Year - patient.BirthDate.Year;
+
+            // Check if the birthday has already occurred this year
+            if (DateTime.Today < patient.BirthDate.ToDateTime(new TimeOnly()).AddYears(age))
+            {
+                age--;
+            }
+            Age = age;
+            Notes = "";
+            AddMedicationCommand = new ViewModelCommand(AddMedication, CanAddMedication);
+            RemoveMedicationCommand = new ViewModelCommand(RemoveMedication);
+            GeneratePdfCommand = new ViewModelCommand(GeneratePdf, CanGeneratePdf);
+        }
+
 
         private void AddMedication(object parameter)
         {
-            Medications.Add(new MedicationModel());
+            if (parameter is OrdonnanceMedicationModel medication)
+            {
+                MedicationsAdded.Add(new OrdonnanceMedicationModel { Name = medication.Name , Dosage = medication.Dosage , Frequency = medication.Frequency});
+            }
+        }
+        private bool CanAddMedication(object parameter)
+        {
+            if (parameter is OrdonnanceMedicationModel medication)
+            {
+                return !(string.IsNullOrEmpty(medication.Name) || string.IsNullOrEmpty(medication.Dosage) || string.IsNullOrEmpty(medication.Frequency));
+            }
+            return false;
         }
 
         private void RemoveMedication(object parameter)
         {
-            if (parameter is MedicationModel medication)
+            if (parameter is OrdonnanceMedicationModel medication)
             {
-                if (DialogService.ShowYesNoDialog() == true)
-                {
-                    Medications.Remove(medication);
-                }
+                MedicationsAdded.Remove(medication);
             }
         }
-        private void SavePdfToFile(string pdfContent, string fileName)
-        {
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            string filePath = Path.Combine(desktopPath, $"{fileName}.pdf");
-            File.WriteAllText(filePath, pdfContent);
-        }
-
 
         private void GeneratePdf(object parameter)
         {
-            try
-            {
-                // Prompt the user to enter a file name
-                string fileName = Microsoft.VisualBasic.Interaction.InputBox("Enter the file name:", "Save PDF", $"{Ordonnance.PatientName}");
+            // Create a new PDF document
+            var document = new PdfSharp.Pdf.PdfDocument();
 
-                // Generate the PDF using the ordonnance and medications data
-                string pdfContent = GeneratePdfContent();
-                SavePdfToFile(pdfContent, fileName);
-            }
-            catch (Exception ex)
+            // Create a new page
+            var page = document.AddPage();
+
+            // Create a PDF graphics object for drawing
+            using (var graphics = PdfSharp.Drawing.XGraphics.FromPdfPage(page))
             {
-                // Output the exception message for debugging
-                Console.WriteLine(ex.Message);
+                // Set the font and size
+                var font = new PdfSharp.Drawing.XFont("Calibri", 14, PdfSharp.Drawing.XFontStyle.Regular);
+                var boldFont = new PdfSharp.Drawing.XFont("Calibri", 14, PdfSharp.Drawing.XFontStyle.Bold);
+
+                // Get the page dimensions
+                var pageWidth = page.Width.Point;
+                var pageHeight = page.Height.Point;
+
+                // Calculate the center coordinates
+                var centerX = pageWidth / 2;
+                var centerY = pageHeight / 2;
+
+                // Calculate the text dimensions
+                var lineHeight = font.GetHeight();
+                var textWidth = graphics.MeasureString("Nom: " + PatientName, font).Width;
+
+                // Calculate the total height of the text
+                var totalTextHeight = MedicationsAdded.Count * lineHeight;
+
+                // Calculate the available space for vertical centering
+                var availableSpace = pageHeight - totalTextHeight;
+
+                // Calculate the initial text position for vertical centering
+                var textX = centerX - (centerX / 1.5);
+                var textY = centerY - (centerY / 2);
+
+                // Draw the patient name
+                graphics.DrawString ("Nom:   " + PatientName + "                                      Age:   " + Age.ToString() , boldFont, PdfSharp.Drawing.XBrushes.Black, textX, textY);
+                textY += lineHeight * 6;
+
+                // Draw the medications added
+                foreach (var medication in MedicationsAdded)
+                {
+                    var ntextX = textX;
+                    graphics.DrawString($"- { medication.Name}", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
+                    var ntextWidth = graphics.MeasureString($"- {medication.Name}", font).Width ;
+                    ntextX += ntextWidth + ntextX/4;
+                    graphics.DrawString($"{medication.Dosage} :", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
+                    ntextX += textX/2;
+                    graphics.DrawString($"{medication.Frequency}", font, PdfSharp.Drawing.XBrushes.Black,ntextX , textY);
+                    textY += lineHeight*1.2;
+                }
+                textY += lineHeight * 10;
+                if (!string.IsNullOrEmpty(Notes))
+                {
+                    // Wrap and draw the notes
+                    var notesX = textX;
+                    var notesWidth = pageWidth - notesX * 1.5;
+                    var notesY = textY;
+                    var notesHeight = pageHeight - notesY;
+                    var notesfont = new PdfSharp.Drawing.XFont("Calibri", 12, PdfSharp.Drawing.XFontStyle.Regular);
+                    var notesRect = new PdfSharp.Drawing.XRect(notesX, notesY, notesWidth, notesHeight);
+                    var notesFormatter = new PdfSharp.Drawing.Layout.XTextFormatter(graphics);
+                    notesFormatter.DrawString("Notes: \n" + Notes, notesfont, PdfSharp.Drawing.XBrushes.Black, notesRect);
+                }
+
+            }
+
+            // Save the PDF to a file
+            var saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.Filter = "PDF files (*.pdf)|*.pdf";
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                document.Save(saveFileDialog.FileName);
             }
         }
-
-
-
-        private string GeneratePdfContent()
+        private bool CanGeneratePdf(object parameter)
         {
-            StringBuilder contentBuilder = new StringBuilder();
-
-            // Add patient information
-            contentBuilder.AppendLine("Patient Information:");
-            contentBuilder.AppendLine($"Name: {Ordonnance.PatientName}");
-            contentBuilder.AppendLine($"Age: {Ordonnance.Age}");
-            contentBuilder.AppendLine($"Notes: {Ordonnance.Notes}");
-            contentBuilder.AppendLine();
-
-            // Add medication information
-            contentBuilder.AppendLine("Medications:");
-            foreach (MedicationModel medication in Medications)
-            {
-                contentBuilder.AppendLine($"Name: {medication.Name}");
-                contentBuilder.AppendLine($"Dosage: {medication.Dosage}");
-                contentBuilder.AppendLine($"Frequency: {medication.Frequency}");
-                contentBuilder.AppendLine();
-            }
-
-            return contentBuilder.ToString();
+            return MedicationsAdded.Count > 0;
         }
 
-
-        private void SavePdfToFile(string pdfContent)
+            private bool FilterBySearchText(object item)
         {
-            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-            string filePath = Path.Combine(desktopPath, "ordonnance.pdf");
-            File.WriteAllText(filePath, pdfContent);
+            if (string.IsNullOrEmpty(_search))
+                return true;
+
+            var medication = item as OrdonnanceMedicationModel;
+            if (medication == null)
+                return false;
+
+            var fullName = $"{medication.Name}".ToLower();
+
+            var searchText = _search.ToLower();
+            var searchParts = searchText.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+
+            foreach (var part in searchParts)
+            {
+                if (!fullName.Contains(part))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
+
+
+
     }
 }

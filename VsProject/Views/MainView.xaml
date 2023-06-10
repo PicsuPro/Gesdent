@@ -68,18 +68,23 @@
                             <StackPanel Orientation="Vertical"/>
                         </ItemsPanelTemplate>
                     </Menu.ItemsPanel>
-                    <MenuItem Header="Lool" Foreground="Black" Command="{Binding SettingsCommand}" 
+                    <MenuItem Header="Médicaments..." Foreground="Black" Command="{Binding AddMedicationCommand}" 
                                               FontSize="11"
                                               BorderThickness="0"
                                               Height="20"
-                                              Padding="6,0,50,2"
-                                              Icon="">
+                                              Padding="6,2,50,2"
+                                              >
+                        <MenuItem.Icon>
+                            <Viewbox Height="15" VerticalAlignment="Top" HorizontalAlignment="Left" >
+                                <Path Data="{StaticResource MedsIcon}" Fill="Black" VerticalAlignment="Top" Stroke="Black" StrokeThickness="4"/>
+                            </Viewbox>
+                        </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem Header="Options..." Foreground="Black" Command="{Binding SettingsCommand}" 
                                             FontSize="11"
                                             BorderThickness="0"
                                             Height="20"
-                                            Padding="6,0,50,2">
+                                            Padding="6,2,50,2">
                         <MenuItem.Icon>
                             <Viewbox Height="14" VerticalAlignment="Center">
                                 <Path Data="{StaticResource settingsIcon}" Fill="Black" />

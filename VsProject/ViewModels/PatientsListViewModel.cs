@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Windows.Data;
 using System.Windows.Input;
 using VsProject.Models;
@@ -39,6 +40,7 @@ namespace VsProject.ViewModels
         public ICommand EditPatientCommand { get; }
         public ICommand RemovePatientCommand { get; }
         public ICommand AppointmentCommand { get; }
+        public ICommand OrdonnanceCommand { get; }
 
         public PatientsListViewModel()
         {
@@ -51,7 +53,10 @@ namespace VsProject.ViewModels
             RemovePatientCommand = new ViewModelCommand(RemovePatient);
             EditPatientCommand = new ViewModelCommand(EditPatient);
             AppointmentCommand = new ViewModelCommand(AddAppointmentForPatient);
+            OrdonnanceCommand = new ViewModelCommand(CreateOrdonnance);
         }
+
+        
 
         private void RemovePatient(object parameter)
         {
@@ -85,7 +90,16 @@ namespace VsProject.ViewModels
                 }
             }
         }
-
+        private void CreateOrdonnance(object parameter)
+        {
+            if (parameter is PatientModel patient)
+            {
+                DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+                if (DialogService.Show(new OrdonnanceViewModel(patient)) == true)
+                {
+                }
+            }
+        }
         private bool FilterBySearchText(object item)
         {
             if (string.IsNullOrEmpty(_searchPatient))

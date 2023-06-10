@@ -31,7 +31,7 @@
                      Width="200" 
                      Height="30"
                      Margin="10 0"
-                     FontSize="20"
+                     FontSize="16"
                      Style="{StaticResource FormTextBox}"
                      VerticalAlignment="Center"
                      Background="White"/>
@@ -80,18 +80,10 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                                <Button x:Name="editButton"
-                                        Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource DataGridButtonsStyle}"
-                                        ToolTip="Modifier">
-                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
-                                </Button>
                                 
                                 <Button x:Name="addAppointmentButton"
                                         Command="{Binding DataContext.AppointmentCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
-                                        Margin="6,0,0,0"
                                         Style="{StaticResource DataGridButtonsStyle}"
                                         Visibility="Visible"
                                         ToolTip="Rendez-vous">
@@ -99,11 +91,31 @@
                                         <Path Data="{StaticResource addAppointmentIcon}" Fill="Black" Opacity="0.8"/>
                                     </Viewbox>
                                 </Button>
+ 
+                                <Button x:Name="ordonnanceButton"
+                                        Command="{Binding DataContext.OrdonnanceCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Margin="9,0,0,0"
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        Visibility="Visible"
+                                        ToolTip="Ordonnance">
+                                    <Viewbox  Width="17" Height="17">
+                                        <Path Data="{StaticResource addFileIcon}" Stroke="Black" StrokeThickness="5" Fill="Black" Opacity="0.8"/>
+                                    </Viewbox>
+                                </Button>
+                                <Button x:Name="editButton"
+                                        Command="{Binding DataContext.EditPatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
+                                        CommandParameter="{Binding}"
+                                        Margin="5,0,0,0"
+                                        Style="{StaticResource DataGridButtonsStyle}"
+                                        ToolTip="Modifier">
+                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
+                                </Button>
 
                                 <Button x:Name="removeButton"
                                         Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
                                         CommandParameter="{Binding}"
-                                        Margin="6,0,0,0"
+                                        Margin="5,0,0,0"
                                         Style="{StaticResource DataGridButtonsStyle}"
                                         Visibility="Visible"
                                         ToolTip="Supprimer">
