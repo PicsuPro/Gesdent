@@ -105,6 +105,10 @@
             VerticalAlignment="Center" Margin="5,0">
 
             <controls:NavListBoxItem Icon="{StaticResource calendarIcon}"
+                ViewModel="{x:Type viewModels:HomeViewModel}"
+                Margin="0,5"
+                KeyboardNavigation.IsTabStop="False"/>
+            <controls:NavListBoxItem Icon="{StaticResource calendarIcon}"
                 ViewModel="{x:Type viewModels:CalendarViewModel}"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>

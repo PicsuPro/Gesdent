@@ -54,4 +54,8 @@
     <ViewModel>vm:MedicationViewModel</ViewModel>
     <View>v:MedicationView</View>
   </Mapping>
+  <Mapping>
+    <ViewModel>vm:HomeViewModel</ViewModel>
+    <View>v:HomeView</View>
+  </Mapping>
 </Mappings>
