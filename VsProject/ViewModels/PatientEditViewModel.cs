@@ -318,6 +318,8 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Diagnostic));
                 OnPropertyChanged(nameof(Plan));
                 OnPropertyChanged(nameof(Notes));
+                OnPropertyChanged(nameof(IsInHistory));
+
             }
         }
 
@@ -360,6 +362,8 @@ namespace VsProject.ViewModels
             {
                 _teeth = value;
                 OnPropertyChanged(nameof(Teeth));
+                OnPropertyChanged(nameof(IsInHistory));
+
             }
         }
         public List<PatientRecordModel> PatientRecordHistory
@@ -369,6 +373,8 @@ namespace VsProject.ViewModels
             {
                 _patientRecordHistory = value;
                 OnPropertyChanged(nameof(PatientRecordHistory));
+                OnPropertyChanged(nameof(IsInHistory));
+
             }
         }
         public List<ObservableCollection<ToothModel>> TeethHistory
@@ -378,6 +384,8 @@ namespace VsProject.ViewModels
             {
                 _teethHistory = value;
                 OnPropertyChanged(nameof(TeethHistory));
+                OnPropertyChanged(nameof(IsInHistory));
+
             }
         }
         public int HistoryIndex
@@ -387,6 +395,7 @@ namespace VsProject.ViewModels
             {
                 _historyIndex = value;
                 OnPropertyChanged(nameof(HistoryIndex));
+                OnPropertyChanged(nameof(IsInHistory));
             }
         }
 
@@ -507,6 +516,8 @@ namespace VsProject.ViewModels
             {
                 _isEditing = value;
                 OnPropertyChanged(nameof(IsEditing));
+                OnPropertyChanged(nameof(IsInHistory));
+
             }
         }
 
@@ -640,6 +651,8 @@ namespace VsProject.ViewModels
         {
             HistoryIndex++;
             NavigateInHistory(HistoryIndex);
+            IsEditing = false;
+
         }
 
         private void NavigateInHistory(int historyIndex)
@@ -698,6 +711,7 @@ namespace VsProject.ViewModels
         {
             HistoryIndex--;
             NavigateInHistory(HistoryIndex);
+            IsEditing = false;
 
         }
 
@@ -713,6 +727,7 @@ namespace VsProject.ViewModels
         {
             SelectedTooth?.Problems.Add(SelectedToothProblem);
             Problems.Add(new ToothProblemModel { IsDefault = false , ToothNumber = SelectedTooth.Number, ToothProblem = SelectedToothProblem });
+            SelectedToothProblem = "";
 
         }
 
@@ -765,6 +780,9 @@ namespace VsProject.ViewModels
             {
                 PatientRecord.Problems?.Add(Problem.ToothProblem ?? "");
             }
+            Problem = new ToothProblemModel();
+            Problem.ToothNumber = 0;
+            Problem.ToothProblem = "";
         }
          private bool CanExecuteAddProblem(object obj)
         {
@@ -860,7 +878,8 @@ namespace VsProject.ViewModels
                 && !(string.IsNullOrWhiteSpace(Patient.Profession))
                 && !(string.IsNullOrWhiteSpace(Patient.Adress))
                 && BirthDate != null
-                && IsEditing;
+                && IsEditing
+                && !IsInHistory;
 
         }
 

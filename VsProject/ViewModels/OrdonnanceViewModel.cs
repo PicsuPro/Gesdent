@@ -151,7 +151,7 @@ namespace VsProject.ViewModels
         {
             if (parameter is OrdonnanceMedicationModel medication)
             {
-                return !(string.IsNullOrEmpty(medication.Name) || string.IsNullOrEmpty(medication.Dosage) || string.IsNullOrEmpty(medication.Frequency));
+                return !(string.IsNullOrEmpty(medication.Name) || string.IsNullOrEmpty(medication.Dosage));
             }
             return false;
         }
@@ -209,14 +209,17 @@ namespace VsProject.ViewModels
                 foreach (var medication in MedicationsAdded)
                 {
                     var ntextX = textX;
-                    graphics.DrawString($"- { medication.Name}", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
-                    var ntextWidth = graphics.MeasureString($"- {medication.Name}", font).Width ;
+                    graphics.DrawString($"- {medication.Name}", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
+                    var ntextWidth = graphics.MeasureString($"- {medication.Name}", font).Width;
                     ntextX += ntextWidth + textX / 4;
                     graphics.DrawString($"{medication.Dosage} :", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
                     ntextWidth = graphics.MeasureString($"{medication.Dosage} :", font).Width;
-                    ntextX += ntextWidth + textX / 4;
-                    graphics.DrawString($"{medication.Frequency}", font, PdfSharp.Drawing.XBrushes.Black,ntextX , textY);
-                    textY += lineHeight*1.2;
+                    if (string.IsNullOrWhiteSpace(medication.Frequency))
+                    {
+                        ntextX += ntextWidth + textX / 4;
+                        graphics.DrawString($"{medication.Frequency}", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
+                        textY += lineHeight * 1.2;
+                    }
                 }
                 textY += lineHeight * 10;
                 if (!string.IsNullOrEmpty(Notes))
