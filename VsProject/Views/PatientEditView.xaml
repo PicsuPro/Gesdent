@@ -12,10 +12,24 @@
              d:DesignHeight="720" d:DesignWidth="1300"
              Background="White">
 
+    <UserControl.Resources>
+        <Style TargetType="ListBoxItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Border Background="Transparent">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <UserControl.DataContext>
         <viewModel:PatientEditViewModel/>
     </UserControl.DataContext>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <Grid >
         <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="10"/>
@@ -24,78 +38,108 @@
                 <RowDefinition Height="10"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1200"/>
+                    <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <StackPanel Width="250"
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="Top">
+
+                    <Button  x:Name="PreviousPageButton"
+                                        Margin="0,0,5,0"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        ToolTip="Page Precedente"
+                                Click="PreviousPageButton_Click"
+                            HorizontalAlignment="Left">
+                        <Viewbox Stretch="Uniform" Height="21">
+                            <Path Data="{StaticResource arrowLeftIcon}" Stroke="Black" StrokeThickness="5" Fill="Black" Opacity="0.8"/>
+                        </Viewbox>
+                    </Button>
+                    <Button  x:Name="NextPageButton"
+                                 Margin="0"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        ToolTip="Page Suivante"
+                                Click="NextPageButton_Click"
+                            HorizontalAlignment="Left">
+                        <Viewbox Stretch="Uniform"  Height="21">
+                            <Path Data="{StaticResource arrowRightIcon}" Stroke="Black" StrokeThickness="5" Fill="Black" Opacity="0.8"/>
+                        </Viewbox>
+                    </Button>
+                </StackPanel>
+
+                <Grid x:Name="MainContainer" Grid.Column="1"
+                        Grid.Row="1">
+                    <Grid Visibility="Collapsed">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Width="250"
                         Orientation="Vertical"
                         Grid.Column="1"
                         Grid.Row="1"
                         Margin="40,0">
 
-                <TextBlock Text="Titre *"
+                            <TextBlock Text="Titre *"
                             VerticalAlignment="Center"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                              Margin="0,25,0,0"/>
-                <StackPanel Margin="1,9,0,-5" Orientation="Horizontal" >
-                    <RadioButton Content="M." VerticalContentAlignment="Center" FontWeight="Medium" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
+                            <StackPanel Margin="1,9,0,-5" Orientation="Horizontal" >
+                                <RadioButton Content="M." VerticalContentAlignment="Center" FontWeight="Medium" FontSize="11" GroupName="Sex"  Margin="0,0,0,0" 
                                  IsChecked="{Binding IsMale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsEditing}"/>
-                    <RadioButton Content="Mme." VerticalContentAlignment="Center" FontWeight="Medium" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
+                                <RadioButton Content="Mme." VerticalContentAlignment="Center" FontWeight="Medium" FontSize="11" GroupName="Sex" Margin="20,0,0,0" 
                                  IsChecked="{Binding IsFemale, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsEditing}"/>
-                </StackPanel>
+                            </StackPanel>
 
-                <TextBlock Text="Nom *"
+                            <TextBlock Text="Nom *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox x:Name="txtName"
+                            <TextBox x:Name="txtName"
                          Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-                <TextBlock Text="Prénom *"
+                            <TextBlock Text="Prénom *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-                <TextBlock Text="Surnom"
+                            <TextBlock Text="Surnom"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-                <TextBlock Text="Date de naissance *"
+                            <TextBlock Text="Date de naissance *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <controls:DatePickerComboBoxes  
+                            <controls:DatePickerComboBoxes  
                     FontWeight="Regular"
                     SelectedDate="{Binding BirthDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     x:Name="datePickerComboBoxes" 
@@ -103,81 +147,81 @@
                     Margin="0,9,0,0"
                     IsEnabled="{Binding IsEditing}"/>
 
-                <TextBlock Text="Numéro principal *"
+                            <TextBlock Text="Numéro principal *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-            </StackPanel>
+                        </StackPanel>
 
-            <StackPanel Width="250"
+                        <StackPanel Width="250"
                         Orientation="Vertical"
                         Grid.Column="2"
                         Grid.Row="1"
                         Margin="40,0">
 
 
-                <TextBlock Text="Numéro secondaire"
+                            <TextBlock Text="Numéro secondaire"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding PhoneAlt, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
 
-                <TextBlock Text="Email *"
+                            <TextBlock Text="Email *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
 
-                <TextBlock Text="Profession *"
+                            <TextBlock Text="Profession *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Profession, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Profession, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-                <TextBlock Text="Adresse *"
+                            <TextBlock Text="Adresse *"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Adress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Adress, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          TextWrapping="Wrap"
                          Height="Auto"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
-                <TextBlock Text="Motif"
+                            <TextBlock Text="Motif"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding Motive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Motive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
@@ -187,62 +231,253 @@
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
 
-            </StackPanel>
+                        </StackPanel>
 
 
-            <StackPanel Width="250"
+                        <StackPanel Width="250"
                         Orientation="Vertical"
                         Grid.Column="3"
                         Grid.Row="1"
                         Margin="40,0"
                         HorizontalAlignment="Center">
-           
-                <TextBlock Text="Orienté par"
+
+                            <TextBlock Text="Orienté par"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding OrientedBy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding OrientedBy, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          MinHeight="28"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-                <TextBlock Text="Jour Préféré"
+                            <TextBlock Text="Jour Préféré"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding PreferredDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding PreferredDay, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-                <TextBlock Text="Nom du parent"
+                            <TextBlock Text="Nom du parent"
                             Foreground="#1B1B1B"
                             FontSize="13"
                             FontFamily="Calibri"
                             FontWeight="Medium"
                             Margin="0,25,0,0"/>
-                <TextBox Text="{Binding ParentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding ParentName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource FormTextBox}"
                          Height="Auto"
                          Margin="0,4,0,0"
                          IsReadOnly="{Binding IsEditing, Converter={StaticResource InverseBoolean}}"/>
 
-            </StackPanel>
+                        </StackPanel>
+                    </Grid>
 
-            <!--<controls:DentalChart 
-                TeethSource="{Binding Teeth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Margin="25,0,0,0"
-                Grid.Column="3"
-                Grid.Row="1"
-                IsEnabled="{Binding DataContext.IsEditing,RelativeSource={RelativeSource AncestorType=UserControl}}"/>-->
-            <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+
+
+
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="450"/> 
+                            <ColumnDefinition /> 
+                            <ColumnDefinition/> 
+                        </Grid.ColumnDefinitions>
+                        <StackPanel>
+                            <controls:DentalChart x:Name="Chart" Grid.Column="0" SelectedTooth="{Binding SelectedTooth, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" TeethSource="{Binding Teeth, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"  />
+                            <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
+                                <TextBlock Text="Bilan:" Style="{StaticResource FormTextBlock}" Margin="10,10,0,5" FontSize="16" FontWeight="Bold"/>
+                                <ListBox HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                ItemsSource="{Binding SelectedToothProblems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                BorderThickness="0"
+                                     Margin="0"
+                                     Padding="0"
+                                >
+
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate DataType="ListBoxItem" >
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="10"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Button x:Name="RemoveProblemSelectedToothButton"
+                                                    Command="{Binding DataContext.RemoveProblemSelectedToothCommand, RelativeSource={RelativeSource AncestorType=local:PatientEditView}}" 
+                                                    CommandParameter="{Binding}"
+                                                    Style="{StaticResource IconButtonStyle}"
+                                                    ToolTip="Supprimer"
+                                                    HorizontalAlignment="Left">
+                                                    <Viewbox  Width="18" Height="18">
+                                                        <Path Data="{StaticResource minusIcon}" Fill="Black" Opacity="0.8"/>
+                                                    </Viewbox>
+                                                </Button>
+
+                                                <TextBox IsReadOnly="True" Grid.Column="1" Text="{Binding .,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Style="{StaticResource theRightFormTextBox}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                <Grid Margin="0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="20"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="10"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Button x:Name="AddProblemSelectedToothButton"
+                                                    Command="{Binding AddProblemSelectedToothCommand,UpdateSourceTrigger=PropertyChanged}" 
+                                                    Style="{StaticResource IconButtonStyle}"
+                                                    ToolTip="Ajouter"
+                                                    HorizontalAlignment="Left">
+                                        <Viewbox  Width="18" Height="18">
+                                            <Path Data="{StaticResource plusIcon}" Fill="Black" Opacity="0.8"/>
+                                        </Viewbox>
+                                    </Button>
+
+
+                                    <TextBox Grid.Column="1"  Text="{Binding SelectedToothProblem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Margin="10,0,0,0" TextWrapping="Wrap" Style="{StaticResource theRightFormTextBox}"/>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
+                            <TextBlock Text="Bilan:" Style="{StaticResource FormTextBlock}" Margin="20,5,0,5" FontSize="16" FontWeight="Bold"/>
+                            <ListBox HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                ItemsSource="{Binding Problems}"
+                                BorderThickness="0"
+                                     Margin="0"
+                                     Padding="0"
+                                >
+
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate DataType="ListBoxItem" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="35"/>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="10"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button x:Name="RemoveProblemButton"
+                                                    Command="{Binding DataContext.RemoveProblemCommand, RelativeSource={RelativeSource AncestorType=local:PatientEditView}}" 
+                                                    CommandParameter="{Binding}"
+                                                    Style="{StaticResource IconButtonStyle}"
+                                                    ToolTip="Supprimer"
+                                                    Visibility="{Binding IsDefault ,Converter={StaticResource InverseBooleanToVisibility}}"
+                                                    HorizontalAlignment="Left">
+                                                <Viewbox  Width="18" Height="18">
+                                                    <Path Data="{StaticResource minusIcon}" Fill="Black" Opacity="0.8"/>
+                                                </Viewbox>
+                                            </Button>
+
+                                                <Button x:Name="ToothButton"  
+                                                        Grid.Column="1" Margin="10,0,0,0"
+                                                        Command="{Binding DataContext.GoToToothCommand, RelativeSource={RelativeSource AncestorType=local:PatientEditView}}" 
+                                                        CommandParameter="{Binding ToothNumber}"
+                                                        ToolTip="Selectionner la Dent"
+                                                        Background="#0000"
+                                                        BorderThickness="0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        VerticalContentAlignment="Center"
+                                                        HorizontalContentAlignment="Center"
+                                                        FontFamily="Calibri"
+                                                        FontWeight="Bold"
+                                                        Foreground="White"
+                                                        Width="25" Height="25"
+                                                        Content="{Binding ToothNumber}"
+                                                        Cursor="Hand">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="Button">
+                                                                        <Border CornerRadius="5" Background="{StaticResource primary1}" BorderBrush="LightGray" BorderThickness="0.5" >
+                                                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                                        </Border>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ToothNumber}" Value="0">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
+                                            <TextBox IsReadOnly="True" Grid.Column="2" Text="{Binding ToothProblem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="10,0,0,0" TextWrapping="Wrap" Style="{StaticResource theRightFormTextBox}"/>
+                                        </Grid>
+                                    </DataTemplate>                                
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <Grid Margin="0,5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="20"/>
+                                    <ColumnDefinition Width="62"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="10"/>
+                                </Grid.ColumnDefinitions>
+                                <Button x:Name="AddProblemtoToothButton"
+                                                    Command="{Binding AddProblemCommand,UpdateSourceTrigger=PropertyChanged}" 
+                                                    CommandParameter="{Binding}"
+                                                    Style="{StaticResource IconButtonStyle}"
+                                                    ToolTip="Ajouter"
+                                                    HorizontalAlignment="Left">
+                                    <Viewbox  Width="18" Height="18">
+                                        <Path Data="{StaticResource plusIcon}" Fill="Black" Opacity="0.8"/>
+                                    </Viewbox>
+                                </Button>
+
+                                <ComboBox Grid.Column="1" Margin="10,0,0,0" ItemsSource="{Binding Numbers}" IsEnabled="{Binding IsEditing}" SelectedIndex="{Binding ToothNumber,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="52" FontWeight="Regular" FontSize="10">
+                                    
+                                </ComboBox>
+                                <TextBox Grid.Column="2" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Text="{Binding ToothProblem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="10,0,0,0" TextWrapping="Wrap" Style="{StaticResource theRightFormTextBox}"/>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Column="2" Margin="10,0,0,0">
+                            <TextBlock Text="Diagnostique:" Style="{StaticResource FormTextBlock}" Margin="10,10,0,10" FontSize="16" FontWeight="Bold" />
+                            <TextBox Text="{Binding Diagnostic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="120" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
+
+                            <TextBlock Text="Plan de Traitement :" Style="{StaticResource FormTextBlock}" Margin="10,30,0,10" FontSize="16" FontWeight="Bold" />
+                            <TextBox Text="{Binding Plan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="220" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
+                            
+                            <TextBlock Text="Notes :" Style="{StaticResource FormTextBlock}" Margin="10,30,0,10" FontSize="16" FontWeight="Bold" />
+                            <TextBox Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="100" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
+
+                        </StackPanel>
+                        
+                    </Grid>
+                    
+                    
+                    
+                    
+                </Grid>
+
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+                <StackPanel Orientation="Vertical"  Grid.Row="2" Grid.Column="1">
+
+                    <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                            Foreground="IndianRed"
                            FontSize="11.5"
                            FontFamily="Calibri"
@@ -250,97 +485,131 @@
                            Margin="0,15,0,0"
                            HorizontalAlignment="Center"
                            TextWrapping="Wrap"
-                           Grid.Column="1"
-                           Grid.ColumnSpan="4"
-                           Grid.Row="2"  
-                           Grid.RowSpan="2"/>
+                            />
 
-            <Button x:Name="btnLogin"
+                    <Button x:Name="btnLogin"
                         Command="{Binding SaveEditCommand}"
                         Content="Enregistrer"
                         FontWeight="DemiBold"
                         FontSize="16"
-                        Margin="0,50,50,0"
+                        Margin="0,30,0,0"
                         Cursor="Hand"
                         IsDefault="True"
                         Style="{StaticResource PopupWindowMainButton}"
-                        HorizontalAlignment="Center"
-                        Grid.Column="1"
-                        Grid.ColumnSpan="4"
-                        Grid.Row="2"  
-                        Grid.RowSpan="2" Height="40" VerticalAlignment="Top">
+                        HorizontalAlignment="Center" Height="40">
 
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}"
+                        <Button.Template>
+                            <ControlTemplate TargetType="Button">
+                                <Border Background="{TemplateBinding Background}"
                                         Height="40"
                                         Width="150"
                                         CornerRadius="8">
-                            <ContentPresenter VerticalAlignment="Center"
+                                    <ContentPresenter VerticalAlignment="Center"
                                                       HorizontalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                                </Border>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
+                </StackPanel>
 
-            <StackPanel Grid.Column="5"
-                        Grid.Row="1"
-                        Orientation="Vertical">
+                <Grid Grid.Column="2"
+                        Grid.Row="1" Grid.RowSpan="2"
+                      Background="#0000">
+                    <StackPanel 
+                        Margin="10,0,0,0"
+                        Orientation="Vertical"
+                            HorizontalAlignment="Left"
+                            Background="#0000">
 
-                <ToggleButton 
+                        <ToggleButton 
+                            ToolTip="Modifier"
                           Cursor="Hand"
                           Focusable="False"
+                        HorizontalAlignment="Center"
                            IsChecked="{Binding IsEditing, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-                          Visibility="{Binding IsNotNewPatient,Converter={StaticResource BooleanToVisibility}}"
                     Margin="0,0,0,10">
-                    <ToggleButton.Style>
-                        <Style TargetType="{x:Type ToggleButton}">
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Opacity="0.8">
-                                        <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="24" Height="24" Visibility="Collapsed" />
-                                        <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="24" Height="24" Visibility="Visible" />
-                                        </StackPanel>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
-                                                <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
-                                            </Trigger>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Opacity" Value="0.75"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
-                    </ToggleButton.Style>
-                </ToggleButton>
+                            <ToggleButton.Style>
+                                <Style TargetType="{x:Type ToggleButton}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Opacity="0.8">
+                                                    <Image x:Name="CheckedImage" Source="/Resources/Images/cancel.png" Width="24" Height="24" Visibility="Collapsed" />
+                                                    <Image x:Name="UncheckedImage" Source="/Resources/Images/edit2.png" Width="24" Height="24" Visibility="Visible" />
+                                                </StackPanel>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="CheckedImage" Property="Visibility" Value="Visible"/>
+                                                        <Setter TargetName="UncheckedImage" Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Opacity" Value="0.75"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ToggleButton.Style>
+                        </ToggleButton>
 
-                <Button x:Name="addAppointmentButton"
-                                        Command="{Binding DataContext.AppointmentCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
-                                        CommandParameter="{Binding}"
+                        <Button x:Name="addAppointmentButton"
+                                        Command="{Binding AppointmentCommand}" 
                                         Margin="0,0,0,10"
                         Style="{StaticResource IconButtonStyle}"
-                                        Visibility="Visible"
-                                        ToolTip="Rendez-vous">
-                    <Viewbox  Width="21" Height="21">
-                        <Path Data="{StaticResource addAppointmentIcon}" Fill="Black" Opacity="0.8"/>
-                    </Viewbox>
-                </Button>
-
-                <Button   Style="{StaticResource IconButtonStyle}"
+                                        ToolTip="Rendez-vous"
+                            HorizontalAlignment="Center">
+                            <Viewbox  Width="21" Height="21">
+                                <Path Data="{StaticResource addAppointmentIcon}" Fill="Black" Opacity="0.8"/>
+                            </Viewbox>
+                        </Button>
+                        <Button x:Name="ordonnanceButton"
+                                        Command="{Binding OrdonnanceCommand}" 
+                                        Margin="0,0,-2,10"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        ToolTip="Ordonnance"
+                            HorizontalAlignment="Center">
+                            <Viewbox Stretch="Uniform" Width="21" Height="21">
+                                <Path Data="{StaticResource addFileIcon}" Stroke="Black" StrokeThickness="5" Fill="Black" Opacity="0.8"/>
+                            </Viewbox>
+                        </Button>
+                        <Button   Style="{StaticResource IconButtonStyle}"
                         x:Name="removeButton"
-                        Command="{Binding DataContext.RemovePatientCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" 
-                        CommandParameter="{Binding}"
+                        Command="{Binding RemovePatientCommand}" 
                         Margin="0,0,0,10"
-                        Visibility="Visible"
-                        ToolTip="Supprimer">
-                    <Image Source="/Resources/Images/remove.png" Width="22" Height="22" />
-                </Button>
+                        ToolTip="Supprimer"
+                              HorizontalAlignment="Center">
+                            <Image Source="/Resources/Images/remove.png" Width="22" Height="22" />
+                        </Button>
+                    </StackPanel>
 
-            </StackPanel>
+                    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+
+                        <Button  
+                            Margin="0,-6,5,0"
+                            Style="{StaticResource IconButtonStyle}"
+                            ToolTip="Reculer Dans Historique"
+                            Command="{Binding GoBackInHistory}"
+                            HorizontalAlignment="Left">
+                            <Viewbox Stretch="Uniform" Width="21">
+                                <Path Data="{StaticResource historyArrowIcon}" Stroke="Black" StrokeThickness="5" Fill="Black" Opacity="0.8"/>
+                            </Viewbox>
+                        </Button>
+                        <Button  
+                                 Margin="0"
+                                        Style="{StaticResource IconButtonStyle}"
+                                        ToolTip="Avancer Dans Historique"
+                            Command="{Binding GoForwardInHistory}"
+                            HorizontalAlignment="Left">
+                            <Viewbox Stretch="Uniform"  Width="21">
+                                <Path Data="{StaticResource tworightArrowsIcon}" Stroke="Black" StrokeThickness="5" Fill="Black" Opacity="0.8"/>
+                            </Viewbox>
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+
+            </Grid>
         </Grid>
     </ScrollViewer>
 </UserControl>

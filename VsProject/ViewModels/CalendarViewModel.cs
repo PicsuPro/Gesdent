@@ -39,7 +39,7 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(StartDate));
             }
         }
-        private DateOnly _endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(7));
+        private DateOnly _endDate { get; set; } = DateOnly.FromDateTime(DateTime.Now.AddDays(6));
         public DateOnly EndDate
         {
             get => _endDate;
@@ -89,6 +89,7 @@ namespace VsProject.ViewModels
         }
 
 
+        public ICommand AppointmentEndCommand { get; }
         public ICommand AppointmentEditCommand { get; }
         public ICommand AppointmentRemoveCommand { get; }
         public ICommand SaveEditCommand { get; }
@@ -96,6 +97,8 @@ namespace VsProject.ViewModels
 
         public CalendarViewModel()
         {
+            KeepLoaded = false;
+            AppointmentEndCommand = new ViewModelCommand(ExecuteAppointmentEnd);
             AppointmentEditCommand = new ViewModelCommand(ExecuteAppointmentEdit);
             AppointmentRemoveCommand = new ViewModelCommand(ExecuteAppointmentRemove);
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
@@ -110,6 +113,27 @@ namespace VsProject.ViewModels
             }
             _oldAppointments = new ObservableCollection<AppointmentViewModel>(Appointments.Select(a => new AppointmentViewModel(a)));
 
+
+        }
+
+        private void ExecuteAppointmentEnd(object obj)
+        {
+            if (obj is AppointmentViewModel appointment)
+            {
+                var patient = UserPrincipal.PatientRepository.GetById(appointment.Appointment.PatientId);
+                var patientRecord = UserPrincipal.PatientRecordRepository.GetByPatientId(appointment.Appointment.PatientId);
+                var teeth = UserPrincipal.ToothRepository.GetAll((int)appointment.Appointment.PatientId);
+                var patientEditViewModel = new PatientEditViewModel(patient, patientRecord, teeth);
+                patientEditViewModel.IsEditing = true;
+                if (DialogService.ShowYesNoDialog() == true)
+                {
+                    Appointments.Remove(appointment);
+                    UserPrincipal.AppointmentRepository.Remove(appointment.Appointment);
+                    NavService.Navigate(patientEditViewModel, 1);
+
+                }
+                
+            }
 
         }
 

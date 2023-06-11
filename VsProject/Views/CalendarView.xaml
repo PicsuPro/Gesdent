@@ -20,7 +20,8 @@
         </Grid.RowDefinitions>
 
         <controls:AppointmentScheduler Grid.Row="1"
-        AppointmentEditCommand="{Binding AppointmentEditCommand}" AppointmentRemoveCommand="{Binding AppointmentRemoveCommand}" Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        AppointmentEditCommand="{Binding AppointmentEditCommand}" AppointmentRemoveCommand="{Binding AppointmentRemoveCommand}" AppointmentEndCommand="{Binding AppointmentEndCommand}"
+                                       Appointments="{Binding Appointments, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartDate="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" EndDate="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         StartHour="{Binding StartTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HourCount="{Binding HourCount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></controls:AppointmentScheduler>
 

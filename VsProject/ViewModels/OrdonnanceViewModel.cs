@@ -189,7 +189,7 @@ namespace VsProject.ViewModels
 
                 // Calculate the text dimensions
                 var lineHeight = font.GetHeight();
-                var textWidth = graphics.MeasureString("Nom: " + PatientName, font).Width;
+                var textWidth = graphics.MeasureString("Nom:   " + PatientName + "                                      Age:   " + Age.ToString() + " ans" + PatientName, font).Width;
 
                 // Calculate the total height of the text
                 var totalTextHeight = MedicationsAdded.Count * lineHeight;
@@ -202,7 +202,7 @@ namespace VsProject.ViewModels
                 var textY = centerY - (centerY / 2);
 
                 // Draw the patient name
-                graphics.DrawString ("Nom:   " + PatientName + "                                      Age:   " + Age.ToString() , boldFont, PdfSharp.Drawing.XBrushes.Black, textX, textY);
+                graphics.DrawString ("Nom:   " + PatientName + "                                   Age:   " + Age.ToString() + " ans", boldFont, PdfSharp.Drawing.XBrushes.Black, textX, textY);
                 textY += lineHeight * 6;
 
                 // Draw the medications added
@@ -211,9 +211,10 @@ namespace VsProject.ViewModels
                     var ntextX = textX;
                     graphics.DrawString($"- { medication.Name}", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
                     var ntextWidth = graphics.MeasureString($"- {medication.Name}", font).Width ;
-                    ntextX += ntextWidth + ntextX/4;
+                    ntextX += ntextWidth + textX / 4;
                     graphics.DrawString($"{medication.Dosage} :", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
-                    ntextX += textX/2;
+                    ntextWidth = graphics.MeasureString($"{medication.Dosage} :", font).Width;
+                    ntextX += ntextWidth + textX / 4;
                     graphics.DrawString($"{medication.Frequency}", font, PdfSharp.Drawing.XBrushes.Black,ntextX , textY);
                     textY += lineHeight*1.2;
                 }

@@ -7,7 +7,7 @@ namespace VsProject.ViewModels
 {
     public class AppointmentEditViewModel : ViewModelBase
     {
-        private AppointmentViewModel _appointment = new AppointmentViewModel(new AppointmentModel() { Subject = "" ,Date = DateOnly.FromDateTime(DateTime.Now), StartTime = new TimeOnly( 12, 0, 0), EndTime = new TimeOnly(12, 30, 0) });
+        private AppointmentViewModel _appointment;
         private DateOnly _date;
         private int? _maxHour;
         private int _minHour = 0;
@@ -80,12 +80,7 @@ namespace VsProject.ViewModels
 
         //-> Commands
         public ICommand SaveEditCommand { get; }
-        public AppointmentEditViewModel()
-        {
-            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
-            IsNewUser = true;
-            IsEditingPassword = IsNewUser;
-        }
+      
         public AppointmentEditViewModel(AppointmentViewModel appointment)
         {
             Appointment = appointment;

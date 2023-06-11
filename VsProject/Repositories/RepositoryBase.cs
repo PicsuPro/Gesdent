@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 
 namespace VsProject.Repositories
@@ -45,6 +46,21 @@ namespace VsProject.Repositories
         public static TimeSpan DBToTimeSpan(this TimeOnly t)
         {
             return t.ToTimeSpan();
+        }
+
+        public static ObservableCollection<string>? ConvertToObservableCollection(string separator, string? joinedString)
+        {
+            if (joinedString == null)
+                return null;
+            ObservableCollection<string> collection = new ObservableCollection<string>();
+
+            string[] strings = joinedString.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string value in strings)
+            {
+                collection.Add(value);
+            }
+
+            return collection;
         }
     }
 

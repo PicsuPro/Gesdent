@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using VsProject.Models;
 
@@ -9,6 +10,11 @@ namespace VsProject.Repositories
     {
         private const string TABLENAME = "patient_record";
         private const string PATIENTID = "patient_id";
+        private const string PROBLEMS = "problems";
+        private const string PROBLEMSSEPARATOR = "{}-";
+        private const string DIAGNOSTIC = "diagnostic";
+        private const string TREATMENTPLAN = "treatment_plan";
+        private const string NOTES = "notes";
         private const string TIMESTART = "time_start";
         private const string TIMEEND = "time_end";
         public void Add(PatientRecordModel patientRecordModel)
@@ -18,7 +24,7 @@ namespace VsProject.Repositories
             //using (var command = new SqlCommand())
             {
 
-                if (GetByPatientId(patientRecordModel.PatientId) == null)
+                if (!IdExists(patientRecordModel.PatientId))
                 {
                     var patientId = UserPrincipal.PatientRepository.GetById(patientRecordModel.PatientId)?.Id;
                     if (patientId != null)
@@ -26,10 +32,14 @@ namespace VsProject.Repositories
 
                         connection.Open();
                         command.Connection = connection;
-                        command.CommandText = $"INSERT INTO {TABLENAME} ({PATIENTID})" +
-                                              "VALUES (@patientId)";
+                        command.CommandText = $"INSERT INTO {TABLENAME} ({PATIENTID},{PROBLEMS},{DIAGNOSTIC},{TREATMENTPLAN},{NOTES})" +
+                                              "VALUES (@patientId,@problems,@diagnostic,@treatmentPlan,@notes)";
 
                         command.Parameters.AddWithValue("@patientId", patientId);
+                        command.Parameters.AddWithValue("@problems", string.Join(PROBLEMSSEPARATOR,patientRecordModel.Problems?? new ObservableCollection<string>()).DBNullOrWS());
+                        command.Parameters.AddWithValue("@diagnostic", patientRecordModel.Diagnostic.DBNullOrWS());
+                        command.Parameters.AddWithValue("@treatmentPlan", patientRecordModel.TreatmentPlan.DBNullOrWS());
+                        command.Parameters.AddWithValue("@notes", patientRecordModel.Notes.DBNullOrWS());
                         command.ExecuteNonQuery();
                     }
                     else
@@ -46,9 +56,27 @@ namespace VsProject.Repositories
 
         public void Edit(PatientRecordModel patientRecordModel)
         {
-            throw new NotImplementedException();
+            if (IdExists(patientRecordModel.PatientId))
+            {
+                    using (var connection = GetConnection())
+                    using (var command = new SqlCommand())
+                    {
+                        connection.Open();
+                        command.Connection = connection;
+                        command.CommandText = $"UPDATE {TABLENAME} SET  {PROBLEMS}=@problems, {DIAGNOSTIC}=@diagnostic, {TREATMENTPLAN}=@treatmentPlan, {NOTES}=@notes WHERE {PATIENTID}=@patientId";
+                        command.Parameters.AddWithValue("@patientId", patientRecordModel.PatientId);
+                        command.Parameters.AddWithValue("@problems", string.Join(PROBLEMSSEPARATOR, patientRecordModel.Problems ?? new ObservableCollection<string>()).DBNullOrWS());
+                        command.Parameters.AddWithValue("@diagnostic", patientRecordModel.Diagnostic.DBNullOrWS());
+                        command.Parameters.AddWithValue("@treatmentPlan", patientRecordModel.TreatmentPlan.DBNullOrWS());
+                        command.Parameters.AddWithValue("@notes", patientRecordModel.Notes.DBNullOrWS());
+                        command.ExecuteNonQuery();
+                    }
+            }
+            else
+            {
+                throw new ArgumentNullException("patient record does not exist");
+            }
         }
-
         public IEnumerable<PatientRecordModel> GetAllFromHistory(int? patientId)
         {
             var patientRecordHistory = new List<PatientRecordModel>();
@@ -58,7 +86,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT {PATIENTID} FROM {TABLENAME} FOR SYSTEM_TIME ALL WHERE {PATIENTID} = @patientId ORDER BY  {TIMESTART} DESC";
+                command.CommandText = $"SELECT {PROBLEMS},{DIAGNOSTIC}, {TREATMENTPLAN}, {NOTES} FROM {TABLENAME} FOR SYSTEM_TIME ALL WHERE {PATIENTID} = @patientId ORDER BY  {TIMESTART} DESC";
                 command.Parameters.AddWithValue("@patientId", patientId);
 
                 using (var reader = command.ExecuteReader())
@@ -66,7 +94,11 @@ namespace VsProject.Repositories
                     {
                         PatientRecordModel patientRecord = new PatientRecordModel
                         {
-                            PatientId = reader[PATIENTID].DBValue<int>(),
+                            PatientId = patientId,
+                            Problems = DBExtensions.ConvertToObservableCollection(PROBLEMSSEPARATOR, reader[PROBLEMS].DBValue<string>()),
+                            Diagnostic = reader[DIAGNOSTIC].DBValue<string>(),
+                            TreatmentPlan = reader[TREATMENTPLAN].DBValue<string>(),
+                            Notes = reader[NOTES].DBValue<string>(),
                         };
                         patientRecordHistory.Add(patientRecord);
                     }
@@ -86,7 +118,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT {PATIENTID} FROM {TABLENAME} WHERE {PATIENTID}=@patientId";
+                command.CommandText = $"SELECT {PROBLEMS},{DIAGNOSTIC}, {TREATMENTPLAN}, {NOTES} FROM {TABLENAME} WHERE {PATIENTID}=@patientId";
                 command.Parameters.AddWithValue("@patientId", patientId);
 
                 using (var reader = command.ExecuteReader())
@@ -95,7 +127,11 @@ namespace VsProject.Repositories
                     {
                         PatientRecordModel patientRecord = new PatientRecordModel
                         {
-                            PatientId = reader[PATIENTID].DBValue<int>(),
+                            PatientId = patientId,
+                            Problems = DBExtensions.ConvertToObservableCollection(PROBLEMSSEPARATOR, reader[PROBLEMS].DBValue<string>()),
+                            Diagnostic = reader[DIAGNOSTIC].DBValue<string>(),
+                            TreatmentPlan = reader[TREATMENTPLAN].DBValue<string>(),
+                            Notes = reader[NOTES].DBValue<string>(),
                         };
                         return patientRecord;
                     }

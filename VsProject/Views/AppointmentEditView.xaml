@@ -14,9 +14,6 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
      Title="Rendez-Vous" Height="373" Width="366">
-    <Window.DataContext>
-        <viewModel:AppointmentEditViewModel/>
-    </Window.DataContext>
 
     <Window.Style>
         <Style TargetType="Window">

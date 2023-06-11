@@ -7,6 +7,8 @@ namespace VsProject.ViewModels
     public class AppointmentViewModel : ViewModelBase
     {
         private readonly AppointmentModel _appointment;
+        private readonly PatientModel _patient;
+        private readonly string _patientName;
         public event Action<AppointmentViewModel, DateOnly>? DateChanged;
         public AppointmentModel Appointment => _appointment; 
         public string? Subject
@@ -18,6 +20,10 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Subject));
             }
         }
+
+        public string PatientName => _patientName;
+      
+        
         public DateOnly Date
         {
             get => _appointment.Date;
@@ -84,13 +90,17 @@ namespace VsProject.ViewModels
         public AppointmentViewModel(AppointmentModel appointment)
         {
             _appointment = appointment;
+            _patient = UserPrincipal.PatientRepository.GetById(appointment.PatientId);
+            _patientName = _patient.LastName + " " + _patient.FirstName;
         }
 
 
 
         public AppointmentViewModel(AppointmentViewModel appointmentvm)
         {
-            _appointment = new AppointmentModel() { Subject = appointmentvm.Subject, Date = appointmentvm.Date, StartTime = appointmentvm.StartTime, EndTime = appointmentvm.EndTime };
+            _appointment = new AppointmentModel() { PatientId = appointmentvm._appointment.PatientId, Subject = appointmentvm.Subject, Date = appointmentvm.Date, StartTime = appointmentvm.StartTime, EndTime = appointmentvm.EndTime };
+            _patient = appointmentvm._patient;
+            _patientName = appointmentvm.PatientName;
         }
 
     }

@@ -32,10 +32,7 @@ namespace VsProject.Views
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            NavService.Navigate(new CalendarViewModel());
-        }
+
 
 
     }

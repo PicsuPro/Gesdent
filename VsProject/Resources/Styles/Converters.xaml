@@ -4,6 +4,7 @@
 
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+    <c:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
     <c:ToothDataConverter x:Key="ToothDataConverter"/>
     <c:InverseBoolean x:Key="InverseBoolean"/>
     <c:DurationToHeightConverter x:Key="DurationToHeightConverter"/>

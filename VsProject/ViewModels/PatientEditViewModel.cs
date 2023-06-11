@@ -3,14 +3,104 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 using VsProject.Models;
 using VsProject.Services;
+using static System.Net.Mime.MediaTypeNames;
+using static VsProject.ViewModels.PatientEditViewModel;
 
 namespace VsProject.ViewModels
 {
     public class PatientEditViewModel : ViewModelBase
     {
+
+        public class SortedObservableCollection<T> : ObservableCollection<T>
+        {
+            public SortedObservableCollection()
+            {
+            }
+
+            public SortedObservableCollection(IEnumerable<T> collection) : base(collection)
+            {
+            }
+
+            public SortedObservableCollection(List<T> list) : base(list)
+            {
+            }
+
+            protected override void InsertItem(int index, T item)
+            {
+                int sortedIndex = FindSortedIndex(item);
+                base.InsertItem(sortedIndex, item);
+            }
+
+            protected override void SetItem(int index, T item)
+            {
+                int sortedIndex = FindSortedIndex(item);
+                base.SetItem(sortedIndex, item);
+            }
+
+            private int FindSortedIndex(T item)
+            {
+                IComparable indexComparable = (item as ToothProblemModel)?.ToothNumber;
+                if (indexComparable == null)
+                    return Count;
+
+                for (int i = 0; i < Count; i++)
+                {
+                    IComparable existingIndexComparable = (this[i] as ToothProblemModel)?.ToothNumber;
+                    if (indexComparable.CompareTo(existingIndexComparable) < 0)
+                        return i;
+                }
+
+                return Count;
+            }
+        }
+
+
+        public class ToothProblemModel : ViewModelBase
+        {
+            private int _toothNumber = 0;
+            private string? _toothProblem;
+            private bool _isDefault = false;
+            public int ToothNumber
+            {
+                get => _toothNumber;
+                set
+                {
+                    _toothNumber = value;
+                    OnPropertyChanged(nameof(ToothNumber));
+                }
+            }
+            public string? ToothProblem
+            {
+                get => _toothProblem;
+                set
+                {
+                    _toothProblem = value;
+                    OnPropertyChanged(nameof(ToothProblem));
+                }
+            }
+            public bool IsDefault
+            {
+                get => _isDefault;
+                set
+                {
+                    _isDefault = value;
+                    OnPropertyChanged(nameof(IsDefault));
+                }
+            }
+        }
+        private int _currentPanelIndex = 0;
+        public int CurrentPanelIndex 
+        { get => _currentPanelIndex;
+            set
+            {
+                _currentPanelIndex = value;
+                OnPropertyChanged(nameof(CurrentPanelIndex));
+            }
+        } 
 
         private PatientModel _patient;
         private string _lastName = "";
@@ -34,11 +124,22 @@ namespace VsProject.ViewModels
         private string _orientedBy = "";
         private string _preferredDay = "";
         private string _parentName = "";
+        private ToothModel? _selectedTooth;
+        private string? _selectedToothProblem;
 
         private PatientRecordModel _patientRecord;
-
-
         private ObservableCollection<ToothModel> _teeth;
+        
+        private List<PatientRecordModel> _patientRecordHistory;
+        private List<ObservableCollection<ToothModel>> _teethHistory;
+        private int _historyIndex = 0;
+
+        private SortedObservableCollection<ToothProblemModel> _problems = new SortedObservableCollection<ToothProblemModel>();
+        private ToothProblemModel _problem = new ToothProblemModel();
+        public string[] Numbers { get; } = Enumerable.Range(0, 33)
+                                            .Select(n => n == 0 ? "None" : n.ToString())
+                                            .ToArray();
+
 
         public PatientModel Patient
         {
@@ -214,6 +315,41 @@ namespace VsProject.ViewModels
             {
                 _patientRecord = value;
                 OnPropertyChanged(nameof(PatientRecord));
+                OnPropertyChanged(nameof(Diagnostic));
+                OnPropertyChanged(nameof(Plan));
+                OnPropertyChanged(nameof(Notes));
+            }
+        }
+
+
+        public string? Diagnostic
+        {
+            get => PatientRecord.Diagnostic;
+            set
+            {
+                PatientRecord.Diagnostic = value;
+                OnPropertyChanged(nameof(Diagnostic));
+                OnPropertyChanged(nameof(PatientRecord));
+            }
+        }
+        public string? Plan
+        {
+            get => PatientRecord.TreatmentPlan;
+            set
+            {
+                PatientRecord.TreatmentPlan = value;
+                OnPropertyChanged(nameof(Plan));
+                OnPropertyChanged(nameof(PatientRecord));
+            }
+        }
+        public string? Notes
+        {
+            get => PatientRecord.Notes;
+            set
+            {
+                PatientRecord.Notes = value;
+                OnPropertyChanged(nameof(Notes));
+                OnPropertyChanged(nameof(PatientRecord));
             }
         }
 
@@ -226,6 +362,126 @@ namespace VsProject.ViewModels
                 OnPropertyChanged(nameof(Teeth));
             }
         }
+        public List<PatientRecordModel> PatientRecordHistory
+        {
+            get => _patientRecordHistory;
+            set
+            {
+                _patientRecordHistory = value;
+                OnPropertyChanged(nameof(PatientRecordHistory));
+            }
+        }
+        public List<ObservableCollection<ToothModel>> TeethHistory
+        {
+            get => _teethHistory;
+            set
+            {
+                _teethHistory = value;
+                OnPropertyChanged(nameof(TeethHistory));
+            }
+        }
+        public int HistoryIndex
+        {
+            get => _historyIndex;
+            set
+            {
+                _historyIndex = value;
+                OnPropertyChanged(nameof(HistoryIndex));
+            }
+        }
+
+        public bool IsInHistory => _historyIndex > 0;
+
+        public ToothModel? SelectedTooth
+        {
+            get => _selectedTooth;
+            set
+            {
+                var t = _selectedTooth;
+                _selectedTooth = value;
+                if (t != null)
+                {
+                    Problems = new SortedObservableCollection<ToothProblemModel>(Problems.Where(p => p.ToothNumber != t.Number || p.IsDefault == false));
+
+                    if (t.ApicalReaction || t.Decay)
+                    {
+
+                        Problems.Add(new ToothProblemModel
+                        {
+                            ToothNumber = t.Number,
+                            ToothProblem = t.DefaultProblem,
+                            IsDefault = true
+                        });
+                    }
+                }
+                OnPropertyChanged(nameof(SelectedToothProblems));
+                OnPropertyChanged(nameof(SelectedTooth));
+            }
+        }
+        public ObservableCollection<string> SelectedToothProblems
+        {
+            get => SelectedTooth?.Problems?? new ObservableCollection<string>();
+            set
+            {
+                if (SelectedTooth != null)
+                {
+                    SelectedTooth.Problems = value;
+                }
+                OnPropertyChanged(nameof(SelectedToothProblems));
+            }
+        }
+
+        public SortedObservableCollection<ToothProblemModel> Problems 
+        { 
+            get => _problems;
+            set
+            {
+                _problems = value;
+                ObservableCollection<string> addedProblems = new ObservableCollection<string>(value
+                                                            .Where(p => p.ToothNumber == 0 && !string.IsNullOrWhiteSpace(p.ToothProblem))
+                                                            .Select(p => p.ToothProblem ?? ""));
+                PatientRecord.Problems = addedProblems;
+                OnPropertyChanged(nameof(Problems));
+            }
+        }
+
+        public ToothProblemModel Problem
+        {
+            get => _problem;
+            set
+            {
+                _problem = value;
+                OnPropertyChanged(nameof(Problem));
+            }
+        }
+        public int ToothNumber
+        {
+            get => Problem.ToothNumber;
+            set
+            {
+                Problem.ToothNumber = value;
+                OnPropertyChanged(nameof(ToothNumber));
+            }
+        }
+        public string? ToothProblem
+        {
+            get => Problem.ToothProblem;
+            set
+            {
+                Problem.ToothProblem = value;
+                OnPropertyChanged(nameof(ToothProblem));
+            }
+        }
+        public string? SelectedToothProblem
+        {
+            get => _selectedToothProblem;
+            set
+            {
+                _selectedToothProblem = value;
+                OnPropertyChanged(nameof(SelectedToothProblem));
+            }
+        }
+
         public string ErrorMessage
         {
             get => _errorMessage; set
@@ -255,24 +511,58 @@ namespace VsProject.ViewModels
         }
 
         public ICommand SaveEditCommand { get; }
+        public ICommand AppointmentCommand { get; }
+        public ICommand OrdonnanceCommand { get; }
+        public ICommand RemovePatientCommand { get; }
+        public ICommand RemoveProblemCommand { get; }
+        public ICommand AddProblemCommand { get; }
+        public ICommand GoToToothCommand { get; }
+        public ICommand RemoveProblemSelectedToothCommand { get; }
+        public ICommand AddProblemSelectedToothCommand { get; }
+        public ICommand GoBackInHistory { get; }
+        public ICommand GoForwardInHistory { get; }
 
 
         public PatientEditViewModel()
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
+            AppointmentCommand = new ViewModelCommand(ExecuteAddAppointment, (_) => { return IsNotNewPatient; });
+            OrdonnanceCommand = new ViewModelCommand(ExecuteAddOrdonnance, (_) => { return IsNotNewPatient; });
+            RemovePatientCommand = new ViewModelCommand(ExecuteRemovePatient, (_) => { return IsNotNewPatient; });
+            RemoveProblemCommand = new ViewModelCommand(ExecuteRemoveProblem, (_) => { return IsEditing; });
+            AddProblemCommand = new ViewModelCommand(ExecuteAddProblem, CanExecuteAddProblem);
+            GoToToothCommand = new ViewModelCommand(ExecuteGoToTooth);
+            RemoveProblemSelectedToothCommand = new ViewModelCommand(ExecuteRemoveProblemSelectedTooth, (_) => { return SelectedTooth != null &&  IsEditing; });
+            AddProblemSelectedToothCommand = new ViewModelCommand(ExecuteAddProblemSelectedTooth, CanExecuteAddProblemSelectedTooth);
+            GoBackInHistory = new ViewModelCommand(ExecuteGoBackInHistory, (_) => { return IsNotNewPatient && PatientRecordHistory != null && HistoryIndex < PatientRecordHistory.Count - 1; });
+            GoForwardInHistory = new ViewModelCommand(ExecuteGoForwardInHistory, (_) => { return IsNotNewPatient && PatientRecordHistory != null && IsInHistory; });
+
+            IsNewPatient = true;
+            IsEditing = true;
+
             Patient = new PatientModel();
             PatientRecord = new PatientRecordModel();
             Teeth = new ObservableCollection<ToothModel>(Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i }));
-            IsNewPatient = true;
-            IsEditing = true;
         }
-        public PatientEditViewModel(PatientModel patient)
+
+      
+        public PatientEditViewModel(PatientModel patient, PatientRecordModel patientRecord, IEnumerable<ToothModel> teeth)
         {
             SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
+            AppointmentCommand = new ViewModelCommand(ExecuteAddAppointment, (_) => { return IsNotNewPatient; });
+            OrdonnanceCommand = new ViewModelCommand(ExecuteAddOrdonnance, (_) => { return IsNotNewPatient; });
+            RemovePatientCommand = new ViewModelCommand(ExecuteRemovePatient, (_) => { return IsNotNewPatient; });
+            RemoveProblemCommand = new ViewModelCommand(ExecuteRemoveProblem, (_) => { return IsEditing; });
+            AddProblemCommand = new ViewModelCommand(ExecuteAddProblem, CanExecuteAddProblem);
+            GoToToothCommand = new ViewModelCommand(ExecuteGoToTooth);
+            RemoveProblemSelectedToothCommand = new ViewModelCommand(ExecuteRemoveProblemSelectedTooth, (_) => { return SelectedTooth != null && IsEditing; });
+            AddProblemSelectedToothCommand = new ViewModelCommand(ExecuteAddProblemSelectedTooth, CanExecuteAddProblemSelectedTooth);
+            GoBackInHistory = new ViewModelCommand(ExecuteGoBackInHistory, (_) => { return IsNotNewPatient && PatientRecordHistory != null && HistoryIndex < PatientRecordHistory.Count - 1; });
+            GoForwardInHistory = new ViewModelCommand(ExecuteGoForwardInHistory, (_) => { return IsNotNewPatient && PatientRecordHistory != null && IsInHistory; });
             Patient = patient;
-            PatientRecord = new PatientRecordModel();
-            PatientRecord.PatientId = Patient.Id;
-            Teeth = new ObservableCollection<ToothModel>(Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i }));
+           
+
+
             LastName = Patient.LastName;
             FirstName = Patient.FirstName;
             Surname = Patient.Surname;
@@ -291,54 +581,271 @@ namespace VsProject.ViewModels
             ParentName = Patient.ParentName;
 
             IsNewPatient = Patient.Id == null;
-        }
 
-   public PatientEditViewModel(PatientModel patient, PatientRecordModel patientRecord , IEnumerable<ToothModel> teeth)
-        {
-            SaveEditCommand = new ViewModelCommand(ExecuteSaveEdit, CanExecuteSaveEdit);
-            Patient = patient;
             PatientRecord = patientRecord;
             PatientRecord.PatientId = Patient.Id;
             Teeth = new ObservableCollection<ToothModel>(teeth);
-            LastName = Patient.LastName;
-            FirstName = Patient.FirstName;
-            Surname = Patient.Surname;
-            IsMale = !Patient.Sex;
-            IsFemale = Patient.Sex;
-            Phone = Patient.Phone;
-            PhoneAlt = Patient.PhoneAlt;
-            Email = Patient.Email;
-            BirthDate = Patient.BirthDate;
-            Profession = Patient.Profession;
-            Adress = Patient.Adress;
-            Motive = Patient.Motive;
-            OrientedBy = Patient.OrientedBy;
-            Adress = Patient.Adress;
-            PreferredDay = Patient.PreferredDay;
-            ParentName = Patient.ParentName;
+            PatientRecordHistory = (List<PatientRecordModel>)UserPrincipal.PatientRecordRepository.GetAllFromHistory(Patient.Id);
+            List<IEnumerable<ToothModel>> toothModelLists = (List<IEnumerable<ToothModel>>)UserPrincipal.ToothRepository.GetAllFromHistory((int)PatientRecord.PatientId);
+            TeethHistory = toothModelLists
+                            .Select(list => new ObservableCollection<ToothModel>(list))
+                            .ToList();
 
-            IsNewPatient = Patient.Id == null;
+
+            foreach (var tooth in Teeth)
+            {
+                foreach (var problem in tooth.Problems)
+                {
+                    var toothProblem = new ToothProblemModel
+                    {
+                        ToothNumber = tooth.Number,
+                        ToothProblem = problem,
+                        IsDefault = false
+                    };
+                    Problems.Add(toothProblem);
+                }
+            }
+            var toothDefaultProblems = Teeth
+            .Where(t => t.ApicalReaction || t.Decay)
+            .Select(t => new ToothProblemModel
+            {
+                ToothNumber = t.Number,
+                ToothProblem = t.DefaultProblem,
+                IsDefault = true
+            }) ;
+
+            foreach (var problem in toothDefaultProblems)
+            {
+                Problems.Add(problem);
+            }
+
+            
+            if(PatientRecord.Problems == null)
+            {
+                PatientRecord.Problems = new ObservableCollection<string>();
+            }
+            foreach (var problem in PatientRecord.Problems)
+            {
+                var toothProblem = new ToothProblemModel
+                {
+                    ToothNumber = 0,
+                    ToothProblem = problem,
+                    IsDefault = false
+                };
+                Problems.Add(toothProblem);
+            }
+
+        }
+        private void ExecuteGoBackInHistory(object obj)
+        {
+            HistoryIndex++;
+            NavigateInHistory(HistoryIndex);
         }
 
+        private void NavigateInHistory(int historyIndex)
+        {
+            PatientRecord = PatientRecordHistory[historyIndex];
+            PatientRecord.PatientId = Patient.Id;
+            Teeth = new ObservableCollection<ToothModel>(TeethHistory[historyIndex]);
+
+            Problems.Clear();
+
+
+            var toothDefaultProblems = Teeth
+            .Where(t => t.ApicalReaction || t.Decay)
+            .Select(t => new ToothProblemModel
+            {
+                ToothNumber = t.Number,
+                ToothProblem = t.DefaultProblem,
+                IsDefault = true
+            });
+
+            foreach (var problem in toothDefaultProblems)
+            {
+                Problems.Add(problem);
+            }
+
+            foreach (var tooth in Teeth)
+            {
+                foreach (var problem in tooth.Problems)
+                {
+                    var toothProblem = new ToothProblemModel
+                    {
+                        ToothNumber = tooth.Number,
+                        ToothProblem = problem,
+                        IsDefault = false
+                    };
+                    Problems.Add(toothProblem);
+                }
+            }
+            if (PatientRecord.Problems == null)
+            {
+                PatientRecord.Problems = new ObservableCollection<string>();
+            }
+            foreach (var problem in PatientRecord.Problems)
+            {
+                var toothProblem = new ToothProblemModel
+                {
+                    ToothNumber = 0,
+                    ToothProblem = problem,
+                    IsDefault = false
+                };
+                Problems.Add(toothProblem);
+            }
+        }
+
+        private void ExecuteGoForwardInHistory(object obj)
+        {
+            HistoryIndex--;
+            NavigateInHistory(HistoryIndex);
+
+        }
+
+
+
+
+        private bool CanExecuteAddProblemSelectedTooth(object obj)
+        {
+            return (SelectedTooth != null  &&  IsEditing && !string.IsNullOrWhiteSpace(SelectedToothProblem));
+        }
+
+        private void ExecuteAddProblemSelectedTooth(object obj)
+        {
+            SelectedTooth?.Problems.Add(SelectedToothProblem);
+            Problems.Add(new ToothProblemModel { IsDefault = false , ToothNumber = SelectedTooth.Number, ToothProblem = SelectedToothProblem });
+
+        }
+
+        private void ExecuteRemoveProblemSelectedTooth(object obj)
+        {
+            if (obj is string toothProblem)
+            {
+                SelectedTooth?.Problems.Remove(toothProblem);
+                var item = Problems.FirstOrDefault(p => p.ToothNumber == SelectedTooth.Number && p.ToothProblem == toothProblem);
+                if(item !=null)
+                    Problems.Remove(item);
+
+            }else
+            {
+                MessageBox.Show(obj.GetType().Name);
+            }
+        }
+
+
+
+        private void ExecuteRemoveProblem(object obj)
+        {
+            if (obj is ToothProblemModel toothProblem)
+            {
+                Problems.Remove(toothProblem);
+                if (Problem.ToothNumber != 0)
+                    Teeth[toothProblem.ToothNumber - 1].Problems.Remove(toothProblem.ToothProblem ?? "");
+                else
+                {
+                    PatientRecord.Problems?.Remove(toothProblem.ToothProblem ?? "");
+                }
+            }
+        }
+
+        private void ExecuteGoToTooth(object obj)
+        {
+            if (obj is int toothNumber)
+            {
+                SelectedTooth = Teeth[toothNumber - 1];
+            }
+        }
+
+
+        private void ExecuteAddProblem(object obj)
+        {
+            Problems.Add(Problem);
+            if(Problem.ToothNumber != 0)
+                Teeth[Problem.ToothNumber - 1].Problems.Add(Problem.ToothProblem?? "");
+            else
+            {
+                PatientRecord.Problems?.Add(Problem.ToothProblem ?? "");
+            }
+        }
+         private bool CanExecuteAddProblem(object obj)
+        {
+            return (IsEditing && !string.IsNullOrEmpty(Problem.ToothProblem));
+        }
+
+        private void ExecuteRemovePatient(object obj)
+        {
+            if (DialogService.ShowYesNoDialog() == true)
+            {
+                UserPrincipal.PatientRepository.Remove(Patient);
+                Patient = new PatientModel();
+                PatientRecord = new PatientRecordModel();
+                Teeth = new ObservableCollection<ToothModel>(Enumerable.Range(1, 32).Select(i => new ToothModel { Number = i }));
+                LastName = "";
+                FirstName = "";
+                Surname = "";
+                IsMale = null;
+                IsFemale = null;
+                Phone = "";
+                PhoneAlt = "";
+                Email = "";
+                BirthDate = new DateOnly();
+                Profession = "";
+                Adress = "";
+                Motive = "";
+                OrientedBy = "";
+                Adress = "";
+                PreferredDay = "";
+                ParentName = "";
+                IsNewPatient = true;
+                IsEditing = true;
+            }
+        }
+
+        private void ExecuteAddOrdonnance(object obj)
+        {
+            DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+            if (DialogService.Show(new OrdonnanceViewModel(Patient)) == true)
+            {
+            }
+        }
+
+        private void ExecuteAddAppointment(object obj)
+        {
+            DateOnly now = DateOnly.FromDateTime(DateTime.Now);
+            var appointment = new AppointmentModel() { PatientId = Patient.Id, Date = now, StartTime = new TimeOnly(12, 0), EndTime = new TimeOnly(13, 0) };
+            if (DialogService.Show(new AppointmentEditViewModel(new AppointmentViewModel(appointment))) == true)
+            {
+                UserPrincipal.AppointmentRepository.Add(appointment);
+            }
+        }
+
+       
 
         private void ExecuteSaveEdit(object obj)
         {
             if (DialogService.ShowYesNoDialog() == true)
             {
+                
                 if (IsNewPatient)
                 {
                     Patient.Id = UserPrincipal.PatientRepository.Add(Patient);
                     PatientRecord.PatientId = Patient.Id;
                     UserPrincipal.PatientRecordRepository.Add(PatientRecord);
                     UserPrincipal.ToothRepository.AddAll(Teeth.ToList(), PatientRecord.PatientId);
+                    IsNewPatient = false;
                 }
                 else
                 {
                     UserPrincipal.PatientRepository.Edit(Patient);
-                    //UserPrincipal.PatientRecordRepository.Edit();
+                    UserPrincipal.PatientRecordRepository.Edit(PatientRecord);
                     if (Teeth != null)
                         UserPrincipal.ToothRepository.EditAll(Teeth.ToList(), Patient.Id);
                 }
+                PatientRecordHistory = (List<PatientRecordModel>)UserPrincipal.PatientRecordRepository.GetAllFromHistory(Patient.Id);
+                List<IEnumerable<ToothModel>> toothModelLists = (List<IEnumerable<ToothModel>>)UserPrincipal.ToothRepository.GetAllFromHistory((int)PatientRecord.PatientId);
+                TeethHistory = toothModelLists
+                                .Select(list => new ObservableCollection<ToothModel>(list))
+                                .ToList();
+
             }
             IsEditing = false;
         }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
+using System.Linq;
 using VsProject.Models;
 
 namespace VsProject.Repositories
@@ -10,6 +12,9 @@ namespace VsProject.Repositories
         private const string TABLENAME = "tooth";
         private const string PATIENTRECORDID = "patient_record_id";
         private const string NUMBER = "number";
+        private const string NOTES = "notes";
+        private const string PROBLEMSSEPARATOR = "{}-";
+        private const string PROBLEMS = "problems";
         private const string APICALREACTION = "apical_reaction";
         private const string DECAY = "decay";
         private const string TIMESTART = "time_start";
@@ -40,12 +45,14 @@ namespace VsProject.Repositories
                     // Update each tooth in the input list
                     foreach (var tooth in teethList)
                     {
-                        command.CommandText = $"INSERT INTO {TABLENAME} ( {PATIENTRECORDID}, {NUMBER}, {APICALREACTION},{DECAY}) " +
-                                            "VALUES ( @patientRecordId, @number, @apicalReaction, @decay)";
+                        command.CommandText = $"INSERT INTO {TABLENAME} ( {PATIENTRECORDID}, {NUMBER}, {NOTES},{PROBLEMS} ,{APICALREACTION},{DECAY}) " +
+                                            "VALUES ( @patientRecordId, @number, @notes, @problems, @apicalReaction, @decay)";
 
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@patientRecordId", patientRecordId);
                         command.Parameters.AddWithValue("@number", tooth.Number);
+                        command.Parameters.AddWithValue("@notes", tooth.Notes.DBNullOrWS());
+                        command.Parameters.AddWithValue("@problems", string.Join(PROBLEMSSEPARATOR,tooth.Problems).DBNullOrWS());
                         command.Parameters.AddWithValue("@apicalReaction", tooth.ApicalReaction);
                         command.Parameters.AddWithValue("@decay", tooth.Decay);
 
@@ -85,10 +92,12 @@ namespace VsProject.Repositories
                     // Update each tooth in the input list
                     foreach (var tooth in teethList)
                     {
-                        command.CommandText = $"UPDATE {TABLENAME} SET {APICALREACTION} = @apicalReaction, {DECAY} = @decay WHERE {PATIENTRECORDID} = @patientRecordId AND {NUMBER} = @number ";
+                        command.CommandText = $"UPDATE {TABLENAME} SET {NOTES} = @notes, {PROBLEMS} = @problems, {APICALREACTION} = @apicalReaction, {DECAY} = @decay WHERE {PATIENTRECORDID} = @patientRecordId AND {NUMBER} = @number ";
 
                         command.Parameters.Clear();
                         command.Parameters.AddWithValue("@apicalReaction", tooth.ApicalReaction);
+                        command.Parameters.AddWithValue("@notes", tooth.Notes.DBNullOrWS());
+                        command.Parameters.AddWithValue("@problems", string.Join(PROBLEMSSEPARATOR, tooth.Problems).DBNullOrWS());
                         command.Parameters.AddWithValue("@decay", tooth.Decay);
                         command.Parameters.AddWithValue("@patientRecordId", patientRecordId);
                         command.Parameters.AddWithValue("@number", tooth.Number);
@@ -116,7 +125,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT {APICALREACTION}, {DECAY} FROM {TABLENAME} WHERE {PATIENTRECORDID} = @patientRecordId AND {NUMBER} = @number";
+                command.CommandText = $"SELECT {NOTES}, {PROBLEMS}, {APICALREACTION}, {DECAY} FROM {TABLENAME} WHERE {PATIENTRECORDID} = @patientRecordId AND {NUMBER} = @number";
 
                 command.Parameters.AddWithValue("@patientRecordId", patientRecordId);
                 command.Parameters.AddWithValue("@number", number);
@@ -128,6 +137,8 @@ namespace VsProject.Repositories
                         var tooth = new ToothModel
                         {
                             Number = (int)number,
+                            Notes = reader[NOTES].DBValue<string>(),
+                            Problems = DBExtensions.ConvertToObservableCollection(PROBLEMSSEPARATOR , reader[PROBLEMS].DBValue<string>())?? new ObservableCollection<string>(),
                             ApicalReaction = reader[APICALREACTION].DBValue<bool>(),
                             Decay = reader[DECAY].DBValue<bool>(),
                         };
@@ -138,6 +149,8 @@ namespace VsProject.Repositories
             }
         }
 
+       
+
         public IEnumerable<ToothModel> GetAll(int patientRecordId)
         {
             var teeth = new List<ToothModel>();
@@ -147,7 +160,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT {PATIENTRECORDID}, {NUMBER}, {APICALREACTION}, {DECAY} FROM {TABLENAME} WHERE {PATIENTRECORDID} = @patientRecordId";
+                command.CommandText = $"SELECT {PATIENTRECORDID}, {NUMBER}, {NOTES}, {PROBLEMS},  {APICALREACTION}, {DECAY} FROM {TABLENAME} WHERE {PATIENTRECORDID} = @patientRecordId";
 
                 command.Parameters.AddWithValue("@patientRecordId", patientRecordId);
 
@@ -158,6 +171,8 @@ namespace VsProject.Repositories
                         var tooth = new ToothModel
                         {
                             Number = reader[NUMBER].DBValue<int>(),
+                            Notes = reader[NOTES].DBValue<string>(),
+                            Problems = DBExtensions.ConvertToObservableCollection(PROBLEMSSEPARATOR , reader[PROBLEMS].DBValue<string>())?? new ObservableCollection<string>(),
                             ApicalReaction = reader[APICALREACTION].DBValue<bool>(),
                             Decay = reader[DECAY].DBValue<bool>(),
                         };
@@ -178,7 +193,7 @@ namespace VsProject.Repositories
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = $"SELECT {PATIENTRECORDID}, {NUMBER}, {APICALREACTION}, {DECAY} FROM {TABLENAME} FOR SYSTEM_TIME ALL WHERE {PATIENTRECORDID} = @patientRecordId ORDER BY  {TIMESTART} DESC , {NUMBER}";
+                command.CommandText = $"SELECT {PATIENTRECORDID}, {NUMBER},{NOTES}, {PROBLEMS}, {APICALREACTION}, {DECAY} FROM {TABLENAME} FOR SYSTEM_TIME ALL WHERE {PATIENTRECORDID} = @patientRecordId ORDER BY  {TIMESTART} DESC , {NUMBER}";
 
                 command.Parameters.AddWithValue("@patientRecordId", patientRecordId);
 
@@ -191,6 +206,8 @@ namespace VsProject.Repositories
                         var tooth = new ToothModel
                         {
                             Number = reader[NUMBER].DBValue<int>(),
+                            Notes = reader[NOTES].DBValue<string>(),
+                            Problems = DBExtensions.ConvertToObservableCollection(PROBLEMSSEPARATOR , reader[PROBLEMS].DBValue<string>())?? new ObservableCollection<string>(),
                             ApicalReaction = reader[APICALREACTION].DBValue<bool>(),
                             Decay = reader[DECAY].DBValue<bool>(),
                         };

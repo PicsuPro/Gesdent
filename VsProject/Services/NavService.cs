@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using VsProject.Resources.Controls;
 using VsProject.ViewModels;
+using VsProject.Views;
 
 namespace VsProject.Services
 {
@@ -45,6 +46,24 @@ namespace VsProject.Services
             var view = (FrameworkElement)Activator.CreateInstance(viewType);
             view.DataContext = viewModel;
 
+            if (parentType != null)
+            {
+                var parent = (FrameworkElement)Activator.CreateInstance(parentType);
+                NavigatedToParent?.Invoke(parent);
+                NavigatedToChild?.Invoke(view);
+            }
+            else
+            {
+                NavigatedToParent?.Invoke(view);
+            }
+        }
+              public static void Navigate<TViewModel>(TViewModel viewModel,int index)
+            where TViewModel : PatientEditViewModel
+        {
+            (Type viewType, Type? parentType) = VMVMappings.GetViewAndParentTypes(viewModel.GetType());
+            var view = (FrameworkElement)Activator.CreateInstance(viewType);
+            view.DataContext = viewModel;
+            ((PatientEditView)view).CurrentPanelIndex = index;
             if (parentType != null)
             {
                 var parent = (FrameworkElement)Activator.CreateInstance(parentType);

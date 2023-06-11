@@ -94,7 +94,6 @@
                 </Menu>
             </Popup>
         </ToggleButton>
-        <Button Content="SS" Click="Button_Click" Grid.Row="1" VerticalAlignment="Top"></Button>
         <ListBox 
             x:Name="sidebar" 
             BorderThickness="0"
@@ -105,7 +104,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center" Margin="5,0">
 
-            <controls:NavListBoxItem Icon="{StaticResource homeIcon}"
+            <controls:NavListBoxItem Icon="{StaticResource calendarIcon}"
                 ViewModel="{x:Type viewModels:CalendarViewModel}"
                 Margin="0,5"
                 KeyboardNavigation.IsTabStop="False"/>

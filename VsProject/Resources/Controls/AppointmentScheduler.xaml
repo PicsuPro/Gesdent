@@ -216,8 +216,30 @@
                                                    Cursor="Hand">
                                                 <Border Background="#EE0062F5" Opacity="1" Margin="0" Padding="0" CornerRadius="5" BorderBrush="LightGray" BorderThickness="0.5">
                                                     <Grid>
-                                                    <TextBlock Text="{Binding Subject}" Padding="5,0" Margin="10" FontSize="15" FontFamily="Calibri" TextWrapping="Wrap" Foreground="Black" />
-                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition/>
+                                                            <ColumnDefinition Width="auto"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        
+                                                        <Button x:Name="endButton"
+                                                                Grid.Column="1"
+                                                                VerticalAlignment="Top"
+                                                                VerticalContentAlignment="Top"
+                                                                    Command="{Binding AppointmentEndCommand, RelativeSource={RelativeSource  AncestorType=local:AppointmentScheduler}}" 
+                                                                    CommandParameter="{Binding}"
+                                                                Style="{StaticResource IconButtonStyle}"
+                                                                    Margin="0,-20,10,0"
+                                                                    Background="#0000"
+                                                                    ToolTip="Completer Rendez-vous">
+                                                            <Viewbox Stretch="Uniform"  Width="25">
+                                                                <Path Data="{StaticResource checkMarkIcon}" Fill="Black" Opacity="0.8"/>
+                                                            </Viewbox>
+                                                        </Button>
+                                                        <StackPanel Orientation="Vertical" Grid.Column="0">
+                                                            <TextBlock Text="{Binding Subject}" Padding="5,0" Margin="10,10,0,0" FontWeight="Bold" FontSize="15" FontFamily="Calibri" TextWrapping="Wrap" Foreground="Black" />
+                                                            <TextBlock Text="{Binding PatientName}" Padding="5,0" Margin="10,0"  FontSize="15" FontFamily="Calibri" TextWrapping="Wrap" Foreground="Black" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10" Grid.ColumnSpan="2">
                                                             <StackPanel.Resources>
                                                                 <Style TargetType="Button">
                                                                     <Setter Property="BorderThickness" Value="0"/>
@@ -246,22 +268,23 @@
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </StackPanel.Resources>
-                                                        <Button x:Name="editButton"
+
+                                                            <Button x:Name="editButton"
                                                                 Command="{Binding AppointmentEditCommand, RelativeSource={RelativeSource  AncestorType=local:AppointmentScheduler}}" 
                                                                 CommandParameter="{Binding}"
                                                                 Margin="0,0,6,0"
                                                                 Background="#0000"
                                                                 ToolTip="Modifier">
-                                                            <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
-                                                        </Button>
-                                                        <Button x:Name="removeButton"
+                                                                    <Image Source="/Resources/Images/edit.png" Width="18" Height="18" />
+                                                                </Button>
+                                                                <Button x:Name="removeButton"
                                                                 Command="{Binding AppointmentRemoveCommand, RelativeSource={RelativeSource  AncestorType=local:AppointmentScheduler}}" 
                                                                 CommandParameter="{Binding}"
                                                                 Background="#0000"
                                                                 Visibility="Visible"
                                                                 ToolTip="Supprimer">
-                                                            <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
-                                                        </Button>
+                                                                    <Image Source="/Resources/Images/remove.png" Width="18" Height="18" />
+                                                                </Button>
                                                     </StackPanel>
                                                 </Grid>
                                                 </Border>

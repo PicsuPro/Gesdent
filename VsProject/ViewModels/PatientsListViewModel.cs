@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using VsProject.Models;
@@ -73,7 +74,9 @@ namespace VsProject.ViewModels
         {
             if(parameter is PatientModel patient)
             {
-                var viewModel = new PatientEditViewModel(patient);
+                var patientRecord = UserPrincipal.PatientRecordRepository.GetByPatientId(patient.Id);
+                var Teeth = UserPrincipal.ToothRepository.GetAll((int)patient.Id);
+                var viewModel = new PatientEditViewModel(patient, patientRecord,Teeth);
                 NavService.Navigate(viewModel);
 
             }

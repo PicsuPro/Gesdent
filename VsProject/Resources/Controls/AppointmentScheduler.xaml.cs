@@ -18,6 +18,20 @@ namespace VsProject.Resources.Controls
     public partial class AppointmentScheduler : UserControl
     {
 
+        public static readonly DependencyProperty AppointmentEndCommandProperty =
+              DependencyProperty.Register(
+                  "AppointmentEndCommand",
+                  typeof(ICommand),
+                  typeof(AppointmentScheduler),
+                  new PropertyMetadata(null));
+
+        public ICommand AppointmentEndCommand
+        {
+            get { return (ICommand)GetValue(AppointmentEndCommandProperty); }
+            set { SetValue(AppointmentEndCommandProperty, value); }
+
+        }
+        
         public static readonly DependencyProperty AppointmenEditCommandProperty =
               DependencyProperty.Register(
                   "AppointmentEditCommand",

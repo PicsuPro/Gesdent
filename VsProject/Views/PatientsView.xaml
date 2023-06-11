@@ -28,9 +28,9 @@
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Stretch">
             <controls:NavTabControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
-                <controls:NavTabItem Header="List" ViewModel="{x:Type viewModels:PatientsListViewModel}" Style="{DynamicResource TabItemStyle}">
+                <controls:NavTabItem Header="Patients" ViewModel="{x:Type viewModels:PatientsListViewModel}" Style="{DynamicResource TabItemStyle}">
                 </controls:NavTabItem>
-                <controls:NavTabItem Header="Add Patient" ViewModel="{x:Type viewModels:PatientEditViewModel}" Style="{DynamicResource TabItemStyle}">
+                <controls:NavTabItem Header="Informations" ViewModel="{x:Type viewModels:PatientEditViewModel}" Style="{DynamicResource TabItemStyle}">
                 </controls:NavTabItem>
             </controls:NavTabControl>
         </Border>
