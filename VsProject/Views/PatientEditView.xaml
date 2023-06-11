@@ -618,7 +618,7 @@
                         <Button  
                             Margin="0,-6,5,0"
                             Style="{StaticResource IconButtonStyle}"
-                            ToolTip="Reculer Dans Historique"
+                            ToolTip="Reculer Dans l'Historique"
                             Command="{Binding GoBackInHistory}"
                             HorizontalAlignment="Left">
                             <Viewbox Stretch="Uniform" Width="21">
@@ -628,7 +628,7 @@
                         <Button  
                                  Margin="0"
                                         Style="{StaticResource IconButtonStyle}"
-                                        ToolTip="Avancer Dans Historique"
+                                        ToolTip="Avancer Dans l'Historique"
                             Command="{Binding GoForwardInHistory}"
                             HorizontalAlignment="Left">
                             <Viewbox Stretch="Uniform"  Width="21">
