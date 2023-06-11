@@ -24,6 +24,7 @@ namespace VsProject.Resources.Controls
         private void OnNavigated(FrameworkElement view)
         {
             var viewModelType = view.DataContext.GetType();
+
             var tabItem = Items.OfType<NavTabItem>().FirstOrDefault(item => item.ViewModel == viewModelType);
             if (tabItem != null)
             {

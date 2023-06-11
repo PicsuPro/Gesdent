@@ -16,4 +16,6 @@
     <c:HeightToBottomMarginHalfConverter x:Key="HeightToBottomMarginHalf"/>
     <c:AppointmentWidthConverter x:Key="AppointmentWidth"/>
     <c:AppointmentLeftConverter x:Key="AppointmentLeft"/>
+    <c:IsNewUserToPatientEditTitle x:Key="IsNewUserToPatientEditTitle"/>
+    <c:IsNewUserToPatientRecordEditTitle x:Key="IsNewUserToPatientRecordEditTitle"/>
 </ResourceDictionary>

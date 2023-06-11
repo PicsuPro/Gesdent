@@ -9,13 +9,14 @@
              xmlns:model="clr-namespace:VsProject.Models" 
              xmlns:controls="clr-namespace:VsProject.Resources.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1300"
-             Background="White">
+             d:DesignHeight="853" d:DesignWidth="1300"
+             >
     <UserControl.Style>
         <Style TargetType="UserControl">
+            <Setter Property="Background" Value="White"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding IsInHistory,UpdateSourceTrigger=PropertyChanged}" Value="True">
-                    <Setter Property="Background" Value="WhiteSmoke"/>
+                    <Setter Property="Background" Value="#FCFCFC"/>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -39,23 +40,24 @@
     </UserControl.DataContext>
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid >
-        <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="10"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
+            <Grid FocusManager.FocusedElement="{Binding ElementName=txtName}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="1200"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right"  VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Right"  Margin="0,5,0,0" VerticalAlignment="Top">
 
                     <Button  x:Name="PreviousPageButton"
-                                        Margin="0,0,5,0"
+                                        Margin="5,0,10,0"
                                         Style="{StaticResource IconButtonStyle}"
                                         ToolTip="Page Precedente"
                                 Click="PreviousPageButton_Click"
@@ -78,14 +80,20 @@
 
                 <Grid x:Name="MainContainer" Grid.Column="1"
                         Grid.Row="1">
-                    <Grid Visibility="Collapsed">
+                    <Grid HorizontalAlignment="Center" Visibility="Collapsed">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="10"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="10"/>
-                        </Grid.ColumnDefinitions>
+                        </Grid.ColumnDefinitions> 
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{Binding IsNewPatient, Converter={StaticResource IsNewUserToPatientEditTitle}}" Margin="0,0,0,50"  Grid.ColumnSpan="10" Style="{StaticResource FormTextBlock}" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
+
                         <StackPanel Width="250"
                         Orientation="Vertical"
                         Grid.Column="1"
@@ -296,14 +304,26 @@
 
                     <Grid >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="450"/> 
+                            <ColumnDefinition Width="550"/> 
                             <ColumnDefinition /> 
                             <ColumnDefinition/> 
                         </Grid.ColumnDefinitions>
-                        <StackPanel>
+
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{Binding IsInHistory, Converter={StaticResource IsNewUserToPatientRecordEditTitle}}" Margin="0,0,0,50" Grid.ColumnSpan="10" Style="{StaticResource FormTextBlock}" FontSize="26" FontWeight="Bold" TextAlignment="Center"/>
+
+
+
+                        <StackPanel Grid.Row="1">
+
                             <controls:DentalChart x:Name="Chart" Grid.Column="0" SelectedTooth="{Binding SelectedTooth, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}" TeethSource="{Binding Teeth, Mode=TwoWay , UpdateSourceTrigger=PropertyChanged}"  IsReadOnly="{Binding IsEditing , Converter={StaticResource InverseBoolean}}"  />
                             <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
-                                <TextBlock Text="Bilan:" Style="{StaticResource FormTextBlock}" Margin="10,10,0,5" FontSize="16" FontWeight="Bold"/>
+                                <TextBlock Text="Problèmes:" Style="{StaticResource FormTextBlock}" Margin="10,10,0,5" FontSize="16" FontWeight="Bold"/>
                                 <ListBox HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                 ItemsSource="{Binding SelectedToothProblems,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                 BorderThickness="0"
@@ -356,8 +376,8 @@
                                 </Grid>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0">
-                            <TextBlock Text="Bilan:" Style="{StaticResource FormTextBlock}" Margin="20,5,0,5" FontSize="16" FontWeight="Bold"/>
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="10,0,0,0"  Grid.Row="1">
+                            <TextBlock Text="Problèmes:" Style="{StaticResource FormTextBlock}" Margin="20,5,0,5" FontSize="16" FontWeight="Bold"/>
                             <ListBox HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
                                 ItemsSource="{Binding Problems}"
                                 BorderThickness="0"
@@ -451,12 +471,12 @@
                                 <TextBox Grid.Column="2" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Text="{Binding ToothProblem,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  Margin="10,0,0,0" TextWrapping="Wrap" Style="{StaticResource theRightFormTextBox}"/>
                             </Grid>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" Grid.Column="2" Margin="10,0,0,0">
+                        <StackPanel Orientation="Vertical" Grid.Column="2" Margin="10,0,0,0"  Grid.Row="1">
                             <TextBlock Text="Diagnostique:" Style="{StaticResource FormTextBlock}" Margin="10,10,0,10" FontSize="16" FontWeight="Bold" />
                             <TextBox  AcceptsReturn="True"  Text="{Binding Diagnostic, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="120" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
 
                             <TextBlock Text="Plan de Traitement :" Style="{StaticResource FormTextBlock}" Margin="10,30,0,10" FontSize="16" FontWeight="Bold" />
-                            <TextBox  AcceptsReturn="True"  Text="{Binding Plan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="220" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
+                            <TextBox  AcceptsReturn="True"  Text="{Binding Plan, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="180" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
                             
                             <TextBlock Text="Notes :" Style="{StaticResource FormTextBlock}" Margin="10,30,0,10" FontSize="16" FontWeight="Bold" />
                             <TextBox  AcceptsReturn="True"  Text="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,0,0,0" Height="100" TextWrapping="Wrap" IsReadOnly="{Binding IsEditing,Converter={StaticResource InverseBoolean}}" Style="{StaticResource FormTextBox}"/>
@@ -527,7 +547,7 @@
                     <StackPanel 
                         Margin="10,0,0,0"
                         Orientation="Vertical"
-                            HorizontalAlignment="Left"
+                            HorizontalAlignment="Right"
                             Background="#0000">
 
                         <ToggleButton 

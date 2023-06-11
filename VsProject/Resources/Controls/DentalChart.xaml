@@ -7,7 +7,7 @@
              xmlns:converters="clr-namespace:VsProject.Resources.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="600"
-             Background="White">
+             Background="#0000">
     <UserControl.Resources>
         <Style TargetType="CheckBox">
             <Style.Triggers>
@@ -27,7 +27,7 @@
         </Grid.RowDefinitions>
         <Viewbox Stretch="Uniform" 
                     MaxHeight="500">
-        <ListBox 
+            <ListBox  Background="#0000"
             ItemsSource="{Binding TeethSource, RelativeSource={RelativeSource AncestorType=local:DentalChart}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedItem="{Binding SelectedTooth, RelativeSource={RelativeSource AncestorType=local:DentalChart}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             x:Name="chart"

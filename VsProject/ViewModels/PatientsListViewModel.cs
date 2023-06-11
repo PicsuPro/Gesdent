@@ -42,6 +42,7 @@ namespace VsProject.ViewModels
         public ICommand RemovePatientCommand { get; }
         public ICommand AppointmentCommand { get; }
         public ICommand OrdonnanceCommand { get; }
+        public ICommand AddPatientCommand { get; }
 
         public PatientsListViewModel()
         {
@@ -55,9 +56,13 @@ namespace VsProject.ViewModels
             EditPatientCommand = new ViewModelCommand(EditPatient);
             AppointmentCommand = new ViewModelCommand(AddAppointmentForPatient);
             OrdonnanceCommand = new ViewModelCommand(CreateOrdonnance);
+            AddPatientCommand = new ViewModelCommand(AddPatient);
         }
 
-        
+        private void AddPatient(object obj)
+        {
+            NavService.Navigate(new PatientEditViewModel());
+        }
 
         private void RemovePatient(object parameter)
         {

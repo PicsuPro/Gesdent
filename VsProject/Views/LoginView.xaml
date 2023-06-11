@@ -85,7 +85,7 @@
 
                         <TextBox x:Name="txtUser"
                              Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
-                             Style="{StaticResource FormTextBox}"
+                             Style="{StaticResource theRightFormTextBox}"
                              Margin="0,4,0,0"
                                  >
                             <TextBox.Background>
