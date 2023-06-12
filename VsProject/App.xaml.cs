@@ -17,7 +17,6 @@ namespace VsProject
             var mainView = new MainView();
             if ((bool)DialogService.Show(new LoginViewModel()))
             {
-                UserPrincipal.SetUser(new NetworkCredential("yes", "yes"));
                 mainView.Show();
                 NavService.Navigate(typeof(PatientsListViewModel));
             }
@@ -25,6 +24,6 @@ namespace VsProject
             {
                 Shutdown();
             }
-        }
+}
     }
 }

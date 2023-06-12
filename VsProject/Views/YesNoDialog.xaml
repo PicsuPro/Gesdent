@@ -82,7 +82,6 @@
                                     Grid.Column="2"
                                     HorizontalAlignment="Right"
                                     Cursor="Hand"
-                                    IsDefault="True"
                                     Height="35"
                                     Width="110"
                                     Style="{StaticResource DialogMainButton}">
