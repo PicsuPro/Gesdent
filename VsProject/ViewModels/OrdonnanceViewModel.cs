@@ -214,12 +214,13 @@ namespace VsProject.ViewModels
                     ntextX += ntextWidth + textX / 4;
                     graphics.DrawString($"{medication.Dosage} :", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
                     ntextWidth = graphics.MeasureString($"{medication.Dosage} :", font).Width;
-                    if (string.IsNullOrWhiteSpace(medication.Frequency))
+                    if (!string.IsNullOrWhiteSpace(medication.Frequency))
                     {
                         ntextX += ntextWidth + textX / 4;
                         graphics.DrawString($"{medication.Frequency}", font, PdfSharp.Drawing.XBrushes.Black, ntextX, textY);
-                        textY += lineHeight * 1.2;
                     }
+                    textY += lineHeight * 1.2;
+
                 }
                 textY += lineHeight * 10;
                 if (!string.IsNullOrEmpty(Notes))
