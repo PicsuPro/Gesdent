@@ -8,7 +8,7 @@
         xmlns:viewModels="clr-namespace:VsProject.ViewModels"
         mc:Ignorable="d"
         WindowState="Maximized"
-        Title="MainView" Height="720" Width="1300"
+        Title="GrinWise" Height="720" Width="1300"
         WindowStartupLocation="CenterScreen">
 
     <Window.DataContext>
