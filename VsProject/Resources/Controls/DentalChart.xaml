@@ -83,6 +83,8 @@
                             <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Front}}" Style="{StaticResource toothFrontStyle}"/>
                             <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.Decay}}" Style="{StaticResource toothFrontStyle}"
                                   Visibility="{Binding Decay,Converter={StaticResource BooleanToVisibility}}"/>
+                            <Path Data="{Binding Number,Converter={StaticResource ToothDataConverter},ConverterParameter={x:Static converters:ToothDataType.ApicalReaction}}" Style="{StaticResource toothFrontStyle}"
+                                  Visibility="{Binding ApicalReaction,Converter={StaticResource BooleanToVisibility}}"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
@@ -93,7 +95,7 @@
             <CheckBox Content="Carie" 
                       IsChecked="{Binding SelectedItem.Decay,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       />
-            <CheckBox Content="Reaction Alpical" 
+            <CheckBox Content="Reaction Apical" 
                       IsChecked="{Binding SelectedItem.ApicalReaction,ElementName=chart,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                       Margin="5,0,0,0"/>
 

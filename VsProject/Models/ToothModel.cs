@@ -54,7 +54,7 @@ namespace VsProject.Models
             {
                 var problems = new List<string>();
                 if (ApicalReaction)
-                    problems.Add("Reaction Alpical");
+                    problems.Add("Reaction Apical");
                 if (Decay)
                     problems.Add("Carie");
                 var res = string.Join(", ", problems);
